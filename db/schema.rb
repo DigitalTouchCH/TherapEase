@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_125824) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_135627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,37 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_125824) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "patients", force: :cascade do |t|
+    t.date "date_of_birth"
+    t.integer "age"
+    t.string "addresse"
+    t.string "tel_1"
+    t.string "tel_2"
+    t.string "contact_name"
+    t.string "contact_info"
+    t.string "contact_tel"
+    t.string "info_private"
+    t.string "info_public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.index ["user_id"], name: "index_patients_on_user_id", unique: true
+  end
+
+  create_table "therapists", force: :cascade do |t|
+    t.text "information"
+    t.string "location_name"
+    t.string "location_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.index ["user_id"], name: "index_therapists_on_user_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -56,4 +87,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_125824) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "patients", "users"
+  add_foreign_key "therapists", "users"
 end
