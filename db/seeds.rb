@@ -1,12 +1,11 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+# USERS / PATIENTS / THERAPISTS
 
-# db/seeds.rb
+# Destroy all previous data
+Patient.destroy_all
+Therapist.destroy_all
+User.destroy_all
+Service.destroy_all
+
 
 # Create two users
 user1 = User.create(email: "patient1@example.com", password: "password123", password_confirmation: "password123")
@@ -48,7 +47,7 @@ Patient.create(
 )
 
 # Seed two therapists
-Therapist.create(
+therapist1 = Therapist.create(
   information: "Therapist 1 details and information",
   location_name: "Therapy Center 1",
   location_address: "789 Therapist Blvd",
@@ -57,7 +56,7 @@ Therapist.create(
   user_id: user3.id
 )
 
-Therapist.create(
+therapist2 = Therapist.create(
   information: "Therapist 2 details and information",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
@@ -65,3 +64,64 @@ Therapist.create(
   last_name: "Marley",
   user_id: user4.id
 )
+
+# SERVICES
+
+services = [
+  {
+    active: true,
+    name: "Physiotherapy Session",
+    paiement_methode: "insurance",
+    insurance_visibility: true,
+    place_type: "In-Person",
+    price_visibility: false,
+    price_per_unit: 50.0,
+    duration_per_unit: 30,
+    color: "blue",
+    services_therapists: [therapist1, therapist2]
+  },
+  {
+    active: true,
+    name: "Massage 30 min",
+    paiement_methode: "Twint or cash",
+    insurance_visibility: false,
+    place_type: "In-Person",
+    price_visibility: true,
+    price_per_unit: 60.0,
+    duration_per_unit: 30,
+    color: "green",
+    services_therapists: [therapist1]
+  },
+  {
+    active: true,
+    name: "Massage 45 min",
+    paiement_methode: "Twint or cash",
+    insurance_visibility: false,
+    place_type: "In-Person",
+    price_visibility: true,
+    price_per_unit: 90.0,
+    duration_per_unit: 45,
+    color: "green light",
+    services_therapists: [therapist1]
+  },
+  {
+    active: false,
+    name: "Counseling",
+    paiement_methode: "Twint or cash",
+    insurance_visibility: true,
+    place_type: "Online",
+    price_visibility: true,
+    price_per_unit: 30.0,
+    duration_per_unit: 15,
+    color: "red",
+    services_therapists: [therapist2]
+  }
+]
+
+services.each do |service_info|
+  therapists_for_service = service_info.delete(:services_therapists)  # Correct the key here
+  service = Service.create!(service_info)
+  service.therapists << therapists_for_service if therapists_for_service
+end
+
+puts "Ok :)"
