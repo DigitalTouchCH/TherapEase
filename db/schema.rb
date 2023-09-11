@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_145521) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_190746) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_145521) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "packages", force: :cascade do |t|
+    t.integer "num_of_session"
+    t.text "info_private"
+    t.text "info_public"
+    t.string "insurance_name"
+    t.string "insurance_number"
+    t.string "insurance_type"
+    t.string "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "service_id", null: false
+    t.bigint "therapist_id", null: false
+    t.bigint "patient_id", null: false
+    t.index ["patient_id"], name: "index_packages_on_patient_id"
+    t.index ["service_id"], name: "index_packages_on_service_id"
+    t.index ["therapist_id"], name: "index_packages_on_therapist_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -100,12 +118,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_145521) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "packages", "patients"
+  add_foreign_key "packages", "services"
+  add_foreign_key "packages", "therapists"
   add_foreign_key "patients", "users"
   add_foreign_key "therapists", "users"
 end
