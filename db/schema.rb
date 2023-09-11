@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_191838) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_192626) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_191838) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.string "status"
+    t.text "info_public"
+    t.text "info_private"
+    t.bigint "patient_id", null: false
+    t.bigint "session_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_bookings_on_patient_id"
+    t.index ["session_id"], name: "index_bookings_on_session_id"
   end
 
   create_table "packages", force: :cascade do |t|
@@ -138,6 +150,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_191838) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookings", "patients"
+  add_foreign_key "bookings", "sessions"
   add_foreign_key "packages", "patients"
   add_foreign_key "packages", "services"
   add_foreign_key "packages", "therapists"
