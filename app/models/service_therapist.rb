@@ -1,0 +1,2 @@
+class ServiceTherapist < ApplicationRecord
+end

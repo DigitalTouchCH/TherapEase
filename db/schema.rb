@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_135627) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_145521) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_135627) do
     t.string "first_name"
     t.string "last_name"
     t.index ["user_id"], name: "index_patients_on_user_id", unique: true
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.boolean "active"
+    t.string "name"
+    t.string "paiement_methode"
+    t.boolean "insurance_visibility"
+    t.string "place_type"
+    t.boolean "price_visibility"
+    t.decimal "price_per_unit"
+    t.integer "duration_per_unit"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "services_therapists", id: false, force: :cascade do |t|
+    t.bigint "therapist_id", null: false
+    t.bigint "service_id", null: false
   end
 
   create_table "therapists", force: :cascade do |t|
