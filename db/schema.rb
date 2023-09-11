@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_192626) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_193507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_192626) do
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_bookings_on_patient_id"
     t.index ["session_id"], name: "index_bookings_on_session_id"
+  end
+
+  create_table "media", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "url"
+    t.bigint "therapist_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["therapist_id"], name: "index_media_on_therapist_id"
+  end
+
+  create_table "media_sessions", force: :cascade do |t|
+    t.text "info_public"
+    t.text "info_private"
+    t.bigint "medium_id", null: false
+    t.bigint "session_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["medium_id"], name: "index_media_sessions_on_medium_id"
+    t.index ["session_id"], name: "index_media_sessions_on_session_id"
   end
 
   create_table "packages", force: :cascade do |t|
@@ -152,6 +173,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_192626) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookings", "patients"
   add_foreign_key "bookings", "sessions"
+  add_foreign_key "media", "therapists"
+  add_foreign_key "media_sessions", "media"
+  add_foreign_key "media_sessions", "sessions"
   add_foreign_key "packages", "patients"
   add_foreign_key "packages", "services"
   add_foreign_key "packages", "therapists"
