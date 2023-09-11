@@ -4,6 +4,8 @@ class Therapist < ApplicationRecord
   has_and_belongs_to_many :services
   has_many :packages
   has_many :media
+  has_many :absences
+  has_many :week_availabilities
 
   validates :location_name, presence: true
   validates :location_address, presence: true
