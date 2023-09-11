@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_190746) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_191838) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -98,6 +98,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_190746) do
     t.bigint "service_id", null: false
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.datetime "start_date_time"
+    t.datetime "end_date_time"
+    t.text "info_public"
+    t.text "info_private"
+    t.string "url_zoom"
+    t.integer "max_attendees"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "package_id", null: false
+    t.index ["package_id"], name: "index_sessions_on_package_id"
+  end
+
   create_table "therapists", force: :cascade do |t|
     t.text "information"
     t.string "location_name"
@@ -129,5 +142,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_190746) do
   add_foreign_key "packages", "services"
   add_foreign_key "packages", "therapists"
   add_foreign_key "patients", "users"
+  add_foreign_key "sessions", "packages"
   add_foreign_key "therapists", "users"
 end
