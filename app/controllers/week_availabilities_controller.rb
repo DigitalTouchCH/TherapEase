@@ -1,0 +1,2 @@
+class WeekAvailabilitiesController < ApplicationController
+end
