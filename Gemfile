@@ -56,6 +56,7 @@ gem "simple_form", github: "heartcombo/simple_form"
 gem "pundit"
 gem 'psych', '~> 3.3', '>= 3.3.2'
 gem "cloudinary"
+gem 'simple_calendar'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

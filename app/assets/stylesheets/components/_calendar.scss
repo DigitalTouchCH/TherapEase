@@ -1,0 +1,82 @@
+.available-day {
+  background-color: #c5e9fa;
+  display: block;
+  text-align: center;
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid #c5e9fa;
+}
+
+.available-day:hover {
+  background-color: #89b4df;
+  border: 1px solid #89b4df;
+}
+
+.simple-calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.simple-calendar .day {
+  width: 14.28%;
+  padding: 10px;
+  border: 1px solid #eee;
+}
+
+.simple-calendar .weekend {
+  background-color: #f7f7f7;
+}
+
+.simple-calendar .today {
+  background-color: #b4d2f0;
+}
+
+
+.booking-pending {
+  padding: 10px;
+  background-color: #90b5e0;
+  border-radius: 12px;
+}
+
+.booking-accepted {
+  padding: 10px;
+  background-color: #c5e9fa;
+  border-radius: 12px;
+}
+
+.booking-declined {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #b4b4b4;
+}
+
+.small-text {
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  color: #4d4d4d; /* Gray out the text */
+}
+
+
+/* Style for the calendar table */
+.calendar-table-container {
+  overflow-x: auto;
+}
+
+/* Style for the header cells */
+.calendar-day-header {
+  font-weight: bold;
+  background-color: #f0f0f0;
+  text-align: center; /* Center align the text */
+}
+
+/* Style for the calendar day content */
+.calendar-day-content {
+  text-align: center; /* Center align the text */
+  font-size: 14px;
+  color: #999; /* Gray out the text */
+}
+
+.custom-table td {
+  background-color: transparent;
+}
