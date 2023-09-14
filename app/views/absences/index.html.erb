@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>All absences</h2>
+  <div>
+    <% @absences.each do |a| %>
+      <div>
+        <table>
+        <tr><p><%= a.id %></p></tr>
+        <tr><%= a.start_date_time %></tr>
+        <tr> <%= a.end_date_time %></tr>
+        <tr> <%= a.reason %></tr>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>
