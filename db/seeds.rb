@@ -14,7 +14,7 @@ user3 = User.create(email: "therapist1@example.com", password: "password123", pa
 user4 = User.create(email: "therapist2@example.com", password: "password123", password_confirmation: "password123")
 
 # Seed two patients
-Patient.create(
+patient1 = Patient.create(
   date_of_birth: "1980-01-01",
   age: 43,
   addresse: "123 Patient St",
@@ -26,11 +26,12 @@ Patient.create(
   info_private: "Private notes here",
   info_public: "Public notes here",
   first_name: "Jane",
-  last_name: "Doe",
-  user_id: user1.id
+  last_name: "Doe"
 )
 
-Patient.create(
+patient1.user = user1
+
+patient2 = Patient.create(
   date_of_birth: "1990-05-05",
   age: 33,
   addresse: "456 Patient Ave",
@@ -42,9 +43,11 @@ Patient.create(
   info_private: "More private notes",
   info_public: "More public notes",
   first_name: "John",
-  last_name: "Smith",
-  user_id: user2.id
+  last_name: "Smith"
 )
+
+patient2.user = user2
+
 
 # Seed two therapists
 therapist1 = Therapist.create(
@@ -52,18 +55,20 @@ therapist1 = Therapist.create(
   location_name: "Therapy Center 1",
   location_address: "789 Therapist Blvd",
   first_name: "Alice",
-  last_name: "Cooper",
-  user_id: user3.id
+  last_name: "Cooper"
 )
+
+therapist1.user = user3
 
 therapist2 = Therapist.create(
   information: "Therapist 2 details and information",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
   first_name: "Bob",
-  last_name: "Marley",
-  user_id: user4.id
+  last_name: "Marley"
 )
+
+therapist2.user = user4
 
 # SERVICES
 
