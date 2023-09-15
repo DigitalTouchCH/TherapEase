@@ -1,1 +1,29 @@
 // Specific CSS for your home-page
+.wrapper-home-container {
+  padding-top: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.img-max {
+  max-height: 500px;
+  height: 100%;
+  // max-width: 500px;
+  // width:100%;
+}
+
+.img-two-corners {
+  border-radius: 25% 10%;
+}
+
+.home-icon {
+  background-color: $blue-100;
+  padding: 15px 15px 15px 15px;
+  border-radius: 3px;
+}
+
+.home-subtitle {
+  margin-bottom: 0;
+  font-size: x-small;
+  color: $primary;
+}
