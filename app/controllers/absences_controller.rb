@@ -1,19 +1,21 @@
 class AbsencesController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :validate_therapist
   before_action :set_absence, only: [:edit, :update]
 
   def index
-    @absences = Absence.all
+    @absences = policy_scope(Absence)
   end
 
   def new
     @absence = Absence.new
+    authorize @absence
   end
 
   def create
     @absence = Absence.new(absence_params)
     @absence.therapist = Therapist.where(user: current_user)[0]
+    authorize @absence
     if @absence.save
       redirect_to absences_path # TODO: maybe another route?
     else
@@ -22,9 +24,11 @@ class AbsencesController < ApplicationController
   end
 
   def edit
+    authorize @absence
   end
 
   def update
+    authorize @absence
     @absence.update(absence_params)
     redirect_to absences_path # TODO: maybe another route?
   end
