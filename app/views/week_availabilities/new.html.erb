@@ -1,0 +1,19 @@
+<h1>New Week Availability</h1>
+
+<%= form_for(@week_availability) do |f| %>
+  <div class="field">
+    <%= f.label :valid_from %>
+    <%= f.date_field :valid_from %>
+  </div>
+
+  <div class="field">
+    <%= f.label :valid_until %>
+    <%= f.date_field :valid_until %>
+  </div>
+
+  <!-- Add other fields as necessary -->
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
