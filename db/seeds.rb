@@ -70,6 +70,29 @@ therapist2 = Therapist.create(
 
 therapist2.user = user4
 
+# Seed absences [TODO: NOT WORKING RAISE A TICKET]
+
+# absence1 = Absence.create(
+#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
+#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
+#   reason: "sick leaves"
+# )
+# absence1.therapist = therapist1
+
+# absence2 = Absence.create(
+#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
+#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
+#   reason: "pippo at home"
+# )
+# absence2.therapist = therapist1
+
+# absence3 = Absence.create(
+#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
+#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
+#   reason: "lazy"
+# )
+# absence3.therapist = therapist2
+
 # SERVICES
 
 services = [
