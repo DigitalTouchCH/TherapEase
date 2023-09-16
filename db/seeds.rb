@@ -2,10 +2,10 @@
 
 # Destroy all previous data
 Patient.destroy_all
+WeekAvailability.destroy_all
 Therapist.destroy_all
 User.destroy_all
 Service.destroy_all
-
 
 # Create two users
 user1 = User.create(email: "patient1@example.com", password: "password123", password_confirmation: "password123")
@@ -57,7 +57,6 @@ therapist1 = Therapist.create(
   first_name: "Alice",
   last_name: "Cooper"
 )
-
 therapist1.user = user3
 
 therapist2 = Therapist.create(
@@ -67,8 +66,43 @@ therapist2 = Therapist.create(
   first_name: "Bob",
   last_name: "Marley"
 )
-
 therapist2.user = user4
+
+
+# AVAILABILITIES
+
+days_of_week = ["monday", "tuesday", "wednesday", "thursday", "friday"]
+therapists = [therapist1, therapist2]
+
+therapists.each do |therapist|
+
+  week_availability = WeekAvailability.create!(
+    therapist: therapist,
+    valid_from: Date.new(2023, 1, 1),
+    valid_until: Date.new(2023, 12, 31),
+    name: "Standart availability"
+  )
+
+  days_of_week.each do |day|
+    # Créer des TimeBlocks pour chaque jour de la semaine
+    TimeBlock.create!(
+      week_availability: week_availability,
+      week_day: day,
+      start_time: "08:00",
+      end_time: "12:00"
+    )
+
+    TimeBlock.create!(
+      week_availability: week_availability,
+      week_day: day,
+      start_time: "13:00",
+      end_time: "17:00"
+    )
+  end
+end
+
+
+
 
 # Seed absences [TODO: NOT WORKING RAISE A TICKET]
 
