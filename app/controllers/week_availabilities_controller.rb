@@ -14,6 +14,7 @@ class WeekAvailabilitiesController < ApplicationController
   end
 
   def show
+    raise
     @week_availability = WeekAvailability.find(params[:id])
     authorize @week_availability
     redirect_to week_availabilities_path
@@ -27,7 +28,8 @@ class WeekAvailabilitiesController < ApplicationController
     if @week_availability.save
       redirect_to week_availabilities_path, notice: 'Week Availability was successfully created.'
     else
-      render :new
+      flash[:alert] = @week_availability.errors.full_messages.join(", ")
+      redirect_to week_availabilities_path
     end
   end
 
@@ -45,17 +47,19 @@ class WeekAvailabilitiesController < ApplicationController
   def update
     @week_availability = WeekAvailability.find(params[:id])
     authorize @week_availability
+
     if @week_availability.update(week_availability_params)
       redirect_to week_availabilities_path, notice: 'Week Availability was successfully updated.'
     else
-      render :edit
+      flash[:alert] = @week_availability.errors.full_messages.join(", ")
+      redirect_to week_availabilities_path
     end
   end
 
   private
 
   def week_availability_params
-    params.require(:week_availability).permit(:valid_from, :valid_until)
+    params.require(:week_availability).permit(:valid_from, :valid_until, :name)
   end
 
   def set_therapist
@@ -63,15 +67,4 @@ class WeekAvailabilitiesController < ApplicationController
     redirect_to(root_path, alert: "You are not a therapist!") unless @therapist
   end
 
-
-
-
-
-  # Handle authorization errors gracefully
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
-  def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
-    redirect_to(request.referrer || root_path)
-  end
 end

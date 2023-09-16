@@ -17,6 +17,10 @@
           <% end %>
 
           <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control' %>
+
+          <div class="form-group">
             <%= f.label :valid_from %>
             <%= f.date_field :valid_from, class: 'form-control' %>
           </div>
