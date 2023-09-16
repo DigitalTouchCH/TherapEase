@@ -43,7 +43,18 @@ class WeekAvailabilityPolicy < ApplicationPolicy
     user.therapist.present?
   end
 
+  # def owns_record?
+  #   therapist? && record.therapist == user.therapist
+  # end
+
   def owns_record?
-    therapist? && record.therapist == user.therapist
+    is_therapist = therapist?
+    owns_record = record.therapist == user.therapist
+
+    Rails.logger.debug "Is user a therapist? #{is_therapist}"
+    Rails.logger.debug "Does user own the record? #{owns_record}"
+
+    is_therapist && owns_record
   end
+
 end

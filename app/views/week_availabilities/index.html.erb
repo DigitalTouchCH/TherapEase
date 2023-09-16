@@ -1,28 +1,30 @@
 <!--OLD VERSION
-<h1>My Availability</h1>
+<div class="container">
+  <h1>My Availability</h1>
 
-<%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
 
-<% @week_availabilities.each do |week_availability| %>
-  <div class="card my-3">
-    <div class="card-header">
-      Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
-      <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
-      <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
+  <% @week_availabilities.each do |week_availability| %>
+    <div class="card my-3">
+      <div class="card-header">
+        Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
+        <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
+        <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
 
-      <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
+        <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% week_availability.time_blocks.each do |time_block| %>
+          <li class="list-group-item">
+            <%= time_block.week_day %> : <%= time_block.start_time %> - <%= time_block.end_time %>
+            <%= link_to 'Edit', edit_week_availability_time_block_path(week_availability, time_block), class: 'btn btn-warning btn-sm float-right ml-2' %>
+            <%= link_to 'Delete', week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm float-right ml-2' %>
+          </li>
+        <% end %>
+      </ul>
     </div>
-    <ul class="list-group list-group-flush">
-      <% week_availability.time_blocks.each do |time_block| %>
-        <li class="list-group-item">
-          <%= time_block.week_day %> : <%= time_block.start_time %> - <%= time_block.end_time %>
-          <%= link_to 'Edit', edit_week_availability_time_block_path(week_availability, time_block), class: 'btn btn-warning btn-sm float-right ml-2' %>
-          <%= link_to 'Delete', week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm float-right ml-2' %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+  <% end %>
+</div>
 -->
 
 <!--NEW VERSION
@@ -80,74 +82,8 @@
 </div>
 -->
 
-<!--TEST VERSION
 
-<style>
-  .table-transparent, .table-transparent thead th, .table-transparent tbody td {
-    background-color: transparent !important;
-    border: none;
-  }
-
-  .time-block-card {
-    background-color: white;
-    border: 1px solid black;
-    margin: 1px 0;
-    position: relative;
-    width: 100%;
-    z-index: 10;
-  }
-
-  /* Définir une hauteur fixe pour le tableau */
-  .table-container {
-    height: 1000px;  /* Ajustez cette valeur selon vos besoins */
-  }
-</style>
-
-<h1>My Availability</h1>
-
-<%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
-
-<% @week_availabilities.each do |week_availability| %>
-  <div class="card my-3">
-    <div class="card-header">
-      Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
-      <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
-      <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
-      <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
-    </div>
-    <div class="card-body">
-      <table class="table table-bordered table-transparent">
-        <thead>
-          <tr>
-            <% @days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %>
-            <% @days.each do |day| %>
-              <th style="width: 14.28%;"><%= day %></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <% @days.each do |day| %>
-              <td>
-                <% time_blocks_for_day = week_availability.time_blocks.where(week_day: day.downcase) %>
-                <% time_blocks_for_day.each do |time_block| %>
-                  <div class="time-block-card" style="height: <%= (time_block.end_time - time_block.start_time).seconds.to_i / 3600.0 * 100 %>px;">
-                    <div class="card-body">
-                      <p><strong><%= "#{time_block.start_time.strftime('%I:%M %p')} - #{time_block.end_time.strftime('%I:%M %p')}" %></strong></p>
-                      <%= link_to 'Edit', edit_week_availability_time_block_path(week_availability, time_block), class: 'btn btn-warning btn-sm' %>
-                      <%= link_to 'Delete', week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
-                    </div>
-                  </div>
-                <% end %>
-              </td>
-            <% end %>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-<% end %>
--->
+<!--FINAL VERSION-->
 <style>
   .table-transparent,
   .table-transparent thead th,
@@ -195,6 +131,16 @@
 <div class="container">
   <h1>My Availability</h1>
 
+  <% if flash[:alert] %>
+    <div class="alert alert-danger">
+      <ul>
+        <% flash[:alert].split(", ").each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
 
   <% @week_availabilities.each do |week_availability| %>
@@ -203,7 +149,7 @@
         Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
         <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
         <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
-        <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
+        <%= link_to 'Delete', week_availability_path(week_availability), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: 'btn btn-danger float-right ml-2' %>
       </div>
       <div class="card-body">
         <table class="table table-bordered table-transparent" style="height: 500px;"> <!-- Assurez-vous que la table a une hauteur fixe -->
@@ -229,7 +175,7 @@
                                 <%= link_to edit_week_availability_time_block_path(week_availability, time_block) do %>
                                     <i class="fas fa-edit" title="Edit"></i>
                                 <% end %>
-                                <%= link_to week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                <%= link_to week_availability_time_block_path(week_availability, time_block), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
                                     <i class="fas fa-trash-alt" title="Delete"></i>
                                 <% end %>
                             </p>
