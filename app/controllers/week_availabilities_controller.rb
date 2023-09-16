@@ -15,6 +15,7 @@ class WeekAvailabilitiesController < ApplicationController
 
   def show
     @week_availability = WeekAvailability.find(params[:id])
+    authorize @week_availability
   end
 
   def create
