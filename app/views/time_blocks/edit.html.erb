@@ -1,0 +1,43 @@
+<!-- app/views/time_blocks/edit.html.erb -->
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+      <div class="p-4 bg-white shadow">
+        <h2 class="text-center">Edit Availability Slot</h2>
+        <%= form_with(model: [@week_availability, @time_block], local: true) do |form| %>
+          <% if @time_block.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(@time_block.errors.count, "error") %> prohibited this time block from being updated:</h4>
+              <ul>
+                <% @time_block.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= form.label :week_day %>
+            <%= form.select :week_day, Date::DAYNAMES.map { |day| [day, day.downcase] }, {}, { class: 'form-control' } %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :start_time %>
+            <%= form.time_field :start_time, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :end_time %>
+            <%= form.time_field :end_time, class: 'form-control' %>
+          </div>
+
+          <div class="actions mt-3">
+            <%= form.submit 'Update Time Block', class: 'btn btn-primary' %>
+            <%= link_to 'Cancel', week_availability_path(@week_availability), class: 'btn btn-secondary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

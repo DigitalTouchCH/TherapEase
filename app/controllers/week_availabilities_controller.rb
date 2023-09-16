@@ -14,7 +14,6 @@ class WeekAvailabilitiesController < ApplicationController
   end
 
   def show
-    raise
     @week_availability = WeekAvailability.find(params[:id])
     authorize @week_availability
     redirect_to week_availabilities_path
@@ -33,12 +32,25 @@ class WeekAvailabilitiesController < ApplicationController
   end
 
   def destroy
-    raise
     @week_availability = WeekAvailability.find(params[:id])
     @week_availability.destroy
     redirect_to week_availabilities_path, notice: 'Week Availability was successfully deleted.', status: :found
   end
 
+  def edit
+    @week_availability = WeekAvailability.find(params[:id])
+    authorize @week_availability
+  end
+
+  def update
+    @week_availability = WeekAvailability.find(params[:id])
+    authorize @week_availability
+    if @week_availability.update(week_availability_params)
+      redirect_to week_availabilities_path, notice: 'Week Availability was successfully updated.'
+    else
+      render :edit
+    end
+  end
 
   private
 

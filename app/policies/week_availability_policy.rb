@@ -19,6 +19,14 @@ class WeekAvailabilityPolicy < ApplicationPolicy
     therapist?
   end
 
+  def new?
+    therapist?
+  end
+
+  def edit?
+    owns_record?
+  end
+
   class Scope < Scope
     def resolve
       if user.therapist

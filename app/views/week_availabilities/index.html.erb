@@ -1,0 +1,249 @@
+<!--OLD VERSION
+<h1>My Availability</h1>
+
+<%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
+
+<% @week_availabilities.each do |week_availability| %>
+  <div class="card my-3">
+    <div class="card-header">
+      Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
+      <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
+      <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
+
+      <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
+    </div>
+    <ul class="list-group list-group-flush">
+      <% week_availability.time_blocks.each do |time_block| %>
+        <li class="list-group-item">
+          <%= time_block.week_day %> : <%= time_block.start_time %> - <%= time_block.end_time %>
+          <%= link_to 'Edit', edit_week_availability_time_block_path(week_availability, time_block), class: 'btn btn-warning btn-sm float-right ml-2' %>
+          <%= link_to 'Delete', week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm float-right ml-2' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+-->
+
+<!--NEW VERSION
+<div class="container">
+
+  <h1>My Availability</h1>
+
+  <%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
+
+  <% @week_availabilities.each do |week_availability| %>
+    <div class="card my-3">
+      <div class="card-header">
+        Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
+        <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
+        <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
+        <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <% @days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %>
+              <% @days.each do |day| %>
+                <th style="width: 14.28%;"><%= day %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <% @days.each do |day| %>
+                <td>
+                  <ul style="list-style: none; padding-left: 0;">
+                    <% time_blocks = week_availability.time_blocks.where(week_day: day.downcase) %>
+                    <% if time_blocks.any? %>
+                      <% time_blocks.each do |time_block| %>
+                        <li>
+                          <%= "#{time_block.start_time.strftime('%I:%M %p')} - #{time_block.end_time.strftime('%I:%M %p')}" %>
+                          <%= link_to 'Edit', edit_week_availability_time_block_path(week_availability, time_block), class: 'btn btn-warning btn-sm ml-2' %>
+                          <%= link_to 'Delete', week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm ml-2' %>
+                        </li>
+                      <% end %>
+                    <% else %>
+                      <li>No time blocks</li>
+                    <% end %>
+                  </ul>
+                </td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+</div>
+-->
+
+<!--TEST VERSION
+
+<style>
+  .table-transparent, .table-transparent thead th, .table-transparent tbody td {
+    background-color: transparent !important;
+    border: none;
+  }
+
+  .time-block-card {
+    background-color: white;
+    border: 1px solid black;
+    margin: 1px 0;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+  }
+
+  /* Définir une hauteur fixe pour le tableau */
+  .table-container {
+    height: 1000px;  /* Ajustez cette valeur selon vos besoins */
+  }
+</style>
+
+<h1>My Availability</h1>
+
+<%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
+
+<% @week_availabilities.each do |week_availability| %>
+  <div class="card my-3">
+    <div class="card-header">
+      Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
+      <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
+      <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
+      <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-transparent">
+        <thead>
+          <tr>
+            <% @days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %>
+            <% @days.each do |day| %>
+              <th style="width: 14.28%;"><%= day %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <% @days.each do |day| %>
+              <td>
+                <% time_blocks_for_day = week_availability.time_blocks.where(week_day: day.downcase) %>
+                <% time_blocks_for_day.each do |time_block| %>
+                  <div class="time-block-card" style="height: <%= (time_block.end_time - time_block.start_time).seconds.to_i / 3600.0 * 100 %>px;">
+                    <div class="card-body">
+                      <p><strong><%= "#{time_block.start_time.strftime('%I:%M %p')} - #{time_block.end_time.strftime('%I:%M %p')}" %></strong></p>
+                      <%= link_to 'Edit', edit_week_availability_time_block_path(week_availability, time_block), class: 'btn btn-warning btn-sm' %>
+                      <%= link_to 'Delete', week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+                    </div>
+                  </div>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+-->
+<style>
+  .table-transparent,
+  .table-transparent thead th,
+  .table-transparent tbody td {
+    background-color: transparent !important;
+    border: none;
+    position: relative
+  }
+
+  .card-body {
+      text-align: center; /* centrer le texte et les icônes */
+  }
+  .time-block-card {
+    background-color: white; /* fond blanc */
+    border: 1px solid #ced4da; /* couleur de bordure plus douce */
+    border-radius: 5px; /* coins arrondis pour une meilleure esthétique */
+    margin: 2px 0; /* un peu plus d'espace entre les blocs */
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+    overflow: hidden; /* pour éviter que le contenu ne déborde */
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1); /* ombre douce pour donner de la profondeur */
+  }
+
+  .fas {
+    margin-right: 10px;
+    color: #555;
+    cursor: pointer;
+  }
+
+  /* boutons à l'intérieur des blocs de temps */
+  .time-block-card .btn-sm {
+    margin-top: 5px; /* espace supplémentaire autour des boutons pour éviter qu'ils ne soient collés ensemble */
+  }
+
+  /* Définir une hauteur fixe pour le tableau */
+  .table-container {
+    height: 1000px;  /* Ajustez cette valeur selon vos besoins */
+    position: relative; /* pour positionner correctement les blocs de temps par rapport à ce conteneur */
+  }
+</style>
+
+<div class="container">
+  <h1>My Availability</h1>
+
+  <%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
+
+  <% @week_availabilities.each do |week_availability| %>
+    <div class="card my-5">
+      <div class="card-header">
+        Availability for the week of <%= week_availability.valid_from %> to <%= week_availability.valid_until %>
+        <%= link_to 'Add Time Block', new_week_availability_time_block_path(week_availability), class: 'btn btn-secondary float-right ml-2' %>
+        <%= link_to 'Edit', edit_week_availability_path(week_availability), class: 'btn btn-warning float-right ml-2' %>
+        <%= link_to 'Delete', week_availability_path(week_availability), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right ml-2' %>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-transparent" style="height: 500px;"> <!-- Assurez-vous que la table a une hauteur fixe -->
+          <thead>
+            <tr>
+              <% @days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %>
+              <% @days.each do |day| %>
+                <th style="width: 14.28%;"><%= day %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <% @days.each do |day| %>
+                <td>
+                  <% time_blocks_for_day = week_availability.time_blocks.where(week_day: day.downcase) %>
+                  <% time_blocks_for_day.each do |time_block| %>
+                    <div class="time-block-card" style="height: <%= height_percentage(time_block.start_time, time_block.end_time) %>%; top: <%= top_position(time_block.start_time) %>%;">
+                        <div class="card-body">
+                            <p>
+                                <strong><%= "#{time_block.start_time.strftime('%H:%M')} to #{time_block.end_time.strftime('%H:%M')}" %></strong>
+                                <br>
+                                <%= link_to edit_week_availability_time_block_path(week_availability, time_block) do %>
+                                    <i class="fas fa-edit" title="Edit"></i>
+                                <% end %>
+                                <%= link_to week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                                    <i class="fas fa-trash-alt" title="Delete"></i>
+                                <% end %>
+                            </p>
+                        </div>
+                    </div>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+
+</div>

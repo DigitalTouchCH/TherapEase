@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :absences, only: [:index, :new, :create, :edit, :update]
 
   resources :week_availabilities do
-    resources :time_blocks, only: [:new, :create, :edit, :update, :destroy]
+    resources :time_blocks
   end
 
 end
