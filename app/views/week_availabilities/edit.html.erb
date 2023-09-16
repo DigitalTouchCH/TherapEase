@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+      <div class="p-4 bg-white shadow">
+        <h2 class="text-center">Edit Week Availability</h2>
+        <%= form_with(model: @week_availability, local: true) do |form| %>
+          <% if @week_availability.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(@week_availability.errors.count, "error") %> prohibited this week availability from being saved:</h4>
+              <ul>
+                <% @week_availability.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= form.label :valid_from %>
+            <%= form.date_field :valid_from, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :valid_until %>
+            <%= form.date_field :valid_until, class: 'form-control' %>
+          </div>
+
+          <div class="actions mt-3">
+            <%= form.submit 'Update Week Availability', class: 'btn btn-primary' %>
+            <%= link_to 'Cancel', week_availability_path(@week_availability), class: 'btn btn-secondary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

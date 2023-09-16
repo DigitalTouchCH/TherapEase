@@ -1,0 +1,21 @@
+<!--
+
+<% def render_card(week_availability, day) %>
+  <% time_block = week_availability.time_blocks.find_by(week_day: day.downcase) %>
+  <div class="card my-2">
+    <div class="card-header">
+      <%= day %>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <% if time_block %>
+          <%= time_block.start_time %> - <%= time_block.end_time %>
+          <%= link_to 'Edit', edit_week_availability_time_block_path(week_availability, time_block), class: 'btn btn-warning btn-sm float-right ml-2' %>
+          <%= link_to 'Delete', week_availability_time_block_path(week_availability, time_block), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm float-right ml-2' %>
+        <% else %>
+          No time block for this day.
+        <% end %>
+      </li>
+    </ul>
+  </div>
+<% end %>
