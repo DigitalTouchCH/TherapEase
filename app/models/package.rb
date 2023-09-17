@@ -4,6 +4,6 @@ class Package < ApplicationRecord
   belongs_to :patient
   has_many :meetings, dependent: :destroy
 
-  validates :num_of_session, presence: true, numericality: { greater_than: 1, less_than: 10 }
-  validates :type, presence: true, inclusion: { in: ["Individual", "Group"] }
+  validates :num_of_session, presence: true, numericality: { greater_than_or_equal_to: 1, less_than: 11 }
+  validates :package_type, presence: true, inclusion: { in: ["Individual", "Group"] }
 end
