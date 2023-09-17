@@ -5,7 +5,41 @@
       <!-- Ajoutez d'autres liens ici si nécessaire -->
     </ul>
   </div>
-
-
-
 </div>
+
+<!-- UGLY STYLE -->
+<!--
+  <%= week_calendar attribute: :start_time, events: @meetings_with_dates do |date, meetings| %>
+    <%= date.strftime('%A, %B %d') %>
+
+    <div class="day-meetings">
+      <% meetings.each do |meeting| %>
+        <div class="meeting-card" style="top: <%= (meeting.start_time.hour * 60) + meeting.start_time.min %>px;">
+          <%= meeting.start_time.strftime('%H:%M') %> - <%= (meeting.start_time + meeting.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
+          <br>
+          <%= meeting.package.service.name %>
+          <br>
+          <% meeting.bookings.each do |booking| %>
+            <%= booking.patient.first_name + " " + booking.patient.last_name %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+-->
+
+<%= week_calendar attribute: :start_time, events: @meetings_with_dates do |date, meetings| %>
+    <div class="day-meetings">
+      <% meetings.each do |meeting| %>
+        <div class="meeting-card" style="top: <%= (meeting.start_time.hour * 60) + meeting.start_time.min %>px;">
+          <%= meeting.start_time.strftime('%H:%M') %> - <%= (meeting.start_time + meeting.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
+          <br>
+          <%= meeting.package.service.name %>
+          <br>
+          <% meeting.bookings.each do |booking| %>
+            <%= booking.patient.first_name + " " + booking.patient.last_name %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+<% end %>
