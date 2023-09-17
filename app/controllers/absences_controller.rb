@@ -19,7 +19,7 @@ class AbsencesController < ApplicationController
     if @absence.save
       redirect_to absences_path # TODO: maybe another route?
     else
-      render :new
+      render :new, status: 422
     end
   end
 
@@ -36,7 +36,7 @@ class AbsencesController < ApplicationController
   private
 
   def absence_params
-    params.require(:absence).permit(:start_date_time, :end_date_time, :reason)
+    params.require(:absence).permit(:start_date_time, :end_date_time, :reason, :therapist_id)
   end
 
   def set_absence
