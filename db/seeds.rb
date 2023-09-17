@@ -1,27 +1,26 @@
-# USERS / PATIENTS / THERAPISTS
-
 # Destroy all previous data
 puts "Destroying old data..."
+Package.destroy_all
 Patient.destroy_all
 WeekAvailability.destroy_all
 Therapist.destroy_all
 User.destroy_all
 Service.destroy_all
-Package.destroy_all
 puts "Old data destroyed."
 
 
-puts "Create users, patients, therapists, services, packages, meetings..."
-# Create users
+puts "Creating new data..."
 
+# USERS
 user1 = User.create(email: "patient1@example.com", password: "password123", password_confirmation: "password123")
 user2 = User.create(email: "patient2@example.com", password: "password123", password_confirmation: "password123")
 user3 = User.create(email: "therapist1@example.com", password: "password123", password_confirmation: "password123")
 user4 = User.create(email: "therapist2@example.com", password: "password123", password_confirmation: "password123")
+puts "#{User.count} users created."
 
-# Seed two patients
+# PATIENTS
 patient1 = Patient.create(
-  date_of_birth: "1980-01-01",
+  date_of_birth: Date.new(1980, 1, 1),
   age: 43,
   addresse: "123 Patient St",
   tel_1: "123-456-7890",
@@ -34,11 +33,11 @@ patient1 = Patient.create(
   first_name: "Jane",
   last_name: "Doe"
 )
-
 patient1.user = user1
+patient1.save!
 
 patient2 = Patient.create(
-  date_of_birth: "1990-05-05",
+  date_of_birth: Date.new(1990, 5, 5),
   age: 33,
   addresse: "456 Patient Ave",
   tel_1: "456-789-0123",
@@ -51,11 +50,13 @@ patient2 = Patient.create(
   first_name: "John",
   last_name: "Smith"
 )
-
 patient2.user = user2
+patient2.save!
 
+puts "#{Patient.count} patients created."
 
-# Seed two therapists
+# THERAPISTS
+
 therapist1 = Therapist.create(
   information: "Therapist 1 details and information",
   location_name: "Therapy Center 1",
@@ -64,6 +65,7 @@ therapist1 = Therapist.create(
   last_name: "Cooper"
 )
 therapist1.user = user3
+therapist1.save!
 
 therapist2 = Therapist.create(
   information: "Therapist 2 details and information",
@@ -73,22 +75,20 @@ therapist2 = Therapist.create(
   last_name: "Marley"
 )
 therapist2.user = user4
-
+therapist2.save!
+puts "#{Therapist.count} therapists created."
 
 # AVAILABILITIES
-
 days_of_week = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 therapists = [therapist1, therapist2]
 
 therapists.each do |therapist|
-
   week_availability = WeekAvailability.create!(
     therapist: therapist,
     valid_from: Date.new(2023, 1, 1),
     valid_until: Date.new(2023, 12, 31),
     name: "Standart availability"
   )
-
   days_of_week.each do |day|
     # Créer des TimeBlocks pour chaque jour de la semaine
     TimeBlock.create!(
@@ -97,7 +97,6 @@ therapists.each do |therapist|
       start_time: "08:00",
       end_time: "12:00"
     )
-
     TimeBlock.create!(
       week_availability: week_availability,
       week_day: day,
@@ -107,8 +106,10 @@ therapists.each do |therapist|
   end
 end
 
+puts "#{WeekAvailability.count} week_availability created."
+puts "#{TimeBlock.count} time_blocks created."
 
-
+# ABSENCES
 
 # Seed absences [TODO: NOT WORKING RAISE A TICKET]
 
@@ -133,9 +134,13 @@ end
 # )
 # absence3.therapist = therapist2
 
+
+
+
+
 # SERVICES
 
-services = [
+services_data = [
   {
     active: true,
     name: "Physiotherapy Session",
@@ -186,47 +191,48 @@ services = [
   }
 ]
 
-services.each do |service_info|
-  therapists_for_service = service_info.delete(:services_therapists)  # Correct the key here
-  service = Service.create!(service_info)
-  service.therapists << therapists_for_service if therapists_for_service
+services_data.each do |service_data|
+  therapists_for_service = service_data.delete(:services_therapists)
+  service_obj = Service.create!(service_data)
+  service_obj.therapists << therapists_for_service if therapists_for_service
+  service_obj.save!
 end
+
+puts "#{Service.count} services created."
+
+
+
 
 
 # PACKAGES
 
-# We will create one package for each service and therapist
-packages = []
+package_data = []
 
-services.each do |service_info|
-  therapists_for_service = service_info[:services_therapists]
-  therapists_for_service&.each do |therapist|
-    package = Package.create!(
-      num_of_session: 1, # assuming 5 sessions per package
+Service.all.each do |service|
+  service.therapists.each do |therapist|
+    package = Package.new(
+      num_of_session: 9,
       info_private: "Private package info",
       info_public: "Public package info",
       insurance_name: "InsuranceCorp",
       insurance_number: "12345",
       insurance_type: "TypeA",
-      type: "Standard", # assuming a package type "Standard"
-      service: service_info,
+      package_type: "Individual",
+      service: service,
       therapist: therapist,
-      patient: patient1 # associating all packages to patient1 for demonstration
+      patient: patient1
     )
-    packages << package
+    package.save!
+    package_data << package
   end
 end
 
-# MEETINGS
+puts "#{Package.count} packages created."
 
-# We will create 3 meetings for each package
 meetings = []
-
-packages.each do |package|
-  3.times do |i|
+package_data.each do |package|
+  package.num_of_session.times do |i|
     meeting = Meeting.create!(
-      start_time: Time.now + i.days, # assuming each meeting starts a day apart
-      end_time: Time.now + i.days + 1.hour, # assuming a 1-hour meeting duration
       info_public: "Public meeting info",
       info_private: "Private meeting info",
       url_zoom: "https://zoomlink.example/#{rand(1000..9999)}",
@@ -237,6 +243,37 @@ packages.each do |package|
   end
 end
 
-puts "Done creating users, patients, therapists, services, packages, meetings."
+puts "#{Meeting.count} meetings created."
+
+
+# BOOKINGS
+
+meetings_to_book = meetings.sample(meetings.count*2 / 3)
+
+bookings = []
+meetings_to_book.each do |meeting|
+
+  duration = meeting.package.service.duration_per_unit.minutes
+  start_time = Time.now + rand(1..10).days
+  end_time = start_time + duration
+
+  meeting.start_time = start_time
+  meeting.end_time = end_time
+  meeting.save!
+
+
+  statuses = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"]
+
+  booking = Booking.create!(
+    status: statuses.sample,
+    info_public: "Public booking info",
+    info_private: "Private booking info",
+    patient: patient1,
+    meeting: meeting
+  )
+  bookings << booking
+end
+
+puts "#{bookings.count} bookings created."
 
 puts "Ok :)"

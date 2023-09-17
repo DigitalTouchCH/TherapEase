@@ -2,8 +2,7 @@ class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
   def index
-    @meetings = policy_scope(Meeting).to_a
-    raise
+    @meetings_with_dates = policy_scope(Meeting).where.not(start_time: nil)
   end
 
   def show
