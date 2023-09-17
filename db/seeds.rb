@@ -1,13 +1,19 @@
 # USERS / PATIENTS / THERAPISTS
 
 # Destroy all previous data
+puts "Destroying old data..."
 Patient.destroy_all
 WeekAvailability.destroy_all
 Therapist.destroy_all
 User.destroy_all
 Service.destroy_all
+Package.destroy_all
+puts "Old data destroyed."
 
-# Create two users
+
+puts "Create users, patients, therapists, services, packages, meetings..."
+# Create users
+
 user1 = User.create(email: "patient1@example.com", password: "password123", password_confirmation: "password123")
 user2 = User.create(email: "patient2@example.com", password: "password123", password_confirmation: "password123")
 user3 = User.create(email: "therapist1@example.com", password: "password123", password_confirmation: "password123")
@@ -185,5 +191,52 @@ services.each do |service_info|
   service = Service.create!(service_info)
   service.therapists << therapists_for_service if therapists_for_service
 end
+
+
+# PACKAGES
+
+# We will create one package for each service and therapist
+packages = []
+
+services.each do |service_info|
+  therapists_for_service = service_info[:services_therapists]
+  therapists_for_service&.each do |therapist|
+    package = Package.create!(
+      num_of_session: 1, # assuming 5 sessions per package
+      info_private: "Private package info",
+      info_public: "Public package info",
+      insurance_name: "InsuranceCorp",
+      insurance_number: "12345",
+      insurance_type: "TypeA",
+      type: "Standard", # assuming a package type "Standard"
+      service: service_info,
+      therapist: therapist,
+      patient: patient1 # associating all packages to patient1 for demonstration
+    )
+    packages << package
+  end
+end
+
+# MEETINGS
+
+# We will create 3 meetings for each package
+meetings = []
+
+packages.each do |package|
+  3.times do |i|
+    meeting = Meeting.create!(
+      start_time: Time.now + i.days, # assuming each meeting starts a day apart
+      end_time: Time.now + i.days + 1.hour, # assuming a 1-hour meeting duration
+      info_public: "Public meeting info",
+      info_private: "Private meeting info",
+      url_zoom: "https://zoomlink.example/#{rand(1000..9999)}",
+      max_attendees: 1,
+      package: package
+    )
+    meetings << meeting
+  end
+end
+
+puts "Done creating users, patients, therapists, services, packages, meetings."
 
 puts "Ok :)"

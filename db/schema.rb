@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_195848) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_17_120818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,11 +57,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_195848) do
     t.text "info_public"
     t.text "info_private"
     t.bigint "patient_id", null: false
-    t.bigint "session_id", null: false
+    t.bigint "meeting_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["meeting_id"], name: "index_bookings_on_meeting_id"
     t.index ["patient_id"], name: "index_bookings_on_patient_id"
-    t.index ["session_id"], name: "index_bookings_on_session_id"
   end
 
   create_table "media", force: :cascade do |t|
@@ -74,15 +74,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_195848) do
     t.index ["therapist_id"], name: "index_media_on_therapist_id"
   end
 
-  create_table "media_sessions", force: :cascade do |t|
+  create_table "media_meetings", force: :cascade do |t|
     t.text "info_public"
     t.text "info_private"
     t.bigint "medium_id", null: false
-    t.bigint "session_id", null: false
+    t.bigint "meeting_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["medium_id"], name: "index_media_sessions_on_medium_id"
-    t.index ["session_id"], name: "index_media_sessions_on_session_id"
+    t.index ["medium_id"], name: "index_media_meetings_on_medium_id"
+    t.index ["meeting_id"], name: "index_media_meetings_on_meeting_id"
+  end
+
+  create_table "meetings", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.text "info_public"
+    t.text "info_private"
+    t.string "url_zoom"
+    t.integer "max_attendees"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "package_id", null: false
+    t.index ["package_id"], name: "index_meetings_on_package_id"
   end
 
   create_table "packages", force: :cascade do |t|
@@ -141,19 +154,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_195848) do
     t.bigint "service_id", null: false
   end
 
-  create_table "sessions", force: :cascade do |t|
-    t.datetime "start_date_time"
-    t.datetime "end_date_time"
-    t.text "info_public"
-    t.text "info_private"
-    t.string "url_zoom"
-    t.integer "max_attendees"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "package_id", null: false
-    t.index ["package_id"], name: "index_sessions_on_package_id"
-  end
-
   create_table "therapists", force: :cascade do |t|
     t.text "information"
     t.string "location_name"
@@ -202,16 +202,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_195848) do
   add_foreign_key "absences", "therapists"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookings", "meetings"
   add_foreign_key "bookings", "patients"
-  add_foreign_key "bookings", "sessions"
   add_foreign_key "media", "therapists"
-  add_foreign_key "media_sessions", "media"
-  add_foreign_key "media_sessions", "sessions"
+  add_foreign_key "media_meetings", "media"
+  add_foreign_key "media_meetings", "meetings"
+  add_foreign_key "meetings", "packages"
   add_foreign_key "packages", "patients"
   add_foreign_key "packages", "services"
   add_foreign_key "packages", "therapists"
   add_foreign_key "patients", "users"
-  add_foreign_key "sessions", "packages"
   add_foreign_key "therapists", "users"
   add_foreign_key "time_blocks", "week_availabilities"
   add_foreign_key "week_availabilities", "therapists"

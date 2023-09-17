@@ -1,6 +1,6 @@
 require "test_helper"
 
-class MediaSessionsControllerTest < ActionDispatch::IntegrationTest
+class MeetingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
