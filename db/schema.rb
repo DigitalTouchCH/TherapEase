@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_17_111728) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_17_120818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -86,8 +86,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_17_111728) do
   end
 
   create_table "meetings", force: :cascade do |t|
-    t.datetime "start_date_time"
-    t.datetime "end_date_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.text "info_public"
     t.text "info_private"
     t.string "url_zoom"

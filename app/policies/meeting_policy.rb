@@ -64,13 +64,10 @@ class MeetingPolicy < ApplicationPolicy
 
     def resolve
       if user.therapist.present?
-        # If the user is a therapist, retrieve all meetings associated with them
         scope.joins(:package).where(packages: { therapist: user.therapist })
       elsif user.patient.present?
-        # If the user is a patient, retrieve all meetings associated with them
         scope.joins(:package).where(packages: { patient: user.patient })
       else
-        # If the user is neither, return no meetings
         scope.none
       end
     end

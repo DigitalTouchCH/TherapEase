@@ -2,7 +2,8 @@ class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
   def index
-    @meetings = policy_scope(Meeting)
+    @meetings = policy_scope(Meeting).to_a
+    raise
   end
 
   def show
