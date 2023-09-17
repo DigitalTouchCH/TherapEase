@@ -7,6 +7,7 @@ class Therapist < ApplicationRecord
   has_many :absences
   has_many :week_availabilities
 
+
   validates :location_name, presence: true
   validates :location_address, presence: true
 end

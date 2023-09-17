@@ -1,2 +1,0 @@
-class MediaSessionsController < ApplicationController
-end
