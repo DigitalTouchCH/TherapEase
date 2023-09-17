@@ -207,10 +207,11 @@ puts "#{Service.count} services created."
 # PACKAGES
 
 package_data = []
+
 Service.all.each do |service|
   service.therapists.each do |therapist|
     package = Package.new(
-      num_of_session: 1,
+      num_of_session: 9,
       info_private: "Private package info",
       info_public: "Public package info",
       insurance_name: "InsuranceCorp",
@@ -228,15 +229,10 @@ end
 
 puts "#{Package.count} packages created."
 
-
 meetings = []
 package_data.each do |package|
-  3.times do |i|
-    duration = package.service.duration_per_unit.minutes
-
+  package.num_of_session.times do |i|
     meeting = Meeting.create!(
-      start_time: Time.now + i.days,
-      end_time: Time.now + i.days + duration,
       info_public: "Public meeting info",
       info_private: "Private meeting info",
       url_zoom: "https://zoomlink.example/#{rand(1000..9999)}",
@@ -248,5 +244,36 @@ package_data.each do |package|
 end
 
 puts "#{Meeting.count} meetings created."
+
+
+# BOOKINGS
+
+meetings_to_book = meetings.sample(meetings.count*2 / 3)
+
+bookings = []
+meetings_to_book.each do |meeting|
+
+  duration = meeting.package.service.duration_per_unit.minutes
+  start_time = Time.now + rand(1..10).days
+  end_time = start_time + duration
+
+  meeting.start_time = start_time
+  meeting.end_time = end_time
+  meeting.save!
+
+
+  statuses = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"]
+
+  booking = Booking.create!(
+    status: statuses.sample,
+    info_public: "Public booking info",
+    info_private: "Private booking info",
+    patient: patient1,
+    meeting: meeting
+  )
+  bookings << booking
+end
+
+puts "#{bookings.count} bookings created."
 
 puts "Ok :)"
