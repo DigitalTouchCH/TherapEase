@@ -1,0 +1,38 @@
+
+<!--
+<%= calendar @sessions, template: 'sessions/calendar' %>
+-->
+
+<!--
+<h2>Patients</h2>
+<ul>
+  <% @patients.each do |patient| %>
+    <li><%= patient.first_name %> <%= patient.last_name %></li>
+  <% end %>
+</ul>
+-->
+
+<!--
+<h2>Booking to confirme</h2>
+<ul>
+  <% @bookings.each do |booking| %>
+    <li>
+      <%= booking.status %> -
+      <%= link_to 'Confirmer', confirm_booking_path(booking), method: :post %> |
+      <%= link_to 'Décliner', decline_booking_path(booking), method: :post %>
+    </li>
+  <% end %>
+</ul>
+-->
+
+<!--
+<h2>Media List</h2>
+<ul>
+  <% @media.each do |medium| %>
+    <li>
+      <%= medium.title %> -
+      <%= link_to 'Voir', medium.url %>
+    </li>
+  <% end %>
+</ul>
+-->

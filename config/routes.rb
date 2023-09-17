@@ -2,11 +2,12 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
 
-
-  resources :absences, only: [:index, :new, :create, :edit, :update]
+  resources :absences
 
   resources :week_availabilities do
     resources :time_blocks
   end
+
+  resources :meetings
 
 end
