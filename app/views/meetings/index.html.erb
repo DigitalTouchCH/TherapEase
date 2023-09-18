@@ -78,8 +78,6 @@
 
 <div class="container-with-sidebar">
 
-
-
   <div class="sidebar">
       <p class="text-center">Welcome <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
 
@@ -95,6 +93,8 @@
 
 
   <div class="content-column">
+
+    <h2>My meetings</h2>
 
     <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
       <div class="day-events">
