@@ -111,31 +111,25 @@ puts "#{TimeBlock.count} time_blocks created."
 
 # ABSENCES
 
-# Seed absences [TODO: NOT WORKING RAISE A TICKET]
+today = Date.today
+possible_days = (today..today + 14.days).to_a.select { |day| ![6, 0].include?(day.wday) }
 
-# absence1 = Absence.create(
-#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   reason: "sick leaves"
-# )
-# absence1.therapist = therapist1
+therapists.each do |therapist|
+  absence_days = possible_days.sample(2)
+  absence_days.each do |absence_day|
+    start_time = DateTime.new(absence_day.year, absence_day.month, absence_day.day, rand(8..16), 0, 0)
+    end_time = start_time + rand(1..4).hours
 
-# absence2 = Absence.create(
-#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   reason: "pippo at home"
-# )
-# absence2.therapist = therapist1
+    Absence.create!(
+      start_date_time: start_time,
+      end_date_time: end_time,
+      reason: ["sick leave", "personal reasons", "training"].sample,
+      therapist: therapist
+    )
+  end
+end
 
-# absence3 = Absence.create(
-#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   reason: "lazy"
-# )
-# absence3.therapist = therapist2
-
-
-
+puts "#{Absence.count} absences created."
 
 
 # SERVICES
