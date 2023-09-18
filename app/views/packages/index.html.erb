@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>All packages</h2>
+  <div>
+    <% @packages.each do |a| %>
+      <div>
+        <table>
+        <tr><%= a.id %></tr>
+        <tr><%= a.num_of_session %></tr>
+        <tr> <%= a.therapist.first_name %> <%= a.therapist.last_name %></tr>
+        <tr> <%= a.patient.first_name %> <%= a.patient.last_name %></tr>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

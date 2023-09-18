@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+      <div class="p-4 bg-white shadow">
+        <h2 class="text-center">Edit package</h2>
+          <%= simple_form_for(@package) do |f| %>
+            <%= f.error_notification %>
+
+            <div class="form-inputs">
+              <%= f.input :num_of_session, label: "Number of sessions", required: true %>
+              <%= f.input :info_public, label: "Public information" %>
+              <%= f.input :info_private, label: "Private information" %>
+              <%= f.input :insurance_name, label: "Insurance name" %>
+              <%= f.input :insurance_number, label: "Insurance number" %>
+              <%= f.input :insurance_type, as: :radio_buttons, label: "Insurance type", :collection => %w[Accident Lamal] %>
+              <%= f.input :package_type, as: :radio_buttons, label: "Package type", :collection => %w[Group Individual] %>
+              <%= f.association :service, as: :radio_buttons, label: "Service" %>
+              <%= f.association :therapist, label_method: :first_name, value_method: :id, include_blank: false, label: "Therapist" %>
+              <%= f.association :patient, label_method: :first_name, value_method: :id, include_blank: false, label: "Patient" %>
+            </div>
+
+            <div class="form-actions">
+              <%= f.button :submit, "Submit", class:"btn btn-primary" %>
+            </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>

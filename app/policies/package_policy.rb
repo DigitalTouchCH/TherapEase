@@ -46,7 +46,7 @@ class PackagePolicy < ApplicationPolicy
 
   def user_is_therapist_for_package?
     # Check if the therapist associated with the package is the current user
-    record.package.therapist == user.therapist
+    record.therapist == user.therapist
   end
 
   def user_packages
