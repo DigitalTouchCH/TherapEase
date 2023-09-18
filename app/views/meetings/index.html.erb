@@ -1,11 +1,87 @@
-<div class="container">
-  <div class="sidebar">
-    <ul>
-      <li><%= link_to 'Week Availabilities', week_availabilities_path %></li>
-      <!-- Ajoutez d'autres liens ici si nécessaire -->
-    </ul>
-  </div>
+<style>
+  .container-with-sidebar {
+    display: flex;
+  }
+
+  .sidebar {
+    flex-shrink: 0;
+    width: 250px;
+    background-color: #ADD8E6;
+    padding: 1em;
+  }
+
+  .content-column {
+    flex-grow: 1;
+    padding: 3em;
+  }
+</style>
+
+
 </div>
+<div class="container-with-sidebar">
+
+  <div class="sidebar">
+      <%= link_to week_availabilities_path, class: "btn btn-primary mb-3 d-block" do %>
+          <i class="fas fa-calendar-week"></i> Week Availabilities
+      <% end %>
+
+      <%= link_to new_absence_path, class: "btn btn-primary mb-3 d-block" do %>
+          <i class="fas fa-calendar-times"></i> New Absence
+      <% end %>
+      <!-- OTHER LINK -->
+  </div>
+
+
+  <div class="content-column">
+
+    <h1 class="text-center">Welcome <%= @therapist.first_name %> <%= @therapist.last_name %>!</h1>
+    <%= week_calendar attribute: :start_time, events: @meetings_with_dates do |date, meetings| %>
+      <div class="day-meetings">
+        <% meetings.each do |meeting| %>
+          <div class="meeting-card" style="top: <%= (meeting.start_time.hour * 60) + meeting.start_time.min %>px;">
+            <%= meeting.start_time.strftime('%H:%M') %> - <%= (meeting.start_time + meeting.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
+            <br>
+            <%= meeting.package.service.name %>
+            <br>
+            <% meeting.bookings.each do |booking| %>
+              <%= booking.patient.first_name + " " + booking.patient.last_name %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
+      <div class="day-events">
+        <% events.each do |event| %>
+          <% if event.is_a?(Meeting) %>
+            <div class="meeting-card" style="top: <%= (event.start_time.hour * 60) + event.start_time.min %>px;">
+              <%= event.start_time.strftime('%H:%M') %> - <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
+              <br>
+              <%= event.package.service.name %>
+              <br>
+              <% event.bookings.each do |booking| %>
+                <%= booking.patient.first_name + " " + booking.patient.last_name %>
+              <% end %>
+            </div>
+          <% elsif event.is_a?(Absence) %>
+            <div class="absence-card" style="top: <%= (event.start_time.hour * 60) + event.start_time.min %>px;">
+              Absence de <%= event.start_time.strftime('%H:%M') %> à <%= event.end_time.strftime('%H:%M') %>
+              <br>
+              Motif : <%= event.reason %> <!-- Supposant que votre modèle Absence a un attribut 'reason' pour le motif de l'absence -->
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+
+</div>
+
+
+
+
 
 <!-- UGLY STYLE -->
 <!--
@@ -27,19 +103,3 @@
     </div>
   <% end %>
 -->
-
-<%= week_calendar attribute: :start_time, events: @meetings_with_dates do |date, meetings| %>
-    <div class="day-meetings">
-      <% meetings.each do |meeting| %>
-        <div class="meeting-card" style="top: <%= (meeting.start_time.hour * 60) + meeting.start_time.min %>px;">
-          <%= meeting.start_time.strftime('%H:%M') %> - <%= (meeting.start_time + meeting.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
-          <br>
-          <%= meeting.package.service.name %>
-          <br>
-          <% meeting.bookings.each do |booking| %>
-            <%= booking.patient.first_name + " " + booking.patient.last_name %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-<% end %>

@@ -117,17 +117,18 @@ possible_days = (today..today + 14.days).to_a.select { |day| ![6, 0].include?(da
 therapists.each do |therapist|
   absence_days = possible_days.sample(2)
   absence_days.each do |absence_day|
-    start_time = DateTime.new(absence_day.year, absence_day.month, absence_day.day, rand(8..16), 0, 0)
-    end_time = start_time + rand(1..4).hours
+    start_time_data = DateTime.new(absence_day.year, absence_day.month, absence_day.day, rand(8..16), 0, 0)
+    end_time_data = start_time_data + rand(1..4).hours
 
     Absence.create!(
-      start_date_time: start_time,
-      end_date_time: end_time,
+      start_time: start_time_data,
+      end_time: end_time_data,
       reason: ["sick leave", "personal reasons", "training"].sample,
       therapist: therapist
     )
   end
 end
+
 
 puts "#{Absence.count} absences created."
 
