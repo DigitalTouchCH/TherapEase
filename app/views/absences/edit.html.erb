@@ -3,12 +3,67 @@
     <div class="col-md-6 offset-md-3">
       <div class="p-4 bg-white shadow">
         <h2 class="text-center">Edit an absence</h2>
+
+        <%= form_with(model: @absence, local: true) do |form| %>
+          <% if @absence.errors.any? %>
+            <div class="alert alert-danger">
+              <h4><%= pluralize(@absence.errors.count, "error") %> prohibited this absence from being saved:</h4>
+              <ul>
+                <% @absence.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= form.label :start_time %>
+            <%= form.datetime_field :start_time, required: true, label: false, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :end_time %>
+            <%= form.datetime_field :end_time, required: true, label: false, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :reason %>
+            <%= form.text_field :reason, label: false, class: 'form-control' %>
+          </div>
+
+          <div class="actions mt-3">
+            <%= form.submit "Update Absence", class: 'btn btn-primary' %>
+            <%= link_to 'Cancel', meetings_path, class: 'btn btn-secondary' %>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- OLD CODE -->
+
+<!--
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+      <div class="p-4 bg-white shadow">
+        <h2 class="text-center">Edit an absence</h2>
           <%= simple_form_for(@absence) do |f| %>
             <%= f.error_notification %>
 
             <div class="form-inputs">
-              <%= f.input :start_date_time, required: true %>
-              <%= f.input :end_date_time, required: true %>
+              <%= f.input :start_time, required: true %>
+              <%= f.input :end_time, required: true %>
               <%= f.input :reason %>
             </div>
 
@@ -20,3 +75,4 @@
     </div>
   </div>
 </div>
+-->

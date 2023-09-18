@@ -145,7 +145,7 @@ services_data = [
     price_visibility: false,
     price_per_unit: 50.0,
     duration_per_unit: 30,
-    color: "blue",
+    color: "#DFF2FF",
     services_therapists: [therapist1, therapist2]
   },
   {
@@ -157,7 +157,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 60.0,
     duration_per_unit: 30,
-    color: "green",
+    color: "#B0F2B6",
     services_therapists: [therapist1]
   },
   {
@@ -169,7 +169,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 90.0,
     duration_per_unit: 45,
-    color: "green light",
+    color: "#DFF9E1",
     services_therapists: [therapist1]
   },
   {
@@ -181,7 +181,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 30.0,
     duration_per_unit: 15,
-    color: "red",
+    color: "#FFF5E6",
     services_therapists: [therapist2]
   }
 ]
