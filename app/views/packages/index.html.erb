@@ -1,15 +1,51 @@
 <div class="container">
   <h2>All packages</h2>
   <div>
-    <% @packages.each do |a| %>
-      <div>
-        <table>
-        <tr><%= a.id %></tr>
-        <tr><%= a.num_of_session %></tr>
-        <tr> <%= a.therapist.first_name %> <%= a.therapist.last_name %></tr>
-        <tr> <%= a.patient.first_name %> <%= a.patient.last_name %></tr>
-        </table>
-      </div>
+    <% if current_user.therapist.present? %>
+      <% @packages.each do |a| %>
+        <div>
+          <table>
+          <tr><%= a.id %></tr>
+          <tr><%= a.num_of_session %></tr>
+          <tr> <%= a.therapist.first_name %> <%= a.therapist.last_name %></tr>
+          <tr> <%= a.patient.first_name %> <%= a.patient.last_name %></tr>
+          </table>
+        </div>
+      <% end %>
     <% end %>
+
+  <% if current_user.patient.present? %>
+    <div class="card-product">
+      <div class="card-product-infos">
+        <h2>Patient information</h2>
+        <p>First name: <%= current_user.patient.first_name %></p>
+        <p>Last name: <%= current_user.patient.last_name %></p>
+        <p>Date of birth: <%= current_user.patient.date_of_birth %></p>
+        <p>Address: <%= current_user.patient.addresse %></p>
+      </div>
+    </div>
+
+    <div>
+    <% @packages.each do |a| %>
+              <p>
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <%= a.service.name %> with <%= a.therapist.first_name %> <%= a.therapist.last_name %>
+                </a>
+              </p>
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                  <p><%= a.id %></p>
+                  <p><%= a.num_of_session %></p>
+                  <p> <%= a.therapist.first_name %> <%= a.therapist.last_name %></p>
+                  <p> <%= a.patient.first_name %> <%= a.patient.last_name %></p>
+                  <% Meeting.where(package: a).each_with_index do |m, index| %>
+                  <p>Meeting <%= index + 1 %></p>
+                  <p> <%= m.start_time.try(:strftime, "%A, %B %d, %Y, %H:%M") %> to <%= m.end_time.try(:strftime, '%H:%M') %> </p>
+                  <% end %>
+                </div>
+              </div>
+      <% end %>
+      </div>
+  <% end %>
   </div>
 </div>
