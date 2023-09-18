@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_17_190328) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_18_191528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "absences", force: :cascade do |t|
-    t.datetime "start_date_time"
-    t.datetime "end_date_time"
     t.string "reason"
     t.bigint "therapist_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["therapist_id"], name: "index_absences_on_therapist_id"
   end
 

@@ -2,7 +2,10 @@ class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
   def index
-    @meetings_with_dates = policy_scope(Meeting).where.not(start_time: nil)
+    @therapist = current_user.therapist
+    @meetings = policy_scope(Meeting).where.not(start_time: nil)
+    @absences = policy_scope(Absence)
+    @events_with_dates = @meetings.to_a + @absences.to_a
   end
 
   def show
@@ -52,4 +55,5 @@ class MeetingsController < ApplicationController
   def meeting_params
     params.require(:meeting).permit(:start_date_time, :end_date_time, :info_public, :info_private, :url_zoom, :max_attendees, :package_id)
   end
+
 end

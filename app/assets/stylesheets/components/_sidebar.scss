@@ -1,5 +1,14 @@
+.container-with-sidebar {
+  display: flex;
+}
+
 .sidebar {
-  flex: 1;
-  background-color: #ADD8E6; /* bleu clair */
+  flex-shrink: 0;
+  width: 250px;
+  background-color: #ADD8E6;
   padding: 1em;
+}
+
+.content-column {
+  flex-grow: 1;
 }

@@ -111,31 +111,26 @@ puts "#{TimeBlock.count} time_blocks created."
 
 # ABSENCES
 
-# Seed absences [TODO: NOT WORKING RAISE A TICKET]
+today = Date.today
+possible_days = (today..today + 14.days).to_a.select { |day| ![6, 0].include?(day.wday) }
 
-# absence1 = Absence.create(
-#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   reason: "sick leaves"
-# )
-# absence1.therapist = therapist1
+therapists.each do |therapist|
+  absence_days = possible_days.sample(2)
+  absence_days.each do |absence_day|
+    start_time_data = DateTime.new(absence_day.year, absence_day.month, absence_day.day, rand(8..16), 0, 0)
+    end_time_data = start_time_data + rand(1..4).hours
 
-# absence2 = Absence.create(
-#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   reason: "pippo at home"
-# )
-# absence2.therapist = therapist1
-
-# absence3 = Absence.create(
-#   start_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   end_date_time: "Fri, 15 Sep 2023 11:52:02 +0200",
-#   reason: "lazy"
-# )
-# absence3.therapist = therapist2
+    Absence.create!(
+      start_time: start_time_data,
+      end_time: end_time_data,
+      reason: ["sick leave", "personal reasons", "training"].sample,
+      therapist: therapist
+    )
+  end
+end
 
 
-
+puts "#{Absence.count} absences created."
 
 
 # SERVICES
@@ -150,7 +145,7 @@ services_data = [
     price_visibility: false,
     price_per_unit: 50.0,
     duration_per_unit: 30,
-    color: "blue",
+    color: "#DFF2FF",
     services_therapists: [therapist1, therapist2]
   },
   {
@@ -162,7 +157,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 60.0,
     duration_per_unit: 30,
-    color: "green",
+    color: "#B0F2B6",
     services_therapists: [therapist1]
   },
   {
@@ -174,7 +169,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 90.0,
     duration_per_unit: 45,
-    color: "green light",
+    color: "#DFF9E1",
     services_therapists: [therapist1]
   },
   {
@@ -186,7 +181,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 30.0,
     duration_per_unit: 15,
-    color: "red",
+    color: "#FFF5E6",
     services_therapists: [therapist2]
   }
 ]

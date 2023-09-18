@@ -1,28 +1,50 @@
+# app/policies/absence_policy.rb
+
 class AbsencePolicy < ApplicationPolicy
-  class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-
-    def resolve
-      scope.all #TODO: check with teachers if we can authorize with pundit
-      # and not in the controller
-    end
-
+  def index?
+    user_is_therapist?
   end
 
-  def new?
-    return true
+  def show?
+    user_is_owner_of_absence?
   end
 
   def create?
-    return true
-  end
-
-  def edit?
-    return true
+    user_is_therapist?
   end
 
   def update?
-    return true
+    user_is_owner_of_absence?
   end
 
+  def destroy?
+    user_is_owner_of_absence?
+  end
+
+  private
+
+  def user_is_therapist?
+    user.therapist.present?
+  end
+
+  def user_is_owner_of_absence?
+    record.therapist == user.therapist
+  end
+
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      if user.therapist.present?
+        scope.where(therapist: user.therapist)
+      else
+        scope.none
+      end
+    end
+  end
 end

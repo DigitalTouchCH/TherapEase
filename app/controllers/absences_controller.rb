@@ -17,7 +17,7 @@ class AbsencesController < ApplicationController
     @absence.therapist = Therapist.where(user: current_user)[0]
     authorize @absence
     if @absence.save
-      redirect_to absences_path # TODO: maybe another route?
+      redirect_to meetings_path
     else
       render :new, status: 422
     end
@@ -30,13 +30,13 @@ class AbsencesController < ApplicationController
   def update
     authorize @absence
     @absence.update(absence_params)
-    redirect_to absences_path # TODO: maybe another route?
+    redirect_to meetings_path
   end
 
   private
 
   def absence_params
-    params.require(:absence).permit(:start_date_time, :end_date_time, :reason, :therapist_id)
+    params.require(:absence).permit(:start_time, :end_time, :reason, :therapist_id)
   end
 
   def set_absence
