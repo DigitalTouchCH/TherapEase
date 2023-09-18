@@ -21,7 +21,7 @@ class PackagesController < ApplicationController
     if @package.save
       redirect_to packages_path, notice: 'Package was successfully created.'
     else
-      render :new,  status: 422
+      render :new, status: 422
     end
   end
 
@@ -32,9 +32,9 @@ class PackagesController < ApplicationController
   def update
     authorize @package
     if @package.update(package_params)
-      redirect_to @package, notice: 'Package was successfully updated.'
+      redirect_to packages_path, notice: 'Package was successfully updated.'
     else
-      render :edit,  status: 422
+      render :edit, status: 422
     end
   end
 
