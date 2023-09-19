@@ -89,26 +89,30 @@
 
 <div class="container-with-sidebar">
   <div class="sidebar">
-        <p class="text-center">Welcome <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
 
-        <%= link_to 'Add Weekly Availability', new_week_availability_path, class: 'btn btn-primary mb-3' %>
+      <% if @therapist.photo.attached? %>
+        <%= cl_image_tag(@therapist.photo.key, width: 100, height: 100, crop: :fill) %>
+      <% else %>
+        <p>No photo</p>
+      <% end %>
+
+      <p class="text-center">Welcome <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
+      <!-- LINK to edit profil-->
+
+      <%= link_to meetings_path, class: "btn btn-primary mb-3 d-block" do %>
+          <i class="fas fa-calendar-week"></i> My calendar
+      <% end %>
+
+      <%= link_to new_week_availability_path, class: "btn btn-primary mb-3 d-block" do %>
+          <i class="fas fa-plus"></i> New schedule
+      <% end %>
+
   </div>
 
 
   <div class="content-column">
 
     <h2>My availabilities</h2>
-
-    <% if flash[:alert] %>
-      <div class="alert alert-danger">
-        <ul>
-          <% flash[:alert].split(", ").each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
 
     <div data-controller="toggle" class="shadow">
       <% @week_availabilities.each do |week_availability| %>

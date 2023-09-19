@@ -79,15 +79,25 @@
 <div class="container-with-sidebar">
 
   <div class="sidebar">
+
+      <% if @therapist.photo.attached? %>
+        <%= cl_image_tag(@therapist.photo.key, width: 100, height: 100, crop: :fill) %>
+      <% else %>
+        <p>No photo</p>
+      <% end %>
+
       <p class="text-center">Welcome <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
+      <!-- LINK to edit profil-->
+
 
       <%= link_to week_availabilities_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-calendar-week"></i> Week Availabilities
+          <i class="fas fa-calendar-week"></i> My working hours
       <% end %>
 
       <%= link_to new_absence_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-calendar-times"></i> New Absence
+          <i class="fas fa-plus"></i> New absence
       <% end %>
+
       <!-- OTHER LINK -->
   </div>
 
