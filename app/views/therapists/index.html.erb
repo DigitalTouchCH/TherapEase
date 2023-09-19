@@ -1,0 +1,10 @@
+<h1>Therapists</h1>
+
+<ul>
+  <% @therapists.each do |therapist| %>
+    <li>
+      <h2><%= therapist.first_name ;therapist.last_name %></h2>
+      <p>Information: <%= therapist.information %></p>
+    </li>
+  <% end %>
+</ul>
