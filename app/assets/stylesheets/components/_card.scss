@@ -24,3 +24,93 @@
   color: $mid-gray;
   font-size: small;
 }
+
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.card-category {
+  width: 250px; /* ou la largeur désirée */
+  height: 200px; /* ou la hauteur désirée */
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* pour améliorer la lisibilité du texte */
+}
+
+
+
+.absence-card {
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 1em;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 0.5em;
+  left: 0;
+  right: 0;
+  width: 100%;
+  color: black !important;
+}
+
+.time-block-card {
+  background-color: white; /* fond blanc */
+  border: 1px solid #ced4da; /* couleur de bordure plus douce */
+  border-radius: 5px; /* coins arrondis pour une meilleure esthétique */
+  margin: 4px 0; /* espace supplémentaire autour des blocs de temps */
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  overflow: hidden; /* pour éviter que le contenu ne déborde */
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1); /* ombre douce pour donner de la profondeur */
+}
+
+.time-block-card .btn-sm {
+  margin-top: 5px; /* espace supplémentaire autour des boutons pour éviter qu'ils ne soient collés ensemble */
+}

@@ -302,7 +302,6 @@ DEPENDENCIES
   puma (~> 5.0)
   pundit
   rails (~> 7.0.7)
-  sassc-rails
   selenium-webdriver
   simple_calendar
   simple_form!
