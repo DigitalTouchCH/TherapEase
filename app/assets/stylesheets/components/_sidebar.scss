@@ -1,14 +1,34 @@
 .container-with-sidebar {
   display: flex;
+  height: 100vh;
 }
 
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
   flex-shrink: 0;
-  width: 250px;
-  background-color: #ADD8E6;
-  padding: 1em;
+  width: 280px;
+  height: 100vh;
+
+  padding-top: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+
+  background-color: lightblue;
+  overflow-y: auto;
 }
 
 .content-column {
+  margin-left: 280px;  /* Compensating for the fixed sidebar width */
   flex-grow: 1;
+  padding-left: 5em;
+  padding-right: 5em;
+
+  /* For smaller screens, reduce the padding */
+  @media (max-width: 768px) {
+      padding-left: 2em;
+      padding-right: 2em;
+  }
 }

@@ -1,3 +1,5 @@
+require "open-uri"
+
 # Destroy all previous data
 puts "Destroying old data..."
 Package.destroy_all
@@ -62,20 +64,32 @@ therapist1 = Therapist.create(
   location_name: "Therapy Center 1",
   location_address: "789 Therapist Blvd",
   first_name: "Alice",
-  last_name: "Cooper"
+  last_name: "Cooper",
 )
 therapist1.user = user3
 therapist1.save!
+
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Am%C3%A9lie_250x250_su4uyp.jpg")
+therapist1.photo.attach(io: photo1, filename: "therapist1.jpg", content_type: "image/jpg")
+therapist1.save!
+
 
 therapist2 = Therapist.create(
   information: "Therapist 2 details and information",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
-  first_name: "Bob",
-  last_name: "Marley"
+  first_name: "Solen",
+  last_name: "Duclos",
 )
+
 therapist2.user = user4
 therapist2.save!
+
+photo2 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg")
+therapist2.photo.attach(io: photo2, filename: "therapist2.jpg", content_type: "image/jpg")
+therapist2.save!
+
+
 puts "#{Therapist.count} therapists created."
 
 # AVAILABILITIES
@@ -146,7 +160,8 @@ services_data = [
     price_per_unit: 50.0,
     duration_per_unit: 30,
     color: "#DFF2FF",
-    services_therapists: [therapist1, therapist2]
+    services_therapists: [therapist1, therapist2],
+    photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_perinee_450x300_vjkamj.jpg"]
   },
   {
     active: true,
@@ -158,7 +173,8 @@ services_data = [
     price_per_unit: 60.0,
     duration_per_unit: 30,
     color: "#B0F2B6",
-    services_therapists: [therapist1]
+    services_therapists: [therapist1],
+    photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_Massage_450x300_clk194.jpg"]
   },
   {
     active: true,
@@ -170,7 +186,8 @@ services_data = [
     price_per_unit: 90.0,
     duration_per_unit: 45,
     color: "#DFF9E1",
-    services_therapists: [therapist1]
+    services_therapists: [therapist1],
+    photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148015/Cat%C3%A9gorie_Physioth%C3%A9rapie_450x300_v2ibey.jpg"]
   },
   {
     active: false,
@@ -182,15 +199,33 @@ services_data = [
     price_per_unit: 30.0,
     duration_per_unit: 15,
     color: "#FFF5E6",
-    services_therapists: [therapist2]
+    services_therapists: [therapist2],
+    photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148166/consulting_pdhtri.jpg"]
   }
 ]
 
+# services_data.each do |service_data|
+#   therapists_for_service = service_data.delete(:services_therapists)
+#   service_obj = Service.create!(service_data)
+#   service_obj.therapists << therapists_for_service if therapists_for_service
+#   service_obj.save!
+# end
+
 services_data.each do |service_data|
   therapists_for_service = service_data.delete(:services_therapists)
-  service_obj = Service.create!(service_data)
-  service_obj.therapists << therapists_for_service if therapists_for_service
-  service_obj.save!
+  photo_url = service_data.delete(:photo).first
+
+  service = Service.create!(service_data)
+
+  if therapists_for_service
+    service.therapists << therapists_for_service
+    service.save!
+  end
+
+  if photo_url
+    photo = URI.open(photo_url)
+    service.photo.attach(io: photo, filename: File.basename(photo_url), content_type: "image/jpg")
+  end
 end
 
 puts "#{Service.count} services created."

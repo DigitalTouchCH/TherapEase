@@ -52,3 +52,29 @@
   padding: 10px;
   box-sizing: border-box;
 }
+
+
+/* for week_availabilities */
+
+.table {
+  border : hide !important;
+}
+.table-transparent,
+.table-transparent thead th,
+.table-transparent tbody td {
+  position: relative;
+  margin: 0px;
+}
+
+.card-header {
+  background-color: lightblue;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.table-container {
+  height: 1000px;  /* Ajustez cette valeur selon vos besoins */
+  position: relative; /* pour positionner correctement les blocs de temps par rapport à ce conteneur */
+}
