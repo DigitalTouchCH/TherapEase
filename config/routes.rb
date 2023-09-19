@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     resources :time_blocks
   end
 
-  resources :meetings
+  resources :meetings do
+    resources :bookings
+  end
 
   resources :packages
 end
