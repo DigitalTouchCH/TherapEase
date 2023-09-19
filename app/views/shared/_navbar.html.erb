@@ -1,14 +1,15 @@
-<div class="navbar navbar-expand-sm navbar-dark navbar-lewagon">
+<div class="navbar navbar-expand-sm navbar-dark navbar-lewagon py-0">
   <%= link_to "/", class: "navbar-brand" do %>
-    <%= image_tag "https://lh3.googleusercontent.com/drive-viewer/AITFw-wirl-7JAMw160w_6lm5m_zJV1RK9VqWvCFeUZEHoqO2ZO7u73h1slN3aaq1o_SGzZYc4IwEEGj6_rIc0f_HUMNBGD1kA=s1600" %>
+    <%= image_tag "https://i.ibb.co/bH60H1C/Untitled-design.png" %>
   <% end %>
+
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
 
-  <div class="shadow-md collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="shadow-md collapse navbar-collapse py-0" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <% if user_signed_in? %>
         <li class="nav-item">
@@ -25,7 +26,7 @@
         </li>
           <li class="nav-item dropdown">
           <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img width="50" height="50" src="https://img.icons8.com/cotton/64/gender-neutral-user--v2.png" alt="gender-neutral-user--v2"/>
+            <img width="30" height="30" src="https://img.icons8.com/cotton/64/gender-neutral-user--v2.png" alt="gender-neutral-user--v2"/>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Absences", "#", class: "dropdown-item" %>
