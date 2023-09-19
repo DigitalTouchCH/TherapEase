@@ -1,10 +1,23 @@
-<h1>Therapists</h1>
 
-<ul>
-  <% @therapists.each do |therapist| %>
-    <li>
-      <h2><%= therapist.first_name ;therapist.last_name %></h2>
-      <p>Information: <%= therapist.information %></p>
-    </li>
-  <% end %>
-</ul>
+
+<div class="team-boxed">
+  <div class="container">
+    <div class="intro">
+        <h1 class="text-center">Therapists</h2>
+        <p class="text-center">Explore our carefully curated list of highly skilled therapists. Our team of certified experts is dedicated to your well-being, ensuring you receive top-notch care and personalized treatments.</p>
+    </div>
+    <div class="row people">
+        <% @therapists.each do |therapist| %>
+          <div class="col-4 item">
+            <div class="box">
+              <img class="rounded-circle" src="https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg">
+              <h3 class="name"><%= therapist.first_name%></h3>
+              <p class="title"><%= ["physiotherapist", "osteopath"].sample %></p>
+              <p class="description"><%= therapist.information %></p>
+              <p class="button-18">Contact</p>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>
