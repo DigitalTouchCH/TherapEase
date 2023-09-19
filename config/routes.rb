@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   resources :absences
 
+  resources :services
+  resources :therapists
+
   resources :week_availabilities do
     resources :time_blocks
   end
