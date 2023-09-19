@@ -18,6 +18,10 @@ user1 = User.create(email: "patient1@example.com", password: "password123", pass
 user2 = User.create(email: "patient2@example.com", password: "password123", password_confirmation: "password123")
 user3 = User.create(email: "therapist1@example.com", password: "password123", password_confirmation: "password123")
 user4 = User.create(email: "therapist2@example.com", password: "password123", password_confirmation: "password123")
+user5 = User.create(email: "therapist3@example.com", password: "password123", password_confirmation: "password123")
+user6 = User.create(email: "therapist4@example.com", password: "password123", password_confirmation: "password123")
+user7 = User.create(email: "therapist5@example.com", password: "password123", password_confirmation: "password123")
+user8 = User.create(email: "therapist6@example.com", password: "password123", password_confirmation: "password123")
 puts "#{User.count} users created."
 
 # PATIENTS
@@ -60,7 +64,7 @@ puts "#{Patient.count} patients created."
 # THERAPISTS
 
 therapist1 = Therapist.create(
-  information: "Therapist 1 details and information",
+  information: "A compassionate physiotherapist with a passion for healing. Sarah's extensive experience and commitment to patient-centered care make her your trusted partner on the path to recovery",
   location_name: "Therapy Center 1",
   location_address: "789 Therapist Blvd",
   first_name: "Alice",
@@ -75,7 +79,7 @@ therapist1.save!
 
 
 therapist2 = Therapist.create(
-  information: "Therapist 2 details and information",
+  information: "A skilled physiotherapist specializing in sports injuries and rehabilitation. With Mark's expert guidance, you'll regain strength, mobility, confidence and guidance in no time",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
   first_name: "Solen",
@@ -84,6 +88,50 @@ therapist2 = Therapist.create(
 
 therapist2.user = user4
 therapist2.save!
+
+therapist3 = Therapist.create(
+  information: "A dedicated osteopathy expert with a gentle touch and a deep understanding of the body's natural healing processes. Lisa's holistic approach will leave you feeling rejuvenated and pain-free",
+  location_name: "Healing Center 2",
+  location_address: "101 Therapist Lane",
+  first_name: "Maria",
+  last_name: "Smith",
+)
+
+therapist3.user = user5
+therapist3.save!
+
+therapist4 = Therapist.create(
+  information: "With a passion for helping others, Alex is your dedicated physiotherapist, committed to guiding you on your journey to optimal health and well-being. With years of experience and a caring",
+  location_name: "Healing Center 2",
+  location_address: "101 Therapist Lane",
+  first_name: "Alex",
+  last_name: "Monroe",
+)
+
+therapist4.user = user6
+therapist4.save!
+
+therapist5 = Therapist.create(
+  information: "As an experienced physiotherapist, Rachel specializes in restoring your mobility and vitality. Her expertise in rehabilitation and pain management, combined with her compassionate",
+  location_name: "Healing Center 2",
+  location_address: "101 Therapist Lane",
+  first_name: "Rachel",
+  last_name: "Black",
+)
+
+therapist5.user = user7
+therapist5.save!
+
+therapist6 = Therapist.create(
+  information: "For effective pain relief and rehabilitation, Jason is the physiotherapist you can rely on. With a deep understanding of the human body and a commitment to your recovery, he provides expert",
+  location_name: "Healing Center 2",
+  location_address: "101 Therapist Lane",
+  first_name: "Jason",
+  last_name: "Doe",
+)
+
+therapist6.user = user8
+therapist6.save!
 
 photo2 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg")
 therapist2.photo.attach(io: photo2, filename: "therapist2.jpg", content_type: "image/jpg")
