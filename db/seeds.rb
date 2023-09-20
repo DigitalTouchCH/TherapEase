@@ -305,6 +305,25 @@ Service.all.each do |service|
   end
 end
 
+Service.all.each do |service|
+  service.therapists.each do |therapist|
+    package = Package.new(
+      num_of_session: 6,
+      info_private: "Private package info",
+      info_public: "Public package info",
+      insurance_name: "InsuranceCorp",
+      insurance_number: "12345",
+      insurance_type: "TypeA",
+      package_type: "Individual",
+      service: service,
+      therapist: therapist,
+      patient: patient2
+    )
+    package.save!
+    package_data << package
+  end
+end
+
 puts "#{Package.count} packages created."
 
 meetings = []
@@ -326,13 +345,17 @@ puts "#{Meeting.count} meetings created."
 
 # BOOKINGS
 
-meetings_to_book = meetings.sample(meetings.count*2 / 3)
+meetings_to_book = meetings.sample(meetings.count*3 / 4)
 
 bookings = []
 meetings_to_book.each do |meeting|
 
   duration = meeting.package.service.duration_per_unit.minutes
-  start_time = Time.now + rand(1..10).days
+  day = Date.today + rand(1..10).days
+  hour = rand(8..16)
+
+
+  start_time = Time.new(day.year, day.month, day.day, hour)
   end_time = start_time + duration
 
   meeting.start_time = start_time
@@ -346,7 +369,7 @@ meetings_to_book.each do |meeting|
     status: statuses.sample,
     info_public: "Public booking info",
     info_private: "Private booking info",
-    patient: patient1,
+    patient: meeting.package.patient,
     meeting: meeting
   )
   bookings << booking
