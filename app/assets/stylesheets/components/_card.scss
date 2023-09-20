@@ -1,5 +1,7 @@
 
 .home-card-small {
+  display: flex;
+  align-items: center; /* Vertical alignment */
 }
 
 .home-card-big {
@@ -8,12 +10,12 @@
 
 .home-card-small h6 {
   color: $gray;
-  font-size: small;
+  font-size: medium;
 }
 
 .home-card-small p {
   color: $mid-gray;
-  font-size: x-small;
+  font-size: small;
 }
 
 .home-card-big h6 {
@@ -30,7 +32,10 @@
 .cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 5px;
+  grid-gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // Smallest device
@@ -50,14 +55,14 @@
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
   .cards {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
   .cards {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -69,7 +74,7 @@
 }
 
 .card-category {
-  width: 250px; /* ou la largeur désirée */
+  width: 320px; /* ou la largeur désirée */
   height: 200px; /* ou la hauteur désirée */
   background-size: cover;
   background-position: center center;
@@ -78,6 +83,7 @@
   justify-content: center;
   align-items: center;
   color: white;
+  border-radius: 5px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* pour améliorer la lisibilité du texte */
 }
 

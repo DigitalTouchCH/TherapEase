@@ -1,34 +1,60 @@
+.container {
+  padding-top: 100px;
+}
+
 .container-with-sidebar {
+  margin-top: 100px;
   display: flex;
   height: 100vh;
+  margin-left: 320px;
 }
 
 .sidebar {
   position: fixed;
-  top: 0;
   left: 0;
+  margin-left: 40px;
 
   flex-shrink: 0;
   width: 280px;
   height: 100vh;
 
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
   padding-top: 2em;
   padding-left: 2em;
   padding-right: 2em;
 
-  background-color: lightblue;
   overflow-y: auto;
 }
 
-.content-column {
-  margin-left: 280px;  /* Compensating for the fixed sidebar width */
-  flex-grow: 1;
-  padding-left: 5em;
-  padding-right: 5em;
+.image-container-sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  /* For smaller screens, reduce the padding */
-  @media (max-width: 768px) {
-      padding-left: 2em;
-      padding-right: 2em;
-  }
+.image-container-sidebar img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.therapist-info p {
+  font-size: 0.8rem;  /* Reduce the font size */
+  margin-top: 5px;    /* Reduce the space from the top */
+  margin-bottom: 5px; /* Reduce the space from the bottom */
+  text-align: center; /* Center the text */
+}
+
+.content-column {
+  margin-left: 40px;
+  margin-right: 40px;
+  flex-grow: 1;
+}
+
+.shadow-rounded {
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
 }
