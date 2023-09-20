@@ -1,4 +1,5 @@
 <div class="<%= current_user.patient.present? ? 'container' : 'container-with-sidebar' %>">
+
   <div class="<%= current_user.patient.present? ? 'container' : 'sidebar therapist-info' %>">
     <div class="d-flex justify-content-center align-items-center">
         <% if @therapist.present? && @therapist.photo.attached? %>
@@ -16,6 +17,9 @@
         <% end %>
       </strong>
     </div>
+
+  </div>
+
 
   <div class="<%= current_user.patient.present? ? 'container' : 'content-column' %>">
     <div class="shadow-rounded mb-5">
