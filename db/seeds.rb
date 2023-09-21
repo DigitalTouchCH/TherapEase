@@ -94,7 +94,7 @@ therapist2.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "i
 therapist2.save!
 
 therapist3 = Therapist.create(
-  information: "A dedicated osteopathy expert with a gentle touch and a deep understanding of the body's natural healing processes. Lisa's holistic approach will leave you feeling rejuvenated and pain-free",
+  information: "A dedicated osteopathy expert with a gentle touch and a deep understanding of the body's natural healing processes. Lisa's holistic approach will leave you feeling rejuvenated",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
   first_name: "Maria",
