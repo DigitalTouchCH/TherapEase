@@ -38,6 +38,7 @@
 
 .team-boxed .item {
   text-align:center;
+  position: relative;
 }
 
 .team-boxed .item .box {
@@ -46,7 +47,8 @@
   border-radius: 20px;
   background-color: white;
   text-align:center;
-  margin-bottom:30px;
+  margin-bottom:20px;
+  min-height: 510px;
 }
 
 .team-boxed .item .name {
@@ -72,6 +74,10 @@
 
 .team-boxed .item .button-18 {
   color:#fff;
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .team-boxed .item img {

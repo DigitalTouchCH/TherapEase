@@ -40,7 +40,7 @@
       <br>
       <div data-controller="toggle">
         <% @week_availabilities.each do |week_availability| %>
-          <div class="card mb-5">
+          <div class="mb-5">
             <div class="card-header text-center">
               <%= week_availability.name.capitalize %> :
               From <strong><%= week_availability.valid_from.strftime('%A %d %B %Y') %></strong> to <strong><%= week_availability.valid_until.strftime('%A %d %B %Y') %></strong>
