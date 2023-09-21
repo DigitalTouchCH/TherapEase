@@ -1,0 +1,10 @@
+<h1>Therapist Details</h1>
+
+<div>
+  <h2><%= @therapist.first_namename %></h2>
+  <p><strong>Description:</strong> <%= @therapist.information %></p>
+  <p><strong>Location:</strong> $<%= @therapist.location_name %></p>
+</div>
+
+<%= link_to 'Edit', edit_therapist_path(@service) %> |
+<%= link_to 'Back', therapists_path %>
