@@ -8,7 +8,11 @@
         <% @therapists.each do |therapist| %>
           <div class="col-4 item">
             <div class="box">
-              <img class="rounded-circle" src="https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg">
+              <% if therapist.photo.attached? %>
+                  <%= cl_image_tag therapist.photo.key, class: "card-img-top rounded"%>
+                <% else %>
+                  <img class="card-img-top rounded" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Card image cap" class="card-img-top rounded", style:="width: 290px; height:193px">
+                <% end %>
               <h3 class="name"><%= therapist.first_name%></h3>
               <p class="title"><%= ["physiotherapist", "osteopath"].sample %></p>
               <p class="description"><%= therapist.information %></p>

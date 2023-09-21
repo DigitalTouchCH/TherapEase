@@ -89,6 +89,10 @@ therapist2 = Therapist.create(
 therapist2.user = user4
 therapist2.save!
 
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg")
+therapist2.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "image/jpg")
+therapist2.save!
+
 therapist3 = Therapist.create(
   information: "A dedicated osteopathy expert with a gentle touch and a deep understanding of the body's natural healing processes. Lisa's holistic approach will leave you feeling rejuvenated and pain-free",
   location_name: "Healing Center 2",
@@ -98,6 +102,10 @@ therapist3 = Therapist.create(
 )
 
 therapist3.user = user5
+therapist3.save!
+
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg")
+therapist3.photo.attach(io: photo1, filename: "therapist3.jpg", content_type: "image/jpg")
 therapist3.save!
 
 therapist4 = Therapist.create(
@@ -111,6 +119,10 @@ therapist4 = Therapist.create(
 therapist4.user = user6
 therapist4.save!
 
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253784/therap3_f5x9vg.jpg")
+therapist4.photo.attach(io: photo1, filename: "therapist4.jpg", content_type: "image/jpg")
+therapist4.save!
+
 therapist5 = Therapist.create(
   information: "As an experienced physiotherapist, Rachel specializes in restoring your mobility and vitality. Her expertise in rehabilitation and pain management, combined with her compassionate",
   location_name: "Healing Center 2",
@@ -121,6 +133,10 @@ therapist5 = Therapist.create(
 
 therapist5.user = user7
 therapist5.save!
+
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253784/therap4_snn7dl.jpg")
+therapist2.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "image/jpg")
+therapist2.save!
 
 therapist6 = Therapist.create(
   information: "For effective pain relief and rehabilitation, Jason is the physiotherapist you can rely on. With a deep understanding of the human body and a commitment to your recovery, he provides expert",
@@ -134,8 +150,8 @@ therapist6.user = user8
 therapist6.save!
 
 photo2 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg")
-therapist2.photo.attach(io: photo2, filename: "therapist2.jpg", content_type: "image/jpg")
-therapist2.save!
+therapist6.photo.attach(io: photo2, filename: "therapist6.jpg", content_type: "image/jpg")
+therapist6.save!
 
 
 puts "#{Therapist.count} therapists created."
@@ -305,6 +321,25 @@ Service.all.each do |service|
   end
 end
 
+Service.all.each do |service|
+  service.therapists.each do |therapist|
+    package = Package.new(
+      num_of_session: 6,
+      info_private: "Private package info",
+      info_public: "Public package info",
+      insurance_name: "InsuranceCorp",
+      insurance_number: "12345",
+      insurance_type: "TypeA",
+      package_type: "Individual",
+      service: service,
+      therapist: therapist,
+      patient: patient2
+    )
+    package.save!
+    package_data << package
+  end
+end
+
 puts "#{Package.count} packages created."
 
 meetings = []
@@ -326,13 +361,17 @@ puts "#{Meeting.count} meetings created."
 
 # BOOKINGS
 
-meetings_to_book = meetings.sample(meetings.count*2 / 3)
+meetings_to_book = meetings.sample(meetings.count*3 / 4)
 
 bookings = []
 meetings_to_book.each do |meeting|
 
   duration = meeting.package.service.duration_per_unit.minutes
-  start_time = Time.now + rand(1..10).days
+  day = Date.today + rand(1..10).days
+  hour = rand(8..16)
+
+
+  start_time = Time.new(day.year, day.month, day.day, hour)
   end_time = start_time + duration
 
   meeting.start_time = start_time
@@ -346,7 +385,7 @@ meetings_to_book.each do |meeting|
     status: statuses.sample,
     info_public: "Public booking info",
     info_private: "Private booking info",
-    patient: patient1,
+    patient: meeting.package.patient,
     meeting: meeting
   )
   bookings << booking

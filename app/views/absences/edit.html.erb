@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-6 offset-md-3">
-      <div class="p-4 bg-white shadow">
+      <div class="p-4 shadow-rounded">
         <h2 class="text-center">Edit an absence</h2>
 
         <%= form_with(model: @absence, local: true) do |form| %>
@@ -31,9 +31,9 @@
             <%= form.text_field :reason, label: false, class: 'form-control' %>
           </div>
 
-          <div class="actions mt-3">
-            <%= form.submit "Update Absence", class: 'button-18' %>
-            <%= link_to 'Cancel', meetings_path, class: 'button-18' %>
+          <div class="actions mt-3 d-grid gap-2 d-md-flex justify-content-md-center">
+            <%= form.submit "Update Absence", class: 'btn btn-primary' %>
+            <%= link_to 'Cancel', meetings_path, class: 'btn btn-outline-primary' %>
           </div>
 
         <% end %>

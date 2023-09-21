@@ -1,51 +1,57 @@
+<%# SECTION 1: TITLE + IMAGE %>
 <div class="wrapper-home-container">
   <div class="container">
-  <%# SECTION 1: TITLE + IMAGE %>
-  <div class="container">
-    <div class="container row justify-content-md-center">
+    <div class="row">
       <%# SUBSECTION 1.1: TITLE + BUTTON %>
-      <div class="container col m-2">
+      <div class="col-md-7">
         <%# MAIN TITLE %>
-        <p class="home-subtitle">CERTIFIED PROFESSIONALS</p>
-        <h1 class="pb-3">Search and find a therapist near you</h1>
+        <div class="row">
+          <p class="home-subtitle mb-1">CERTIFIED PROFESSIONALS</p>
+          <h1>Search and find a therapist near by you</h1>
+        </div>
         <%# SMALL SERIVICE CARDS %>
-        <div class="container row py-3">
-          <div class="home-card-small col px-0 d-flex">
-            <i class="fa-regular fa-envelope" style="color: #0052e0;"></i>
-            <div class="container">
-              <h6>Get free consultation</h6>
-              <p>Nund sed augue locus</p>
+        <div class="row mt-4 mb-4">
+          <div class="col-md-6 mt-2">
+            <div class="home-card-small">
+              <i class="fa-regular fa-envelope" style="color: #0052e0;"></i>
+              <div style="margin-left: 1.5rem;">
+                <h6>Get free consultation</h6>
+                <p>Nund sed augue locus</p>
+              </div>
+            </div>
+            <div class="home-card-small">
+              <i class="fa-regular fa-handshake" style="color: #0052e0;"></i>
+              <div style="margin-left: 1.5rem;">
+                <h6>Free partnership</h6>
+                <p>Aliqua massa veritas</p>
+              </div>
             </div>
           </div>
-          <div class="home-card-small col px-0 d-flex">
-            <i class="fa-regular fa-handshake" style="color: #0052e0;"></i>
-            <div class="container">
-              <h6>Free partnership</h6>
-              <p>Aliqua massa veritas</p>
+          <div class="col-md-6 mt-2">
+            <div class="home-card-small">
+              <i class="fa-solid fa-magnifying-glass" style="color: #0052e0;"></i>
+              <div style="margin-left: 1.5rem;">
+                <h6>Find the best therapists</h6>
+                <p>Pallentesque habitant</p>
+              </div>
             </div>
-          </div>
-          <div class="w-100"></div>
-          <div class="home-card-small col px-0 d-flex">
-            <i class="fa-solid fa-magnifying-glass" style="color: #0052e0;"></i>
-            <div class="container">
-              <h6>Find the best therapists</h6>
-              <p>Pallentesque habitant</p>
-            </div>
-          </div>
-          <div class="home-card-small col px-0 d-flex">
-            <i class="fa-regular fa-comments" style="color: #0052e0;"></i>
-            <div class="container">
-              <h6>Ask your questions</h6>
-              <p>Vitae semper disctium</p>
+            <div class="home-card-small">
+              <i class="fa-regular fa-comments" style="color: #0052e0;"></i>
+              <div style="margin-left: 1.5rem;">
+                <h6>Ask your questions</h6>
+                <p>Vitae semper disctium</p>
+              </div>
             </div>
           </div>
         </div>
         <%# ACTION BUTTON %>
-        <p class="button-18">Explore →</p>
+        <%= link_to "See our services →", services_path, class: "btn btn-primary btn-sm" %>
+
+        <%= link_to "See our therapists →", therapists_path, class: "btn btn-primary btn-sm" %>
       </div>
       <%# SUBSECTION 1.2: IMAGE %>
-      <div class="container col m-2">
-        <img class="img-max img-fluid img-two-corners" src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80" alt="physioterapy move">
+      <div class="col-md-5">
+        <img style="max-height: 340px;" class="img-max img-fluid img-two-corners" src="https://images.unsplash.com/photo-1519824145371-296894a0daa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80" alt="physioterapy move">
       </div>
     </div>
   </div>
@@ -81,14 +87,4 @@
       </div>
     </div>
   </div>
-
-  <%# SECTION 3: METRICS %>
-  <div class="container"></div>
-
-  </div>
 </div>
-
-
-<%# <%= week_calendar do |date| %>
-  <%# <%= date %>
-<%# <% end %>
