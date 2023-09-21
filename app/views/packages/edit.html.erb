@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-6 offset-md-3">
-      <div class="p-4 bg-white shadow">
+      <div class="p-4 shadow-rounded">
         <h2 class="text-center">Edit package</h2>
           <%= simple_form_for(@package) do |f| %>
             <%= f.error_notification %>
@@ -19,7 +19,7 @@
               <%= f.association :patient, label_method: :first_name, value_method: :id, include_blank: false, label: "Patient" %>
             </div>
 
-            <div class="form-actions">
+            <div class="form-actions d-grid gap-2 d-md-flex justify-content-md-center">
               <%= f.button :submit, "Submit", class:"btn btn-primary" %>
             </div>
           <% end %>

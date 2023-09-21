@@ -10,11 +10,11 @@
       </span>
     </h6>
 
-    <nav class="mt-3">
+    <nav class="d-grid gap-2 d-md-flex justify-content-md-center">
       <strong style= "font-size: 1rem; text-decoration: none;">
-      <%= link_to t('simple_calendar.previous', default: '<<'), calendar.url_for_previous_view, style: "text-decoration: none; color: black;" %>
-      <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view, style: "text-decoration: none; color: black;" %>
-      <%= link_to t('simple_calendar.next', default: '>>'), calendar.url_for_next_view, style: "text-decoration: none; color: black;" %>
+      <%= link_to t('simple_calendar.previous', default: '<<'), calendar.url_for_previous_view, class: "btn btn-primary mb-3" %>
+      <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view, class: "btn btn-primary mb-3" %>
+      <%= link_to t('simple_calendar.next', default: '>>'), calendar.url_for_next_view, class: "btn btn-primary mb-3" %>
       </strong>
     </nav>
   </div>
@@ -29,7 +29,7 @@
         </tr>
       </thead>
 
-      <tbody style= "background-color: transparent !important;">
+      <tbody>
         <% date_range.each_slice(7) do |week| %>
           <tr>
             <% week.each do |day| %>

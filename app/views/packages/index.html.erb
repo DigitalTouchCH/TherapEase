@@ -10,12 +10,40 @@
     </div>
 
     <div>
-      <strong>
-        <% if @therapist.present? %>
-          <p class="text-center"> <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
-          <p class="text-center"><%= @therapist.location_name %> : <%= @therapist.location_address %></p>
+      <% if @therapist.present? %>
+        <p class="text-center"> <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
+        <br>
+        <strong><p class="text-center"><%= @therapist.location_name %></p></strong>
+        <p class="text-center"><%= @therapist.location_address %></p>
+      <% end %>
+    </div>
+
+    <div class="mt-3">
+      <% if @therapist.present? %>
+        <%= link_to meetings_path, class: "btn btn-primary mb-3 d-block" do %>
+            <i class="fas fa-calendar-week"></i> My calendar
         <% end %>
-      </strong>
+        <%= link_to week_availabilities_path, class: "btn btn-primary mb-3 d-block" do %>
+            <i class="fas fa-calendar-week"></i> My working hours
+        <% end %>
+        <!-- OTHER LINK -->
+      <% end %>
+    </div>
+
+    <div class="sidebar-patient-list mt-3">
+      <h4 class="text-center">My Current Patients</h4>
+      <% @bookings_grouped_by_patient.each do |patient, bookings| %>
+        <p><strong><%= patient.first_name %> <%= patient.last_name.upcase %></strong></p>
+        <ul>
+          <% bookings.map { |booking| booking.meeting.package }.uniq.each do |package| %>
+            <li>
+              <%= package.service.name %>:
+              <%= bookings.select { |b| b.meeting.package == package}.count %> /
+              <%= @meetings_by_package[package].count %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
 
   </div>
@@ -33,9 +61,8 @@
         <% patients.uniq! %>
         <% patients.each do |p| %>
           <div class="card">
-            <div class="card-header"><strong>Patient information</strong></div>
+            <div class="card-header text-center"><strong><%= p.first_name %>   <%= p.last_name.upcase %></strong></div>
             <div class="card-body">
-              <h6 class="mb-3"><strong><%= p.first_name %>   <%= p.last_name.upcase %></strong></h6>
               <p class="card-text">Date of birth: <%= p.date_of_birth %></p>
               <p class="card-text">Address: <%= p.addresse %></p>
               <a href="/packages/new" class="btn btn-primary">Add a new package</a>
@@ -108,7 +135,7 @@
           <br>
           <br>
         <% end %> <!-- This closes the patients.each loop -->
-      <% end %> <!-- This closes the if current_user.therapist.present? condition -->
+      <% end %>
 
       <% if current_user.patient.present? %>
         <div class="card">

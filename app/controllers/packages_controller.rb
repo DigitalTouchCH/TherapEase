@@ -5,6 +5,15 @@ class PackagesController < ApplicationController
   def index
     @packages = policy_scope(Package)
     @therapist = current_user.therapist
+
+    # Collect all meetings of the therapist's packages
+    @meetings_by_package = @therapist.packages.includes(meetings: :bookings).each_with_object({}) do |package, hsh|
+      hsh[package] = package.meetings
+    end
+
+    # Group bookings by patient
+    all_meetings = @meetings_by_package.values.flatten
+    @bookings_grouped_by_patient = Booking.where(meeting: all_meetings).includes(:patient, meeting: [package: :service]).group_by(&:patient)
   end
 
   def show
