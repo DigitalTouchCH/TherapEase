@@ -1,6 +1,5 @@
 .team-boxed {
   color:#313437;
-  background-color: $white;
 }
 // eef4f7
 
@@ -42,9 +41,11 @@
 }
 
 .team-boxed .item .box {
+  padding: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  background-color: white;
   text-align:center;
-  padding:30px;
-  background-color: $gray-100;
   margin-bottom:30px;
 }
 
