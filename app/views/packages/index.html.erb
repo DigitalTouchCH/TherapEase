@@ -62,12 +62,12 @@
         <% end %>
         <% patients.uniq! %>
         <% patients.each do |p| %>
-          <div class="card">
-            <div class="card-header text-center"><strong><%= p.first_name %>   <%= p.last_name.upcase %></strong></div>
-            <div class="card-body">
+          <div class="patient-card">
+            <div class="card-header text-center", style="padding: 0.5rem;"><strong><%= p.first_name %>   <%= p.last_name.upcase %></strong></div>
+            <div class="card-body mt-3">
               <p class="card-text">Date of birth: <%= p.date_of_birth %></p>
               <p class="card-text">Address: <%= p.addresse %></p>
-              <a href="/packages/new" class="btn btn-primary">Add a new package</a>
+              <a href="/packages/new" class="btn btn-primary mb-3">Add a new package</a>
             </div>
           </div>
 
@@ -140,14 +140,12 @@
       <% end %>
 
       <% if current_user.patient.present? %>
-        <div class="card">
-          <div class="card-header"><strong>Patient information</strong></div>
+        <div class="patient-card">
+          <div class="card-header mb-3 text-center", style="padding: 0.5rem;"><strong>My information</strong></div>
           <div class="card-body">
-            <p class="card-text">First name: <%= current_user.patient.first_name %></p>
-            <p class="card-text">Last name: <%= current_user.patient.last_name %></p>
             <p class="card-text">Date of birth: <%= current_user.patient.date_of_birth %></p>
             <p class="card-text">Address: <%= current_user.patient.addresse %></p>
-            <a href="/packages/new" class="btn btn-primary">Add a new package</a>
+            <a href="/packages/new" class="btn btn-primary mb-3">Add a new package</a>
           </div>
         </div>
 
