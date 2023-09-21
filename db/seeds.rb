@@ -64,7 +64,7 @@ puts "#{Patient.count} patients created."
 # THERAPISTS
 
 therapist1 = Therapist.create(
-  information: "A compassionate physiotherapist with a passion for healing. Sarah's extensive experience and commitment to patient-centered care make her your trusted partner on the path to recovery",
+  information: "A compassionate physiotherapist with a passion for healing. Alice's extensive experience and commitment to patient-centered care make her your trusted partner on the path to recovery",
   location_name: "Therapy Center 1",
   location_address: "789 Therapist Blvd",
   first_name: "Alice",
@@ -79,22 +79,22 @@ therapist1.save!
 
 
 therapist2 = Therapist.create(
-  information: "A skilled physiotherapist specializing in sports injuries and rehabilitation. With Mark's expert guidance, you'll regain strength, mobility, confidence and guidance in no time",
+  information: "A skilled physiotherapist specializing in sports injuries and rehabilitation. With Daniel's expert guidance, you'll regain strength, mobility, confidence and guidance in no time",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
-  first_name: "Solen",
+  first_name: "Daniel",
   last_name: "Duclos",
 )
 
 therapist2.user = user4
 therapist2.save!
 
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg")
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg")
 therapist2.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "image/jpg")
 therapist2.save!
 
 therapist3 = Therapist.create(
-  information: "A dedicated osteopathy expert with a gentle touch and a deep understanding of the body's natural healing processes. Lisa's holistic approach will leave you feeling rejuvenated",
+  information: "A dedicated osteopathy expert with a gentle touch and a deep understanding of the body's natural healing processes. Maria's holistic approach will leave you feeling rejuvenated",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
   first_name: "Maria",
@@ -104,7 +104,7 @@ therapist3 = Therapist.create(
 therapist3.user = user5
 therapist3.save!
 
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg")
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253784/therap3_f5x9vg.jpg")
 therapist3.photo.attach(io: photo1, filename: "therapist3.jpg", content_type: "image/jpg")
 therapist3.save!
 
@@ -119,12 +119,12 @@ therapist4 = Therapist.create(
 therapist4.user = user6
 therapist4.save!
 
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253784/therap3_f5x9vg.jpg")
+photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg")
 therapist4.photo.attach(io: photo1, filename: "therapist4.jpg", content_type: "image/jpg")
 therapist4.save!
 
 therapist5 = Therapist.create(
-  information: "As an experienced physiotherapist, Rachel specializes in restoring your mobility and vitality. Her expertise in rehabilitation and pain management, combined with her compassionate",
+  information: "As an experienced physiotherapist, Rachel specializes in restoring your mobility and vitality. Her expertise in rehabilitation and pain management, combined with her compassion.",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
   first_name: "Rachel",
@@ -135,14 +135,14 @@ therapist5.user = user7
 therapist5.save!
 
 photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253784/therap4_snn7dl.jpg")
-therapist2.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "image/jpg")
-therapist2.save!
+therapist5.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "image/jpg")
+therapist5.save!
 
 therapist6 = Therapist.create(
-  information: "For effective pain relief and rehabilitation, Jason is the physiotherapist you can rely on. With a deep understanding of the human body and a commitment to your recovery, he provides expert",
+  information: "For effective pain relief and rehabilitation, Jacqueline is the physiotherapist you can rely on. With a deep understanding of the human body and a commitment to your recovery",
   location_name: "Healing Center 2",
   location_address: "101 Therapist Lane",
-  first_name: "Jason",
+  first_name: "Jacqueline",
   last_name: "Doe",
 )
 
