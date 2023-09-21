@@ -1,145 +1,202 @@
-<div class="container">
-  <h2>My packages</h2>
-  <div>
-    <% if current_user.therapist.present? %>
-      <% patients = [] %>
-      <% @packages.each do |a| %>
-        <% patients << a.patient %>
-      <% end %>
-      <% patients.uniq! %>
-      <% patients.each do |p| %>
-          <div class="card">
-            <div class="card-header"><Strong>Patient information</Strong></div>
-              <div class="card-body">
-                <p class="card-text">First name: <%= p.first_name %></p>
-                <p class="card-text">Last name: <%= p.last_name %></p>
-                <p class="card-text">Date of birth: <%= p.date_of_birth %></p>
-                <p class="card-text">Address: <%= p.addresse %></p>
-                <a href="/packages/new" class="btn btn-primary">Add a new package</a>
+<div class="<%= current_user.patient.present? ? 'container' : 'container-with-sidebar' %>">
+
+  <% if @therapist %>
+  <div class="<%= current_user.patient.present? ? 'container' : 'sidebar therapist-info' %>">
+    <div class="d-flex justify-content-center align-items-center">
+        <% if @therapist.present? && @therapist.photo.attached? %>
+            <div class="image-container-sidebar">
+                <%= cl_image_tag(@therapist.photo.key, alt: "Therapist Photo", class: "my-image rounded-circle") %>
             </div>
-          </div>
-
-    <div class="accordion" id="accordionExample">
-      <% @packages.each_with_index do |a, index| %>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
-              <%= a.service.name %> with <%= a.patient.first_name %> <%= a.patient.last_name %>
-            </button>
-          </h2>
-          <div id="collapse<%= index %>" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <p><Strong>Total number of meetings: <%= a.num_of_session %></Strong></p>
-              <p><Strong>Patient: <%= a.patient.first_name %> <%= a.patient.last_name %><Strong></p>
-              <p>
-                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                  More information
-                </a>
-                <a><%= link_to "Edit Package", edit_package_path(a), class:"btn btn-primary" %></a>
-              </p>
-              <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                  <p>Insurance name: <%= a.insurance_name %></p>
-                  <p>Insurance number: <%= a.insurance_number %></p>
-                  <p>Insurance type: <%= a.insurance_type %></p>
-                  <p>Package type: <%= a.package_type %></p>
-                </div>
-              </div>
-
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col"><Strong>#</Strong></th>
-                    <th scope="col"><Strong>Date</Strong></th>
-                    <th scope="col"><Strong>Start Time</Strong></th>
-                    <th scope="col"><Strong>End time</Strong></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% Meeting.where(package: a).each_with_index do |m, index| %>
-                    <% if m.start_time.present? %>
-                      <tr>
-                        <th scope="row"><%= index + 1%></th>
-                        <td><%= m.start_time.try(:strftime, "%A, %B %d, %Y") %></td>
-                        <td><%= m.start_time.try(:strftime, '%H:%M') %></td>
-                        <td><%= m.end_time.try(:strftime, '%H:%M') %></td>
-                      </tr>
-                    <% else %>
-                      <tr>
-                        <th scope="row"><%= index + 1%></th>
-                        <td class="text-warning"><Strong>To be booked</Strong></td>
-                        <td></td>
-                        <td><a href="/meetings/new" class="btn btn-primary btn-sm">Book</a></td>
-                      </tr>
-                    <% end %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <% end %></div>
-      <% end %>
-    <% end %>
-
-  <% if current_user.patient.present? %>
-    <div class="card">
-      <div class="card-header"><Strong>Patient information</Strong></div>
-      <div class="card-body">
-        <p class="card-text">First name: <%= current_user.patient.first_name %></p>
-        <p class="card-text">Last name: <%= current_user.patient.last_name %></p>
-        <p class="card-text">Date of birth: <%= current_user.patient.date_of_birth %></p>
-        <p class="card-text">Address: <%= current_user.patient.addresse %></p>
-        <a href="/packages/new" class="btn btn-primary">Add a new package</a>
-      </div>
+        <% end %>
     </div>
 
+    <div>
+      <% if @therapist.present? %>
+        <p class="text-center"> <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
+        <br>
+        <strong><p class="text-center"><%= @therapist.location_name %></p></strong>
+        <p class="text-center"><%= @therapist.location_address %></p>
+      <% end %>
+    </div>
 
-    <div class="accordion" id="accordionExample">
-      <% @packages.each_with_index do |a, index| %>
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
-              <%= a.service.name %> with <%= a.therapist.first_name %> <%= a.therapist.last_name %>
-            </button>
-          </h2>
-          <div id="collapse<%= index %>" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <p><Strong>Total number of meetings: <%= a.num_of_session %></Strong></p>
-              <p><Strong>Therapist: <%= a.therapist.first_name %> <%= a.therapist.last_name %><Strong></p>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col"><Strong>#</Strong></th>
-                    <th scope="col"><Strong>Date</Strong></th>
-                    <th scope="col"><Strong>Start Time</Strong></th>
-                    <th scope="col"><Strong>End time</Strong></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% Meeting.where(package: a).each_with_index do |m, index| %>
-                    <% if m.start_time.present? %>
-                      <tr>
-                        <th scope="row"><%= index + 1%></th>
-                        <td><%= m.start_time.try(:strftime, "%A, %B %d, %Y") %></td>
-                        <td><%= m.start_time.try(:strftime, '%H:%M') %></td>
-                        <td><%= m.end_time.try(:strftime, '%H:%M') %></td>
-                      </tr>
-                    <% else %>
-                      <tr>
-                        <th scope="row"><%= index + 1%></th>
-                        <td class="text-warning"><Strong>To be booked</Strong></td>
-                        <td></td>
-                        <td><a href="/meetings/new" class="btn btn-primary btn-sm">Book</a></td>
-                      </tr>
-                    <% end %>
-                  <% end %>
-                </tbody>
-              </table>
+    <div class="mt-3">
+      <% if @therapist.present? %>
+        <%= link_to meetings_path, class: "btn btn-primary mb-3 d-block" do %>
+            <i class="fas fa-calendar-week"></i> My calendar
+        <% end %>
+        <%= link_to week_availabilities_path, class: "btn btn-primary mb-3 d-block" do %>
+            <i class="fas fa-calendar-week"></i> My working hours
+        <% end %>
+        <!-- OTHER LINK -->
+      <% end %>
+    </div>
+
+    <div class="sidebar-patient-list mt-3">
+      <h4 class="text-center">My Current Patients</h4>
+      <% @bookings_grouped_by_patient.each do |patient, bookings| %>
+        <p><strong><%= patient.first_name %> <%= patient.last_name.upcase %></strong></p>
+        <ul>
+          <% bookings.map { |booking| booking.meeting.package }.uniq.each do |package| %>
+            <li>
+              <%= package.service.name %>:
+              <%= bookings.select { |b| b.meeting.package == package}.count %> /
+              <%= @meetings_by_package[package].count %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+  </div>
+  <% end %>
+
+
+  <div class="<%= current_user.patient.present? ? 'container' : 'content-column' %>">
+    <div class="shadow-rounded mb-5">
+      <h3 class="text-center">My packages</h3>
+      <br>
+      <% if current_user.therapist.present? %>
+        <% patients = [] %>
+        <% @packages.each do |a| %>
+          <% patients << a.patient %>
+        <% end %>
+        <% patients.uniq! %>
+        <% patients.each do |p| %>
+          <div class="patient-card">
+            <div class="card-header text-center", style="padding: 0.5rem;"><strong><%= p.first_name %>   <%= p.last_name.upcase %></strong></div>
+            <div class="card-body mt-3">
+              <p class="card-text">Date of birth: <%= p.date_of_birth %></p>
+              <p class="card-text">Address: <%= p.addresse %></p>
+              <a href="/packages/new" class="btn btn-primary mb-3">Add a new package</a>
             </div>
           </div>
+
+          <div class="accordion" id="accordionExample">
+            <% @packages.each_with_index do |a, index| %>
+              <% if a.patient == p %>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                      <%= a.service.name %> with <%= a.patient.first_name %> <%= a.patient.last_name %>
+                    </button>
+                  </h2>
+                  <div id="collapse<%= index %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <p><strong>Total number of meetings: <%= a.num_of_session %></strong></p>
+                      <p><strong>Patient: <%= a.patient.first_name %> <%= a.patient.last_name %></strong></p>
+                      <p>
+                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                          More information
+                        </a>
+                        <%= link_to "Edit Package", edit_package_path(a), class:"btn btn-primary" %>
+                      </p>
+                      <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                          <p>Insurance name: <%= a.insurance_name %></p>
+                          <p>Insurance number: <%= a.insurance_number %></p>
+                          <p>Insurance type: <%= a.insurance_type %></p>
+                          <p>Package type: <%= a.package_type %></p>
+                        </div>
+                      </div>
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col"><strong>#</strong></th>
+                            <th scope="col"><strong>Date</strong></th>
+                            <th scope="col"><strong>Start Time</strong></th>
+                            <th scope="col"><strong>End time</strong></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% Meeting.where(package: a).each_with_index do |m, index| %>
+                            <% if m.start_time.present? %>
+                              <tr>
+                                <th scope="row"><%= index + 1 %></th>
+                                <td><%= m.start_time.try(:strftime, "%A, %B %d, %Y") %></td>
+                                <td><%= m.start_time.try(:strftime, '%H:%M') %></td>
+                                <td><%= m.end_time.try(:strftime, '%H:%M') %></td>
+                              </tr>
+                            <% else %>
+                              <tr>
+                                <th scope="row"><%= index + 1 %></th>
+                                <td class="text-warning"><strong>To be booked</strong></td>
+                                <td></td>
+                                <td><a href="/meetings/new" class="btn btn-primary btn-sm">Book</a></td>
+                              </tr>
+                            <% end %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% end %> <!-- This closes the @packages.each_with_index loop -->
+          </div>
+          <br>
+          <br>
+        <% end %> <!-- This closes the patients.each loop -->
+      <% end %>
+
+      <% if current_user.patient.present? %>
+        <div class="patient-card">
+          <div class="card-header mb-3 text-center", style="padding: 0.5rem;"><strong>My information</strong></div>
+          <div class="card-body">
+            <p class="card-text">Date of birth: <%= current_user.patient.date_of_birth %></p>
+            <p class="card-text">Address: <%= current_user.patient.addresse %></p>
+            <a href="/packages/new" class="btn btn-primary mb-3">Add a new package</a>
+          </div>
         </div>
-        <% end %></div>
-  <% end %>
+
+        <div class="accordion" id="accordionExample2">
+          <% @packages.each_with_index do |a, index| %>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                  <%= a.service.name %> with <%= a.therapist.first_name %> <%= a.therapist.last_name %>
+                </button>
+              </h2>
+              <div id="collapse<%= index %>" class="accordion-collapse collapse collapse" data-bs-parent="#accordionExample2">
+                <div class="accordion-body">
+                  <p><strong>Total number of meetings: <%= a.num_of_session %></strong></p>
+                  <p><strong>Therapist: <%= a.therapist.first_name %> <%= a.therapist.last_name %></strong></p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"><strong>#</strong></th>
+                        <th scope="col"><strong>Date</strong></th>
+                        <th scope="col"><strong>Start Time</strong></th>
+                        <th scope="col"><strong>End time</strong></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% Meeting.where(package: a).each_with_index do |m, index| %>
+                        <% if m.start_time.present? %>
+                          <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td><%= m.start_time.try(:strftime, "%A, %B %d, %Y") %></td>
+                            <td><%= m.start_time.try(:strftime, '%H:%M') %></td>
+                            <td><%= m.end_time.try(:strftime, '%H:%M') %></td>
+                          </tr>
+                        <% else %>
+                          <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td class="text-warning"><strong>To be booked</strong></td>
+                            <td></td>
+                            <td><a href="/meetings/new" class="btn btn-primary btn-sm">Book</a></td>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
+
 </div>

@@ -1,77 +1,86 @@
 <div class="container-with-sidebar">
-
-  <div class="sidebar">
-    <div class="sidebar-content">
-      <div>
+  <div class="sidebar therapist-info">
+    <div class="d-flex justify-content-center align-items-center">
         <% if @therapist.photo.attached? %>
-          <%= cl_image_tag(@therapist.photo.key, class:"avatar-large") %>
+            <div class="image-container-sidebar">
+                <%= cl_image_tag(@therapist.photo.key, alt: "Therapist Photo", class: "my-image rounded-circle") %>
+            </div>
         <% else %>
-          <p>No photo</p>
+            <p>No photo</p>
         <% end %>
-      </div>
+    </div>
 
-      <p class="text-center">Welcome <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
-      <!-- LINK to edit profil-->
+    <div>
+      <% if @therapist.present? %>
+        <p class="text-center"> <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
+        <br>
+        <strong><p class="text-center"><%= @therapist.location_name %></p></strong>
+        <p class="text-center"><%= @therapist.location_address %></p>
+      <% end %>
+    </div>
 
+    <div class="mt-3">
       <%= link_to week_availabilities_path, class: "btn btn-primary mb-3 d-block" do %>
           <i class="fas fa-calendar-week"></i> My working hours
       <% end %>
-
+      <%= link_to packages_path, class: "btn btn-primary mb-3 d-block" do %>
+          <i class="fas fa-calendar-week"></i> My packages
+      <% end %>
       <%= link_to new_absence_path, class: "btn btn-primary mb-3 d-block" do %>
           <i class="fas fa-plus"></i> New absence
       <% end %>
-
       <!-- OTHER LINK -->
     </div>
   </div>
 
   <div class="content-column">
 
-    <h2>My Services</h2>
-    <div class="cards">
-      <% @therapist.services.each do |service| %>
-        <div class="card-category text-center" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cl_image_path(service.photo.key) %>)">
-          <h4><%= service.name %></h4>
-          <p>Price per unit: <%= service.price_per_unit %> | Duration per unit: <%= service.duration_per_unit %> minutes</p>
-        </div>
-      <% end %>
-    </div>
-
-
-    <br>
-    <hr>
-    <br>
-
-    <h2>My meetings</h2>
-
-    <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
-      <div class="day-events">
-        <% events.each do |event| %>
-          <% if event.is_a?(Meeting) %>
-            <div class="absence-card" style="top: <%= (event.start_time.hour * 60) + event.start_time.min %>px; background-color: <%= event.package.service.color %>;">
-              <strong><%= event.start_time.strftime('%H:%M') %> to <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %></strong>
-              <br>
-              <%= event.package.service.name %>
-              <br>
-              <% event.bookings.each do |booking| %>
-                with <strong><%= booking.patient.first_name + " " + booking.patient.last_name %></strong>
-              <% end %>
-            </div>
-          <% elsif event.is_a?(Absence) %>
-            <div class="absence-card" style="top: <%= (event.start_time.hour * 60) + event.start_time.min %>px;">
-              <strong><%= event.start_time.strftime('%H:%M') %> à <%= event.end_time.strftime('%H:%M') %></strong>
-              <br>
-              Absence (<%= event.reason %>)
-              <br>
-              <%= link_to edit_absence_path(event) do %>
-                <i class="fas fas-black fa-edit" title="Edit"></i>
-              <% end %>
-            </div>
-          <% end %>
+    <div class="shadow-rounded mb-5">
+      <h3 class="text-center">My Services</h3>
+      <div class="d-grid gap-2 col-2 mx-auto">
+        <h5 class="btn btn-primary mb-3 texte-center"> Add a new service</h5>
+      </div>
+      <br>
+      <div class="cards mb-3">
+        <% @therapist.services.each do |service| %>
+          <div class="card-category text-center" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cl_image_path(service.photo.key) %>)">
+            <h4><%= service.name %></h4>
+            <p>Price : <%= service.price_per_unit %> | Duration : <%= service.duration_per_unit %> min.</p>
+          </div>
         <% end %>
       </div>
-    <% end %>
-  </div>
+    </div>
+
+    <div class="shadow-rounded mb-5">
+      <h3 class="text-center">My meetings</h3>
+        <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
+          <div class="day-events">
+            <% events.each do |event| %>
+              <% if event.is_a?(Meeting) %>
+                <div class="absence-card" style="top: <%= (event.start_time.hour * 60) + event.start_time.min %>px; background-color: <%= event.package.service.color %>;">
+                  <strong><%= event.start_time.strftime('%H:%M') %> to <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %></strong>
+                  <br>
+                  <%= event.package.service.name %>
+                  <br>
+                  <% event.bookings.each do |booking| %>
+                    with <strong><%= booking.patient.first_name + " " + booking.patient.last_name %></strong>
+                  <% end %>
+                </div>
+              <% elsif event.is_a?(Absence) %>
+                <div class="absence-card" style="top: <%= (event.start_time.hour * 60) + event.start_time.min %>px;">
+                  <strong><%= event.start_time.strftime('%H:%M') %> à <%= event.end_time.strftime('%H:%M') %></strong>
+                  <br>
+                  Absence (<%= event.reason %>)
+                  <br>
+                  <%= link_to edit_absence_path(event) do %>
+                    <i class="fas fas-black fa-edit" title="Edit"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
 
 </div>
 

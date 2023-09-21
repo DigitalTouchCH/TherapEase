@@ -1,10 +1,25 @@
-<h1>Therapists</h1>
-
-<ul>
-  <% @therapists.each do |therapist| %>
-    <li>
-      <h2><%= therapist.first_name ;therapist.last_name %></h2>
-      <p>Information: <%= therapist.information %></p>
-    </li>
-  <% end %>
-</ul>
+<div class="team-boxed">
+  <div class="container">
+    <div class="intro">
+        <h1 class="text-center">Therapists</h2>
+        <p class="text-center">Explore our carefully curated list of highly skilled therapists. Our team of certified experts is dedicated to your well-being, ensuring you receive top-notch care and personalized treatments.</p>
+    </div>
+    <div class="row people">
+        <% @therapists.each do |therapist| %>
+          <div class="col-3 item">
+            <div class="box">
+              <% if therapist.photo.attached? %>
+                  <%= cl_image_tag therapist.photo.key, class: "card-img-top rounded"%>
+                <% else %>
+                  <img class="card-img-top rounded" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Card image cap" class="card-img-top rounded", style:="width: 290px; height:193px">
+                <% end %>
+              <h3 class="name"><%= therapist.first_name%></h3>
+              <p class="title"><%= ["physiotherapist", "osteopath"].sample %></p>
+              <p class="description"><%= therapist.information %></p>
+              <p class="button-18">Contact</p>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>

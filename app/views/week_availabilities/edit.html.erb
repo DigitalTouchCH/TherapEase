@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-6 offset-md-3">
-      <div class="p-4 bg-white shadow">
+      <div class="p-4 shadow-rounded">
         <h2 class="text-center">Edit Week Availability</h2>
         <%= form_with(model: @week_availability, local: true) do |form| %>
           <% if @week_availability.errors.any? %>
@@ -30,9 +30,9 @@
             <%= form.date_field :valid_until, class: 'form-control' %>
           </div>
 
-          <div class="actions mt-3">
+          <div class="actions mt-3 d-grid gap-2 d-md-flex justify-content-md-center">
             <%= form.submit 'Update Week Availability', class: 'btn btn-primary' %>
-            <%= link_to 'Cancel', week_availability_path(@week_availability), class: 'btn btn-secondary' %>
+            <%= link_to 'Cancel', week_availability_path(@week_availability), class: 'btn btn-outline-primary' %>
           </div>
         <% end %>
       </div>

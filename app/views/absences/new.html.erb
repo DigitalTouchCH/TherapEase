@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-md-6 offset-md-3">
-      <div class="p-4 bg-white shadow">
+      <div class="p-4 shadow-rounded">
         <h2 class="text-center">Create a new absence</h2>
           <%= simple_form_for(@absence) do |f| %>
             <%= f.error_notification %>
@@ -12,8 +12,9 @@
               <%= f.input :reason %>
             </div>
 
-            <div class="form-actions">
+            <div class="form-actions d-grid gap-2 d-md-flex justify-content-md-center">
               <%= f.button :submit, "Submit", class:"btn btn-primary" %>
+              <%= link_to 'Cancel', meetings_path, class: 'btn btn-outline-primary' %>
             </div>
           <% end %>
       </div>

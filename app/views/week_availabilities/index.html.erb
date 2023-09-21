@@ -1,90 +1,102 @@
 <div class="container-with-sidebar">
-  <div class="sidebar">
+  <div class="sidebar therapist-info">
+    <div class="d-flex justify-content-center align-items-center">
+        <% if @therapist.photo.attached? %>
+            <div class="image-container-sidebar">
+                <%= cl_image_tag(@therapist.photo.key, alt: "Therapist Photo", class: "my-image rounded-circle") %>
+            </div>
+        <% else %>
+            <p>No photo</p>
+        <% end %>
+    </div>
 
-      <% if @therapist.photo.attached? %>
-        <%= cl_image_tag(@therapist.photo.key, width: 100, height: 100, crop: :fill) %>
-      <% else %>
-        <p>No photo</p>
+    <div>
+      <% if @therapist.present? %>
+        <p class="text-center"> <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
+        <br>
+        <strong><p class="text-center"><%= @therapist.location_name %></p></strong>
+        <p class="text-center"><%= @therapist.location_address %></p>
       <% end %>
+    </div>
 
-      <p class="text-center">Welcome <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
-      <!-- LINK to edit profil-->
-
+    <div class="mt-3">
       <%= link_to meetings_path, class: "btn btn-primary mb-3 d-block" do %>
           <i class="fas fa-calendar-week"></i> My calendar
       <% end %>
-
+      <%= link_to packages_path, class: "btn btn-primary mb-3 d-block" do %>
+          <i class="fas fa-calendar-week"></i> My packages
+      <% end %>
       <%= link_to new_week_availability_path, class: "btn btn-primary mb-3 d-block" do %>
           <i class="fas fa-plus"></i> New schedule
       <% end %>
-
+    </div>
   </div>
 
 
   <div class="content-column">
 
-    <h2>My availabilities</h2>
-
-    <div data-controller="toggle" class="shadow">
-      <% @week_availabilities.each do |week_availability| %>
-        <div class="card my-5">
-          <div class="card-header text-center">
-            <%= week_availability.name.capitalize %> :
-            From <strong><%= week_availability.valid_from.strftime('%A %d %B %Y') %></strong> to <strong><%= week_availability.valid_until.strftime('%A %d %B %Y') %></strong>
-            <%= link_to new_week_availability_time_block_path(week_availability), class: 'float-right ml-2' do %>
-                <i class="fas fas-black fa-plus" title="Add Time Block"></i>
-            <% end %>
-            <%= link_to edit_week_availability_path(week_availability), class: 'float-right ml-2' do %>
-              <i class="fas fas-black fa-edit" title="Edit"></i>
-            <% end %>
-            <%= link_to week_availability_path(week_availability), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: 'float-right ml-2' do %>
-              <i class="fas fas-black fa-trash-alt" title="Delete"></i>
-            <% end %>
-            <button data-action="toggle#toggle" class="btn btn-sm float-right">
-              <i class="fas fas-black fa-eye" data-toggle-icon></i>
-            </button>
+    <div class="shadow-rounded mb-5">
+      <h3 class="text-center">My availabilities</h3>
+      <br>
+      <div data-controller="toggle">
+        <% @week_availabilities.each do |week_availability| %>
+          <div class="mb-5">
+            <div class="card-header text-center">
+              <%= week_availability.name.capitalize %> :
+              From <strong><%= week_availability.valid_from.strftime('%A %d %B %Y') %></strong> to <strong><%= week_availability.valid_until.strftime('%A %d %B %Y') %></strong>
+              <%= link_to new_week_availability_time_block_path(week_availability), class: 'float-right ml-2' do %>
+                  <i class="fas fas-black fa-plus" title="Add Time Block"></i>
+              <% end %>
+              <%= link_to edit_week_availability_path(week_availability), class: 'float-right ml-2' do %>
+                <i class="fas fas-black fa-edit" title="Edit"></i>
+              <% end %>
+              <%= link_to week_availability_path(week_availability), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: 'float-right ml-2' do %>
+                <i class="fas fas-black fa-trash-alt" title="Delete"></i>
+              <% end %>
+              <button data-action="toggle#toggle" class="btn btn-sm float-right">
+                <i class="fas fas-black fa-eye" data-toggle-icon></i>
+              </button>
+            </div>
+            <div class="card-body" data-toggle-target="content">
+              <table class="table table-transparent" style="height: 500px;">
+                <thead>
+                  <tr>
+                    <% @days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %>
+                    <% @days.each do |day| %>
+                      <th style="width: 14.28%;"><%= day %></th>
+                    <% end %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <% @days.each do |day| %>
+                      <td>
+                        <% time_blocks_for_day = week_availability.time_blocks.where(week_day: day.downcase) %>
+                        <% time_blocks_for_day.each do |time_block| %>
+                          <div class="time-block-card" style="height: <%= height_percentage(time_block.start_time, time_block.end_time) %>%; top: <%= top_position(time_block.start_time) %>%;">
+                              <div class="card-body">
+                                  <p>
+                                      <strong><%= "#{time_block.start_time.strftime('%H:%M')} to #{time_block.end_time.strftime('%H:%M')}" %></strong>
+                                      <br>
+                                      <%= link_to edit_week_availability_time_block_path(week_availability, time_block) do %>
+                                          <i class="fas fas-black fa-edit" title="Edit"></i>
+                                      <% end %>
+                                      <%= link_to week_availability_time_block_path(week_availability, time_block), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
+                                          <i class="fas fas-black fa-trash-alt" title="Delete"></i>
+                                      <% end %>
+                                  </p>
+                              </div>
+                          </div>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="card-body" data-toggle-target="content">
-            <table class="table table-transparent" style="height: 500px;"> <!-- Assurez-vous que la table a une hauteur fixe -->
-              <thead>
-                <tr>
-                  <% @days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %>
-                  <% @days.each do |day| %>
-                    <th style="width: 14.28%;"><%= day %></th>
-                  <% end %>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <% @days.each do |day| %>
-                    <td>
-                      <% time_blocks_for_day = week_availability.time_blocks.where(week_day: day.downcase) %>
-                      <% time_blocks_for_day.each do |time_block| %>
-                        <div class="time-block-card" style="height: <%= height_percentage(time_block.start_time, time_block.end_time) %>%; top: <%= top_position(time_block.start_time) %>%;">
-                            <div class="card-body">
-                                <p>
-                                    <strong><%= "#{time_block.start_time.strftime('%H:%M')} to #{time_block.end_time.strftime('%H:%M')}" %></strong>
-                                    <br>
-                                    <%= link_to edit_week_availability_time_block_path(week_availability, time_block) do %>
-                                        <i class="fas fas-black fa-edit" title="Edit"></i>
-                                    <% end %>
-                                    <%= link_to week_availability_time_block_path(week_availability, time_block), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
-                                        <i class="fas fas-black fa-trash-alt" title="Delete"></i>
-                                    <% end %>
-                                </p>
-                            </div>
-                        </div>
-                      <% end %>
-                    </td>
-                  <% end %>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
+        <% end %>
+      </div>
   </div>
 </div>
 
