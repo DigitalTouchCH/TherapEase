@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_18_191528) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_22_153822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,10 +91,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_191528) do
     t.text "info_public"
     t.text "info_private"
     t.string "url_zoom"
-    t.integer "max_attendees"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "package_id", null: false
+    t.string "status", default: "No date set"
     t.index ["package_id"], name: "index_meetings_on_package_id"
   end
 
