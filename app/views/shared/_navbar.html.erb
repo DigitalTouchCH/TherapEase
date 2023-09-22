@@ -1,39 +1,41 @@
-<div class="navbar navbar-expand-sm navbar-dark navbar-lewagon py-0">
+<div class="navbar navbar-expand-sm navbar-dark navbar-lewagon">
   <%= link_to "/", class: "navbar-brand" do %>
     <%= image_tag "https://i.ibb.co/bH60H1C/Untitled-design.png" %>
   <% end %>
-
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-
-  <div class="shadow-md collapse navbar-collapse py-0" id="navbarSupportedContent">
+  <div class="shadow-md collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <% if user_signed_in? %>
         <li class="nav-item">
           <%= link_to "Services", "/services", class: "nav-link" %>
         </li>
         <li class="nav-item">
           <%= link_to "Therapists", "/therapists", class: "nav-link" %>
         </li>
+
+
+  <div class="shadow-md collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+
         <li class="nav-item">
-          <% if current_user.therapist.present? %>
-            <%= link_to "My dashboard", "/meetings", class: "nav-link" %>
-          <% end %>
+          <%= link_to "Bookings", "/bookings", class: "nav-link" %>
         </li>
-        <% unless current_user.therapist.present? %>
-          <li class="nav-item">
-            <%= link_to "My packages", "/packages", class: "nav-link" %>
-          </li>
-        <% end %>
+        <li class="nav-item">
+          <%= link_to "Packages", "/packages", class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Availability", "/packages", class: "nav-link" %>
+        </li>
         <li class="nav-item">
           <%= link_to "Log out", destroy_user_session_path, class: "nav-link", data: { turbo_method: :delete } %>
         </li>
           <li class="nav-item dropdown">
           <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img width="30" height="30" src="https://img.icons8.com/cotton/64/gender-neutral-user--v2.png" alt="gender-neutral-user--v2"/>
+            <img width="50" height="50" src="https://img.icons8.com/cotton/64/gender-neutral-user--v2.png" alt="gender-neutral-user--v2"/>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Absences", "#", class: "dropdown-item" %>
@@ -43,7 +45,7 @@
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Login/Sign Up", new_user_session_path, class: "nav-link" %>
           </li>
         <% end %>
       </ul>
