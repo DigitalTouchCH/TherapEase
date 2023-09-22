@@ -33,19 +33,20 @@
 
     <div class="sidebar-patient-list mt-3">
       <h4 class="text-center">My Current Patients</h4>
-      <% @bookings_grouped_by_patient.each do |patient, bookings| %>
+      <% @meetings_grouped_by_patient.each do |patient, meetings| %>
         <p><strong><%= patient.first_name %> <%= patient.last_name.upcase %></strong></p>
         <ul>
-          <% bookings.map { |booking| booking.meeting.package }.uniq.each do |package| %>
+          <% meetings.map { |meeting| meeting.package }.uniq.each do |package| %>
             <li>
               <%= package.service.name %>:
-              <%= bookings.select { |b| b.meeting.package == package}.count %> /
+              <%= meetings.select { |m| m.package == package && m.status == "No date set" }.count %> /
               <%= @meetings_by_package[package].count %>
             </li>
           <% end %>
         </ul>
       <% end %>
     </div>
+
 
   </div>
   <% end %>

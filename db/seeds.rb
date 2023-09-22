@@ -342,15 +342,17 @@ end
 
 puts "#{Package.count} packages created."
 
+# Seed Meetings
+
 meetings = []
 package_data.each do |package|
   package.num_of_session.times do |i|
     meeting = Meeting.create!(
       info_public: "Public meeting info",
       info_private: "Private meeting info",
-      url_zoom: "https://zoomlink.example/#{rand(1000..9999)}",
-      max_attendees: 1,
-      package: package
+      url_zoom: "",
+      package: package,
+      status: "No date set" # default value, but set explicitly for clarity
     )
     meetings << meeting
   end
@@ -358,39 +360,25 @@ end
 
 puts "#{Meeting.count} meetings created."
 
+# Assign Dates and Times to Meetings
 
-# BOOKINGS
+meetings_to_assign_date = meetings.sample(meetings.count * 3 / 4)
 
-meetings_to_book = meetings.sample(meetings.count*3 / 4)
-
-bookings = []
-meetings_to_book.each do |meeting|
-
+meetings_to_assign_date.each do |meeting|
   duration = meeting.package.service.duration_per_unit.minutes
   day = Date.today + rand(1..10).days
   hour = rand(8..16)
-
 
   start_time = Time.new(day.year, day.month, day.day, hour)
   end_time = start_time + duration
 
   meeting.start_time = start_time
   meeting.end_time = end_time
+  meeting.status = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"].sample
   meeting.save!
-
-
-  statuses = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"]
-
-  booking = Booking.create!(
-    status: statuses.sample,
-    info_public: "Public booking info",
-    info_private: "Private booking info",
-    patient: meeting.package.patient,
-    meeting: meeting
-  )
-  bookings << booking
 end
 
-puts "#{bookings.count} bookings created."
+puts "#{meetings_to_assign_date.count} meetings assigned with date and time."
+
 
 puts "Ok :)"

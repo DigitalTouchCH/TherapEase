@@ -1,6 +1,5 @@
 class Meeting < ApplicationRecord
   belongs_to :package
-  has_many :bookings, dependent: :destroy
 
 
   validates :max_attendees, numericality: { greater_than_or_equal_to: 1}
