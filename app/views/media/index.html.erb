@@ -1,0 +1,10 @@
+<div class="container">
+<h1>"Boungiorno!"</h1>
+<% @media.each do |m| %>
+<%= m.id %>
+<%= m.title %>
+<%= m.description %>
+<%= youtube_video m.url %>
+<%= m.url %>
+<% end %>
+</div>
