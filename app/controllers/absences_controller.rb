@@ -1,5 +1,5 @@
 class AbsencesController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   before_action :validate_therapist
   before_action :set_absence, only: [:edit, :update]
 

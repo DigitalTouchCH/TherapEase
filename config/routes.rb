@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   resources :meetings
 
   resources :packages
+
+  resources :media
 end
