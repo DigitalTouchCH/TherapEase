@@ -62,9 +62,7 @@
                   <br>
                   <%= event.package.service.name %>
                   <br>
-                  <% event.bookings.each do |booking| %>
-                    with <strong><%= booking.patient.first_name + " " + booking.patient.last_name %></strong>
-                  <% end %>
+                  <strong><%= event.package.patient.first_name + " " + event.package.patient.last_name %></strong>
                 </div>
               <% elsif event.is_a?(Absence) %>
                 <div class="absence-card" style="top: <%= (event.start_time.hour * 60) + event.start_time.min %>px;">
