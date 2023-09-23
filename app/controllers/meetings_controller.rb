@@ -15,7 +15,6 @@ class MeetingsController < ApplicationController
   def new
     @package = Package.find(params[:package_id]) if params[:package_id]
     @meeting = Meeting.new(package: @package)
-
     @final_available_slots = AvailableSlotsCalculator.new(@package.therapist, @package).call
 
     slot_class = Class.new do
