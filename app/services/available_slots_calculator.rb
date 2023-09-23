@@ -20,7 +20,7 @@ class AvailableSlotsCalculator
       meetings_slots = get_meeting_slots_for(date)
       absences_slots = get_absence_slots_for(date)
 
-      final_slots_for_day = filter_final_available_slots(all_slots_for_day, meetings_slots, absences_slots, service_duration)
+      final_slots_for_day = filter_final_available_slots(all_slots_for_day, meetings_slots, absences_slots)
       final_available_slots[date] = final_slots_for_day
     end
 
@@ -56,6 +56,7 @@ class AvailableSlotsCalculator
     Meeting.joins(:package).where(packages: { therapist_id: @therapist.id }).where("start_time::date = ?", date).flat_map do |meeting|
       slots = []
       meeting_start = meeting.start_time
+
       while meeting_start < meeting.end_time
         slots << meeting_start
         meeting_start += 15.minutes
@@ -84,15 +85,15 @@ class AvailableSlotsCalculator
     get_slots_from_time_blocks(valid_week_availability.time_blocks, date)
   end
 
-  def filter_final_available_slots(all_available_slots, meetings_slots, absences_slots, service_duration)
+  def filter_final_available_slots(all_available_slots, meetings_slots, absences_slots)
     blocked_slots = meetings_slots + absences_slots
-    final_slots = all_available_slots - blocked_slots
-    sorted_final_slots = final_slots.sort
-    filter_slots(sorted_final_slots)
+    final_slots = all_available_slots.reject { |slot| blocked_slots.include?(slot) }
+    filter_slots(final_slots)
+
   end
 
   def filter_slots(slots)
-    slots.reject { |slot| slot.min == 15 }
+    slots.reject { |slot| slot.min == 15 || slot.min == 45 }
   end
 end
 
