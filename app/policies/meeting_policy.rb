@@ -3,14 +3,21 @@ class MeetingPolicy < ApplicationPolicy
     # Only therapists and patients associated with the meeting can see the list of meetings
     user_meetings.exists?
   end
+
   def show?
     # The associated therapist or the patient can view a specific meeting
     user_is_therapist_for_meeting? || user_is_patient_for_meeting?
   end
-  def create?
-    # Only patients can create a meeting
-    user_is_patient?
+
+  def new?
+    create?
   end
+
+  def create?
+    # Only the associated therapist or the patient can create a meeting
+    record.package.therapist.user == user || record.package.patient.user == user
+  end
+
   def update?
     # Only the associated therapist can update the meeting
     user_is_therapist_for_meeting?

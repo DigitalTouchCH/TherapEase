@@ -340,6 +340,25 @@ Service.all.each do |service|
   end
 end
 
+Service.all.each do |service|
+  service.therapists.each do |therapist|
+    package = Package.new(
+      num_of_session: 9,
+      info_private: "Private package info",
+      info_public: "Public package info",
+      insurance_name: "InsuranceCorp",
+      insurance_number: "12345",
+      insurance_type: "TypeA",
+      package_type: "Individual",
+      service: service,
+      therapist: therapist,
+      patient: patient2
+    )
+    package.save!
+    package_data << package
+  end
+end
+
 puts "#{Package.count} packages created."
 
 # Seed Meetings
@@ -366,8 +385,8 @@ meetings_to_assign_date = meetings.sample(meetings.count * 3 / 4)
 
 meetings_to_assign_date.each do |meeting|
   duration = meeting.package.service.duration_per_unit.minutes
-  day = Date.today + rand(1..10).days
-  hour = rand(8..16)
+  day = Date.today + rand(1..14).days
+  hour = rand(8..17)
 
   start_time = Time.new(day.year, day.month, day.day, hour)
   end_time = start_time + duration

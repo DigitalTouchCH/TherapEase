@@ -11,10 +11,8 @@ class PackagesController < ApplicationController
       @meetings_by_package = @therapist.packages.includes(:meetings).each_with_object({}) do |package, hsh|
         hsh[package] = package.meetings
       end
-
       # Fetch all meetings
       all_meetings = @meetings_by_package.values.flatten
-
       # Group meetings by patient through their package
       @meetings_grouped_by_patient = all_meetings.group_by { |meeting| meeting.package.patient }
     end
