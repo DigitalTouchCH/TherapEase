@@ -1,0 +1,21 @@
+<%= form_for @meeting do |f| %>
+  <!-- Si @package est présent, pré-remplir certaines informations -->
+  <% if @package %>
+    <%= f.hidden_field :package_id, value: @package.id %>
+    <!-- Afficher d'autres informations pertinentes sur le paquet ici -->
+  <% end %>
+
+  <div class="shadow-rounded mb-5">
+    <h3 class="text-center">Available Slots</h3>
+    <%= week_calendar attribute: :start_time, events: @final_slots_array do |date, slots| %>
+      <div class="day-events">
+        <% slots.each do |slot| %>
+          <div class="absence-card">
+            <%= slot.start_time.strftime('%H:%M') %>
+            <br>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

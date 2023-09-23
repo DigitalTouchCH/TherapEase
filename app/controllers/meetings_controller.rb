@@ -13,9 +13,27 @@ class MeetingsController < ApplicationController
   end
 
   def new
-    @meeting = Meeting.new
+    @package = Package.find(params[:package_id]) if params[:package_id]
+    @meeting = Meeting.new(package: @package)
+
+    @final_available_slots = AvailableSlotsCalculator.new(@package.therapist, @package).call
+
+    slot_class = Class.new do
+      attr_reader :start_time
+
+      def initialize(start_time)
+        @start_time = start_time
+      end
+    end
+
+    slots_array = @final_available_slots.values.flatten.map { |datetime| slot_class.new(datetime) }
+    @final_available_slots_array = slots_array.group_by { |slot| slot.start_time.to_date }
+    @final_slots_array = @final_available_slots_array.values.flatten
+
     authorize @meeting
   end
+
+
 
   def create
     @meeting = Meeting.new(meeting_params)

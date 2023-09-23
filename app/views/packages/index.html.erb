@@ -123,7 +123,7 @@
                                 <th scope="row"><%= index + 1 %></th>
                                 <td class="text-warning"><strong>To be booked</strong></td>
                                 <td></td>
-                                <td><a href="/meetings/new" class="btn btn-primary btn-sm">Book</a></td>
+                                <td><%= link_to "Book", new_meeting_path(package_id: a.id), class: "btn btn-primary btn-sm" %></td>
                               </tr>
                             <% end %>
                           <% end %>
@@ -185,7 +185,7 @@
                             <th scope="row"><%= index + 1 %></th>
                             <td class="text-warning"><strong>To be booked</strong></td>
                             <td></td>
-                            <td><a href="/meetings/new" class="btn btn-primary btn-sm">Book</a></td>
+                            <td><%= link_to "Book", new_meeting_path(package_id: a.id), class: "btn btn-primary btn-sm" %></td>
                           </tr>
                         <% end %>
                       <% end %>
