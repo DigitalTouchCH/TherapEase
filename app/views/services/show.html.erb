@@ -3,7 +3,7 @@
 <div>
   <h2><%= @service.name %></h2>
   <p><strong>Description:</strong> <%= @service. %></p>
-  <p><strong>Price:</strong> $<%= @service.price_per_unit %></p>
+  <p><strong>Price:</strong> $<%= format_price(@service.price_per_unit) %></p>
 </div>
 
 <%= link_to 'Edit', edit_service_path(@service) %> |
