@@ -8,3 +8,6 @@ application.register("insert-in-list", InsertInListController)
 
 import ToggleController from "./toggle_controller"
 application.register("toggle", ToggleController)
+
+import SlotSelectionController from "./slot_selection_controller"
+application.register("slot-selection", SlotSelectionController)
