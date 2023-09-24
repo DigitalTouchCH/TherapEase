@@ -22,6 +22,11 @@ user5 = User.create(email: "therapist3@example.com", password: "password123", pa
 user6 = User.create(email: "therapist4@example.com", password: "password123", password_confirmation: "password123")
 user7 = User.create(email: "therapist5@example.com", password: "password123", password_confirmation: "password123")
 user8 = User.create(email: "therapist6@example.com", password: "password123", password_confirmation: "password123")
+user9 = User.create(email: "patient3@example.com", password: "password123", password_confirmation: "password123")
+user10 = User.create(email: "patient4@example.com", password: "password123", password_confirmation: "password123")
+user11 = User.create(email: "patient5@example.com", password: "password123", password_confirmation: "password123")
+user12 = User.create(email: "patient6@example.com", password: "password123", password_confirmation: "password123")
+
 puts "#{User.count} users created."
 
 # PATIENTS
@@ -58,6 +63,78 @@ patient2 = Patient.create(
 )
 patient2.user = user2
 patient2.save!
+
+patient3 = Patient.create(
+  date_of_birth: Date.new(1985, 8, 15),
+  age: 38,
+  addresse: "789 Patient Rd",
+  tel_1: "789-012-3456",
+  tel_2: "890-123-4567",
+  contact_name: "David Johnson",
+  contact_info: "Brother",
+  contact_tel: "901-234-5678",
+  info_private: "Private notes 2",
+  info_public: "Public notes 2",
+  first_name: "Emily",
+  last_name: "Johnson"
+)
+
+patient3.user = user9
+patient3.save!
+
+patient4 = Patient.create(
+  date_of_birth: Date.new(1985, 9, 20),
+  age: 37,
+  addresse: "789 Patient Rd",
+  tel_1: "789-012-3456",
+  tel_2: "890-123-4567",
+  contact_name: "Bob Johnson",
+  contact_info: "Friend",
+  contact_tel: "901-234-5678",
+  info_private: "Private notes for patient 3",
+  info_public: "Public notes for patient 3",
+  first_name: "Eve",
+  last_name: "Teil"
+)
+
+patient4.user = user10
+patient4.save!
+
+patient5 = Patient.create(
+  date_of_birth: Date.new(1988, 9, 20),
+  age: 35,
+  addresse: "789 Patient Rd",
+  tel_1: "789-012-3456",
+  tel_2: "890-123-4567",
+  contact_name: "Bob Johnson",
+  contact_info: "Friend",
+  contact_tel: "901-234-5678",
+  info_private: "Private notes for patient 3",
+  info_public: "Public notes for patient 3",
+  first_name: "Thomas",
+  last_name: "Dessert"
+)
+
+patient5.user = user11
+patient5.save!
+
+patient6 = Patient.create(
+  date_of_birth: Date.new(1980, 9, 20),
+  age: 42,
+  addresse: "789 Patient Rd",
+  tel_1: "789-012-3456",
+  tel_2: "890-123-4567",
+  contact_name: "Bob Johnson",
+  contact_info: "Friend",
+  contact_tel: "901-234-5678",
+  info_private: "Private notes for patient 3",
+  info_public: "Public notes for patient 3",
+  first_name: "Angelina",
+  last_name: "Jolie"
+)
+
+patient6.user = user12
+patient6.save!
 
 puts "#{Patient.count} patients created."
 
@@ -157,6 +234,7 @@ therapist6.save!
 puts "#{Therapist.count} therapists created."
 
 # AVAILABILITIES
+
 days_of_week = ["monday", "tuesday", "wednesday", "thursday", "friday"]
 therapists = [therapist1, therapist2]
 
@@ -268,12 +346,6 @@ services_data = [
   }
 ]
 
-# services_data.each do |service_data|
-#   therapists_for_service = service_data.delete(:services_therapists)
-#   service_obj = Service.create!(service_data)
-#   service_obj.therapists << therapists_for_service if therapists_for_service
-#   service_obj.save!
-# end
 
 services_data.each do |service_data|
   therapists_for_service = service_data.delete(:services_therapists)
@@ -293,7 +365,6 @@ services_data.each do |service_data|
 end
 
 puts "#{Service.count} services created."
-
 
 
 
@@ -352,7 +423,7 @@ Service.all.each do |service|
       package_type: "Individual",
       service: service,
       therapist: therapist,
-      patient: patient2
+      patient: patient3
     )
     package.save!
     package_data << package
@@ -371,7 +442,45 @@ Service.all.each do |service|
       package_type: "Individual",
       service: service,
       therapist: therapist,
-      patient: patient1
+      patient: patient4
+    )
+    package.save!
+    package_data << package
+  end
+end
+
+Service.all.each do |service|
+  service.therapists.each do |therapist|
+    package = Package.new(
+      num_of_session: 9,
+      info_private: "Private package info",
+      info_public: "Public package info",
+      insurance_name: "InsuranceCorp",
+      insurance_number: "12345",
+      insurance_type: "TypeA",
+      package_type: "Individual",
+      service: service,
+      therapist: therapist,
+      patient: patient5
+    )
+    package.save!
+    package_data << package
+  end
+end
+
+Service.all.each do |service|
+  service.therapists.each do |therapist|
+    package = Package.new(
+      num_of_session: 9,
+      info_private: "Private package info",
+      info_public: "Public package info",
+      insurance_name: "InsuranceCorp",
+      insurance_number: "12345",
+      insurance_type: "TypeA",
+      package_type: "Individual",
+      service: service,
+      therapist: therapist,
+      patient: patient6
     )
     package.save!
     package_data << package
@@ -380,9 +489,12 @@ end
 
 puts "#{Package.count} packages created."
 
-# Seed Meetings
+
+
+# MEETINGS
 
 meetings = []
+
 package_data.each do |package|
   package.num_of_session.times do |i|
     meeting = Meeting.create!(
@@ -390,7 +502,7 @@ package_data.each do |package|
       info_private: "Private meeting info",
       url_zoom: "",
       package: package,
-      status: "No date set" # default value, but set explicitly for clarity
+      status: "No date set"
     )
     meetings << meeting
   end
@@ -398,31 +510,75 @@ end
 
 puts "#{Meeting.count} meetings created."
 
-# Assign Dates and Times to Meetings
+# DATE TO MEETIN OLD
+#
+# meetings_to_assign_date = meetings.sample(meetings.count * 3 / 4)
+#
+# meetings_to_assign_date.each do |meeting|
+#   duration = meeting.package.service.duration_per_unit.minutes
+#   day = Date.today + rand(1..14).days
+#
+#   while ![1, 2, 3, 4, 5].include?(day.cwday)
+#     day += 1.day
+#   end
+#
+#
+#   hour = rand(8..17)
+#
+#   start_time = Time.new(day.year, day.month, day.day, hour)
+#   end_time = start_time + duration
+#
+#   meeting.start_time = start_time
+#   meeting.end_time = end_time
+#   meeting.status = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"].sample
+#   meeting.save!
+# end
 
-meetings_to_assign_date = meetings.sample(meetings.count * 3 / 4)
+# Récupérez la liste des thérapeutes disponibles
+therapists = Therapist.all
 
-meetings_to_assign_date.each do |meeting|
-  duration = meeting.package.service.duration_per_unit.minutes
-  day = Date.today + rand(1..14).days
+# Définissez les plages horaires disponibles (de 09h à 17h, sauf de 12h à 13h)
+available_hours = (10..12).to_a + (15..17).to_a
 
-  while ![1, 2, 3, 4, 5].include?(day.cwday)
-    day += 1.day
+# Créez une liste de jours de -7 jours à +14 jours par rapport à aujourd'hui
+start_date = Date.today - 7
+end_date = Date.today + 14
+date_range = (start_date..end_date).to_a.select { |day| [1, 2, 3, 4, 5].include?(day.cwday) }
+
+# Boucle sur chaque thérapeute
+therapists.each do |therapist|
+  # Récupérez les packages associés à ce thérapeute
+  therapist_packages = therapist.packages.includes(:meetings).where(meetings: { start_time: nil }).sample(therapist.packages.count * 3 / 4)
+
+  therapist_packages.each do |package|
+    meetings_to_assign_date = package.meetings.where(start_time: nil)
+
+    meetings_to_assign_date.each do |meeting|
+      duration = package.service.duration_per_unit.minutes
+      day = date_range.sample
+      hour = available_hours.sample
+
+      start_time = Time.new(day.year, day.month, day.day, hour)
+      end_time = start_time + duration
+
+      # Vérifiez que la réunion ne se chevauche pas avec d'autres réunions du thérapeute
+      overlapping_meetings = package.meetings.where(
+        "start_time < ? AND end_time > ?",
+        end_time,
+        start_time
+      )
+
+      unless overlapping_meetings.exists?
+        meeting.start_time = start_time
+        meeting.end_time = end_time
+        meeting.status = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"].sample
+        meeting.save!
+      end
+    end
   end
-
-
-  hour = rand(8..17)
-
-  start_time = Time.new(day.year, day.month, day.day, hour)
-  end_time = start_time + duration
-
-  meeting.start_time = start_time
-  meeting.end_time = end_time
-  meeting.status = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"].sample
-  meeting.save!
 end
 
-puts "#{meetings_to_assign_date.count} meetings assigned with date and time."
+
 
 
 puts "Ok :)"
