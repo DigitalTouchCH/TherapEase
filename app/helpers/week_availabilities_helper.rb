@@ -45,7 +45,7 @@ module WeekAvailabilitiesHelper
     start_hours_from_5_am = (start_time.seconds_since_midnight / 3600.0) - 5.0
     start_hours_from_5_am = 0 if start_hours_from_5_am < 0
     (start_hours_from_5_am / TOTAL_HOURS) * 100
-end
+  end
 
 
 end

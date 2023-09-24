@@ -1,8 +1,9 @@
 <div class="container" data-controller="slot-selection" data-slot-selection-duration="<%= @duration %>">
-  <div class="row mt-5">
-    <div class="p-4 shadow-rounded">
-      <h2 class="text-center">Schedule a Meeting</h2>
+  <div class="row mt-5 shadow-rounded">
 
+    <!-- Colonne pour le formulaire -->
+    <div class="col-md-4">
+      <h2 class="text-center mt-2">Schedule a Meeting</h2>
       <%= form_for @meeting do |f| %>
 
         <!-- HIDEN FIELD -->
@@ -11,56 +12,52 @@
         <% end %>
         <%= f.hidden_field :status, value: "Pending", data: { slot_selection_target: "status" } %>
 
-        <!-- FIELD Start Time et End Time READ-ONLY-->
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <%= f.label :start_time, "Selected Start Time:" %>
-            <%= f.text_field :start_time, class: 'form-control', data: { slot_selection_target: "startTime" }, readonly: true %>
-          </div>
-          <div class="form-group col-md-6">
-            <%= f.label :end_time, "End Time:" %>
-            <%= f.text_field :end_time, class: 'form-control', data: { slot_selection_target: "endTime" }, readonly: true %>
-          </div>
+        <!-- FIELD Start Time et End Time READ-ONLY -->
+        <div class="form-group mt-5">
+          <%= f.label :start_time, "Selected Start Time:" %>
+          <%= f.text_field :start_time, class: 'form-control', data: { slot_selection_target: "startTime" }, readonly: true %>
+        </div>
+        <div class="form-group mt-2">
+          <%= f.label :end_time, "End Time:" %>
+          <%= f.text_field :end_time, class: 'form-control', data: { slot_selection_target: "endTime" }, readonly: true %>
         </div>
 
         <!-- FIELD INFO -->
-
-        <div class="form-group">
+        <div class="form-group mt-5">
           <%= f.label :info_public, "Public Information:" %>
-          <%= f.text_area :info_public, class: 'form-control' %>
+          <%= f.text_area :info_public, class: 'form-control', style: 'height: 150px;' %>
         </div>
-
         <% if current_user&.therapist %>
-          <div class="form-group">
+          <div class="form-group mt-2">
             <%= f.label :info_private, "Private Information (Visible only to therapists):" %>
-            <%= f.text_area :info_private, class: 'form-control' %>
+            <%= f.text_area :info_private, class: 'form-control', style: 'height: 150px;' %>
           </div>
         <% end %>
 
         <!-- Bouton Submit -->
-        <div class="actions mt-3">
+        <div class="actions mt-3 d-flex justify-content-center">
           <%= f.submit 'Schedule Meeting', class: 'btn btn-primary' %>
         </div>
-
-        <!-- FIELD AVAILABILITIES SLOTS -->
-
-        <div class="form-group mt-3">
-          <%= week_calendar attribute: :start_time, events: @final_slots_array do |date, slots| %>
-            <div class="day-events">
-              <% slots.each do |slot| %>
-                <div class="absence-card slot" data-slot-target="slot" data-time="<%= slot.start_time %>" data-action="click->slot-selection#select">
-                  <%= slot.start_time.strftime('%H:%M') %>
-                  <br>
-                </div>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-
-
-
-
       <% end %>
     </div>
+
+    <!-- Colonne pour les slots de disponibilités -->
+    <div class="col-md-8">
+      <div class="form-group mt-3">
+        <%= week_calendar attribute: :start_time, events: @final_slots_array do |date, slots| %>
+          <div class="day-events" style="height: 500px;">
+            <% slots.each do |slot| %>
+              <div class="absence-card slot" data-slot-target="slot" data-time="<%= slot.start_time %>" data-action="click->slot-selection#select"
+                  style="top: <%= calculate_top_position(slot) %>%;
+                  height: <%= calculate_height_for_meeting(slot)%>%;
+                  padding: 0.1em; ">
+                <%= slot.start_time.strftime('%H:%M') %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
   </div>
 </div>

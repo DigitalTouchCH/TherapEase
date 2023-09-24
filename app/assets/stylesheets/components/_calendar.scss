@@ -25,7 +25,6 @@
 }
 
 
-
 .calendar-table-container {
   overflow-x: auto;
 }
@@ -42,16 +41,53 @@
   color: #999; /* Gray out the text */
 }
 
+.day-events {
+  position: relative;
+}
+
 .meeting-card {
   position: absolute;
   width: 100%;
-  height: auto; /* ou définissez une hauteur spécifique pour chaque réunion */
   border: 1px solid #ccc;
   background-color: #f9f9f9;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 1em;
   box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
 }
+
+.absence-card {
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 1em;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  color: black !important;
+  overflow: hidden;
+}
+
+.time-block-card {
+  background-color: white;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  margin: 4px 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  overflow: hidden;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+
+.time-block-card .btn-sm {
+  margin-top: 5px;
+}
+
 
 
 /* for week_availabilities */
