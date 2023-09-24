@@ -105,25 +105,26 @@
                           <tr>
                             <th scope="col"><strong>#</strong></th>
                             <th scope="col"><strong>Date</strong></th>
-                            <th scope="col"><strong>Start Time</strong></th>
-                            <th scope="col"><strong>End time</strong></th>
+                            <th scope="col"><strong>Action</strong></th>
                           </tr>
                         </thead>
                         <tbody>
-                          <% Meeting.where(package: a).each_with_index do |m, index| %>
+                          <% Meeting.where(package: a).order(:start_time).each_with_index do |m, index| %>
                             <% if m.start_time.present? %>
                               <tr>
                                 <th scope="row"><%= index + 1 %></th>
-                                <td><%= m.start_time.try(:strftime, "%A, %B %d, %Y") %></td>
-                                <td><%= m.start_time.try(:strftime, '%H:%M') %></td>
-                                <td><%= m.end_time.try(:strftime, '%H:%M') %></td>
+                                <td><%= m.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= m.end_time.try(:strftime, '%H:%M') %></td>
+                                <td>
+                                  <% if m.start_time > (Time.now + 24.hours) %>
+                                    <%= link_to "Edit", edit_meeting_path(m.id), class: "btn btn-primary btn-sm" %>
+                                  <% end %>
+                                </td>
                               </tr>
                             <% else %>
                               <tr>
                                 <th scope="row"><%= index + 1 %></th>
                                 <td class="text-warning"><strong>To be booked</strong></td>
-                                <td></td>
-                                <td><%= link_to "Book", new_meeting_path(package_id: a.id), class: "btn btn-primary btn-sm" %></td>
+                                <td><%= link_to "Book", edit_meeting_path(m.id), class: "btn btn-primary btn-sm" %></td>
                               </tr>
                             <% end %>
                           <% end %>
