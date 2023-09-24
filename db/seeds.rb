@@ -534,20 +534,15 @@ puts "#{Meeting.count} meetings created."
 #   meeting.save!
 # end
 
-# Récupérez la liste des thérapeutes disponibles
 therapists = Therapist.all
 
-# Définissez les plages horaires disponibles (de 09h à 17h, sauf de 12h à 13h)
 available_hours = (10..12).to_a + (15..17).to_a
 
-# Créez une liste de jours de -7 jours à +14 jours par rapport à aujourd'hui
 start_date = Date.today - 7
 end_date = Date.today + 14
 date_range = (start_date..end_date).to_a.select { |day| [1, 2, 3, 4, 5].include?(day.cwday) }
 
-# Boucle sur chaque thérapeute
 therapists.each do |therapist|
-  # Récupérez les packages associés à ce thérapeute
   therapist_packages = therapist.packages.includes(:meetings).where(meetings: { start_time: nil }).sample(therapist.packages.count * 3 / 4)
 
   therapist_packages.each do |package|
@@ -571,7 +566,13 @@ therapists.each do |therapist|
       unless overlapping_meetings.exists?
         meeting.start_time = start_time
         meeting.end_time = end_time
-        meeting.status = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"].sample
+
+        if start_time.past?
+          meeting.status = ["Done", "Excused"].sample
+        elsif start_time.future?
+          meeting.status = ["Pending", "Confirmed"].sample
+        end
+
         meeting.save!
       end
     end

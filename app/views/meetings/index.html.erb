@@ -53,6 +53,41 @@
 
     <div class="shadow-rounded mb-5">
       <h3 class="text-center">My meetings</h3>
+      <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
+        <div class="day-events" style="height: 1000px;">
+          <% events.each do |event| %>
+            <% if event.is_a?(Meeting) %>
+              <div class="meeting-card"
+                  style="top: <%= calculate_top_position(event) %>%;
+                          height: <%= calculate_height_for_meeting(event) %>%;
+                          background-color: <%= event.package.service.color %>;">
+                <strong><%= event.start_time.strftime('%H:%M') %> to <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %></strong> - <strong><%= event.package.patient.first_name + " " + event.package.patient.last_name %></strong>
+                <br>
+                <%= event.package.service.name %>
+
+              </div>
+            <% elsif event.is_a?(Absence) %>
+              <div class="absence-card"
+                  style="top: <%= calculate_top_position(event) %>%;
+                  height: <%= calculate_height_for_meeting(event) %>%;">
+                <strong><%= event.start_time.strftime('%H:%M') %> à <%= event.end_time.strftime('%H:%M') %></strong>
+                <br>
+                Absence (<%= event.reason %>)
+                <br>
+                <%= link_to edit_absence_path(event) do %>
+                  <i class="fas fas-black fa-edit" title="Edit"></i>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- WITHOUT PROPORTIONALITIES -->
+    <!--
+    <div class="shadow-rounded mb-5">
+      <h3 class="text-center">My meetings</h3>
         <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
           <div class="day-events">
             <% events.each do |event| %>
@@ -79,6 +114,7 @@
           </div>
         <% end %>
     </div>
+    -->
 
   </div>
 
