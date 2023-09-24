@@ -48,8 +48,10 @@ module ApplicationHelper
 
     if event.respond_to?(:package) && event.package&.service&.duration_per_unit
       duration = event.package.service.duration_per_unit.minutes
-    else event.respond_to?(:start_time) && event.respond_to?(:end_time)
+    elsif event.respond_to?(:start_time) && event.respond_to?(:end_time)
       duration = event.end_time - event.start_time
+    else
+      duration = 29*60
     end
 
     end_time = start_time + duration

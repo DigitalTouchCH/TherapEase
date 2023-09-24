@@ -51,9 +51,10 @@
   border: 1px solid #ccc;
   background-color: #f9f9f9;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 1em;
   box-sizing: border-box;
   overflow: hidden;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
 }
 
 .absence-card {
@@ -65,7 +66,6 @@
   border: 1px solid #ced4da;
   border-radius: 5px;
   box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-  margin-bottom: 0.5em;
   color: black !important;
   overflow: hidden;
 }
