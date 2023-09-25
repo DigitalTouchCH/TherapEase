@@ -1,5 +1,5 @@
 class Patient < ApplicationRecord
-  has_one_attached :photo
+  has_one_attached :photo, dependent: :destroy
   belongs_to :user, dependent: :destroy
   has_many :packages
 
