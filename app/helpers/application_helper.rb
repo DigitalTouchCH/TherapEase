@@ -34,6 +34,7 @@ module ApplicationHelper
   START_TIME = 8.0
   END_TIME = 17.0
   TOTAL_HOURS = END_TIME - START_TIME
+  INTERVAL = 15.minutes
 
   def calculate_top_position(event)
     start_hours_from_START_TIME = (event.start_time.seconds_since_midnight / 3600.0) - START_TIME
@@ -59,5 +60,24 @@ module ApplicationHelper
     height_for_event = (hours / TOTAL_HOURS) * 100
     height_for_event*FACTOR
   end
+
+  def time_slots()
+    start_time = Time.now.beginning_of_day + START_TIME.to_i.hours
+    end_time = Time.now.beginning_of_day + END_TIME.to_i.hours
+    (start_time.to_i..end_time.to_i).step(INTERVAL).map { |time| Time.at(time) }
+  end
+
+  def calculate_top_position_for_time_slot(time_slot)
+    start_hours_from_START_TIME = (time_slot.seconds_since_midnight / 3600.0) - START_TIME
+    start_hours_from_START_TIME = 0 if start_hours_from_START_TIME < 0
+    top_position = (start_hours_from_START_TIME / TOTAL_HOURS) * 100
+    top_position * FACTOR
+  end
+
+  def calculate_height_for_time_slot
+    0.1
+  end
+
+
 
 end
