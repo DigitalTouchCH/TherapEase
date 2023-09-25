@@ -543,42 +543,36 @@ end_date = Date.today + 14
 date_range = (start_date..end_date).to_a.select { |day| [1, 2, 3, 4, 5].include?(day.cwday) }
 
 therapists.each do |therapist|
-  therapist_packages = therapist.packages.includes(:meetings).where(meetings: { start_time: nil }).sample(therapist.packages.count * 3 / 4)
+  meetings = therapist.meetings.where(start_time: nil).sample(therapist.meetings.count * 3 / 4)
 
-  therapist_packages.each do |package|
-    meetings_to_assign_date = package.meetings.where(start_time: nil)
+  meetings.each do |meeting|
+    duration = meeting.package.service.duration_per_unit.minutes
+    day = date_range.sample
+    hour = available_hours.sample
+    start_time = Time.new(day.year, day.month, day.day, hour)
+    end_time = start_time + duration
 
-    meetings_to_assign_date.each do |meeting|
-      duration = package.service.duration_per_unit.minutes
-      day = date_range.sample
-      hour = available_hours.sample
+    # Vérifiez que la réunion ne se chevauche pas avec d'autres réunions du thérapeute
+    overlapping_meetings = therapist.meetings.where(
+      "start_time < ? AND end_time > ?",
+      end_time,
+      start_time
+    )
 
-      start_time = Time.new(day.year, day.month, day.day, hour)
-      end_time = start_time + duration
+    unless overlapping_meetings.exists?
+      meeting.start_time = start_time
+      meeting.end_time = end_time
 
-      # Vérifiez que la réunion ne se chevauche pas avec d'autres réunions du thérapeute
-      overlapping_meetings = package.meetings.where(
-        "start_time < ? AND end_time > ?",
-        end_time,
-        start_time
-      )
-
-      unless overlapping_meetings.exists?
-        meeting.start_time = start_time
-        meeting.end_time = end_time
-
-        if start_time.past?
-          meeting.status = ["Done", "Excused"].sample
-        elsif start_time.future?
-          meeting.status = ["Pending", "Confirmed"].sample
-        end
-
-        meeting.save!
+      if start_time.past?
+        meeting.status = ["Done", "Excused"].sample
+      elsif start_time.future?
+        meeting.status = ["Pending", "Confirmed"].sample
       end
+
+      meeting.save!
     end
   end
 end
-
 
 
 

@@ -1,0 +1,32 @@
+<!-- app/views/patients/index.html.erb -->
+
+<div class="<%= current_user.patient.present? ? 'container' : 'content-column' %>">
+    <div class="shadow-rounded mb-5">
+      <h3 class="text-center">Liste des patients</h3>
+      <br>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Date de naissance</th>
+            <th>Adresse</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @patients.each do |patient| %>
+            <tr>
+              <td><%= patient.first_name %></td>
+              <td><%= patient.last_name %></td>
+              <td><%= patient.date_of_birth %></td>
+              <td><%= patient.addresse %></td>
+              <td><%= link_to "Voir détails", patient_path(patient) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+</div>

@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   resources :packages
 
   resources :media
+
+  resources :patients, only: [:index, :show, :create, :update]
 end

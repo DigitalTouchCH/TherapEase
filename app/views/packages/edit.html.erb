@@ -13,10 +13,10 @@
               <%= f.input :insurance_name, label: "Insurance name" %>
               <%= f.input :insurance_number, label: "Insurance number" %>
               <%= f.input :insurance_type, as: :radio_buttons, label: "Insurance type", :collection => %w[Accident Lamal] %>
-              <%= f.input :package_type, as: :radio_buttons, label: "Package type", :collection => %w[Group Individual] %>
-              <%= f.association :service, as: :radio_buttons, label: "Service" %>
-              <%= f.association :therapist, label_method: :first_name, value_method: :id, include_blank: false, label: "Therapist" %>
-              <%= f.association :patient, label_method: :first_name, value_method: :id, include_blank: false, label: "Patient" %>
+              <% f.input :package_type, as: :radio_buttons, label: "Package type", :collection => %w[Group Individual] %>
+              <% f.association :service, as: :radio_buttons, label: "Service" %>
+              <% f.association :therapist, label_method: :first_name, value_method: :id, include_blank: false, label: "Therapist" %>
+              <% f.association :patient, label_method: :first_name, value_method: :id, include_blank: false, label: "Patient" %>
             </div>
 
             <div class="form-actions d-grid gap-2 d-md-flex justify-content-md-center">

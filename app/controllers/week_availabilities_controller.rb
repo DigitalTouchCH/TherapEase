@@ -6,6 +6,7 @@ class WeekAvailabilitiesController < ApplicationController
 
   def index
     @week_availabilities = policy_scope(WeekAvailability).where(therapist: current_user.therapist)
+    @patients = policy_scope(Patient)
   end
 
   def new
