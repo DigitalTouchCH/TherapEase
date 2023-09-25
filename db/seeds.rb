@@ -257,7 +257,7 @@ puts "#{Meeting.count} meetings created."
 
 therapists = Therapist.all
 
-available_hours = (10..12).to_a + (15..17).to_a
+available_hours = (08..12).to_a + (13..16).to_a
 
 start_date = Date.today - 7
 end_date = Date.today + 14

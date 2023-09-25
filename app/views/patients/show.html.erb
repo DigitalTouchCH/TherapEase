@@ -3,89 +3,85 @@
 <div class="container-with-sidebar">
   <%= render 'shared/sidebar' %>
 
-  <div class="content-column shadow-rounded mb-5">
-      <div class="mb-5">
-        <div class="mb-5">
-          <div class="card-header text-center", style="padding: 0.8rem;">
-            <strong><%= @patient.first_name %> <%= @patient.last_name.upcase %></strong>
-          </div>
-          <div class="card-body mt-3">
-            <p class="card-text">Date de naissance: <%= @patient.date_of_birth %></p>
-            <p class="card-text">Adresse: <%= @patient.addresse %></p>
-          </div>
+  <div class="content-column">
+      <div class="shadow-rounded mb-5">
+        <div class="card-header text-center", style="padding: 0.8rem;">
+          <strong><%= @patient.first_name %> <%= @patient.last_name.upcase %></strong>
         </div>
-
-        <div class="mb-5" >
-          <% @packages.each do |package| %>
-          <div class="row" data-controller="toggle">
-            <div class="card-header text-center">
-              <h6><%= package.service.name %> (<%= package.num_of_session %> sessions) with <%= package.therapist.first_name %>
-                <%= link_to edit_package_path(package), class: 'float-right ml-2' do %>
-                  <i class="fas fas-black fa-edit"></i>
-                <% end %>
-                <button data-action="toggle#toggle" class="btn btn-sm float-right">
-                  <i class="fas fas-black fa-eye" data-toggle-icon></i>
-                </button>
-              </h6>
-            </div>
-
-            <div class="card-body hide-content" data-toggle-target="content">
-
-              <!-- First Column -->
-              <div class="col-md-3">
-                <p><strong>Insurance</strong></p>
-                <p><%= package.insurance_name %> (<%= package.insurance_type %>)</p>
-                <p>N°<%= package.insurance_number %></p>
-              </div>
-
-              <!-- Second Column -->
-              <div class="col-md-9">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col"><strong></strong></th>
-                      <th scope="col"><strong>Date</strong></th>
-                      <th scope="col"><strong>Status</strong></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% Meeting.where(package: package).order(:start_time).each_with_index do |m, index| %>
-                      <% row_class = m.start_time && m.start_time < (Time.now + 24.hours) ? 'text-muted' : '' %>
-                      <% if m.start_time.present? %>
-                        <tr>
-                          <th scope="row"><%= index + 1 %></th>
-                          <td>
-                            <div class="<%= row_class %>">
-                              <%= m.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= m.end_time.try(:strftime, '%H:%M') %>
-                              <% if m.start_time > (Time.now + 24.hours) %>
-                                <%= link_to edit_meeting_path(m.id), class: 'float-right ml-2' do %>
-                                  <i class="fas fas-black fa-edit" title="Edit"></i>
-                                <% end %>
-                              <% end %>
-                            </div>
-                          </td>
-                          <td>
-                            <span class="<%= status_class(m.status) %>"><%= m.status %></span>
-                          </td>
-                        </tr>
-                      <% else %>
-                        <tr>
-                          <th scope="row"><%= index + 1 %></th>
-                          <td class="text-warning"><strong>To be booked</strong></td>
-                          <td><%= link_to "Book", edit_meeting_path(m.id), class: "btn btn-primary btn-sm" %></td>
-                        </tr>
-                      <% end %>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <% end %> <!-- Closing the @patient.packages loop -->
+        <div class="card-body mt-3">
+          <p class="card-text">Date de naissance: <%= @patient.date_of_birth %></p>
+          <p class="card-text">Adresse: <%= @patient.addresse %></p>
         </div>
-
-
       </div>
+
+
+      <% @packages.each do |package| %>
+      <div class="shadow-rounded mb-5" data-controller="toggle">
+        <div class="row card-header text-center mb-3">
+          <h6><%= package.service.name %> (<%= package.num_of_session %> sessions) with <%= package.therapist.first_name %>
+            <%= link_to edit_package_path(package) do %>
+              <i class="fas fas-black fa-edit"></i>
+            <% end %>
+            <button data-action="toggle#toggle" class="btn btn-sm float-right">
+              <i class="fas fas-black fa-eye" data-toggle-icon></i>
+            </button>
+          </h6>
+        </div>
+        <div class="row" data-toggle-target="content">
+          <!-- First Column -->
+          <div class="col-md-4">
+            <p><strong>Insurance</strong></p>
+            <p><%= package.insurance_name %> (<%= package.insurance_type %>)<br> N°<%= package.insurance_number %></p>
+            <p><strong>Informations</strong></p>
+            <p>Public: <%= package.info_public %><br>Intern: <%= package.info_private %></p>
+          </div>
+          <!-- Second Column -->
+          <div class="col-md-6">
+            <table class="table">
+              <thead>
+              </thead>
+              <tbody>
+                <% Meeting.where(package: package).order(:start_time).each_with_index do |m, index| %>
+                  <% row_class = m.start_time && m.start_time < (Time.now + 24.hours) ? 'text-muted' : '' %>
+                  <% if m.start_time.present? %>
+                    <tr>
+                      <th scope="row"><%= index + 1 %></th>
+                      <td>
+                        <div class="<%= row_class %>">
+                          <%= m.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= m.end_time.try(:strftime, '%H:%M') %>
+                          <% if m.start_time > (Time.now + 24.hours) %>
+                            <%= link_to edit_meeting_path(m.id) do %>
+                              <i class="fas fas-black fa-edit" title="Edit"></i>
+                            <% end %>
+                          <% end %>
+                          <span class="badge rounded-pill <%= status_class(m.status) %>"><%= m.status %></span>
+                        </div>
+                      </td>
+                    </tr>
+                  <% else %>
+                    <tr>
+                      <th scope="row"><%= index + 1 %></th>
+                      <td><%= link_to edit_meeting_path(m.id) do %>
+                            <i class="fas fas-black fa-calendar" title="Book"></i>
+                          <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Third Column -->
+          <div class="col-md-2">
+            <% meetings_by_status = Meeting.where(package: package).group(:status).count %>
+            <%= pie_chart meetings_by_status, colors: colors_for_data(meetings_by_status), width: "200px", height: "200px" %>
+          </div>
+
+        </div>
+      </div>
+      <% end %>
+    </div>
   </div>
 
 </div>
