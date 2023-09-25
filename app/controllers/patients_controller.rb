@@ -10,7 +10,13 @@ class PatientsController < ApplicationController
   def show
     authorize @patient
     @packages = Package.where(therapist: @therapist, patient: @patient)
-  end
+    @meetings_by_status_per_package = {}
+
+    @packages.each do |package|
+        @meetings_by_status_per_package[package.id] = Meeting.where(package: package).group(:status).count
+    end
+end
+
 
 
   def new

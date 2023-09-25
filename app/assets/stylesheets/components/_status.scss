@@ -1,24 +1,23 @@
 .status-no-date {
-  color: #cecece;
 }
 
 .status-pending {
-  color: #da9c79;
+  background-color: #b38b75;
 }
 
 .status-confirmed {
-  color: #2ecc71;
+  background-color: #40865d;
 }
 
 .status-cancelled {
-  color: #777777;
+  background-color: #464646;
 }
 
 .status-excused {
-  color: #bdbdbd;
   font-style: italic;
+  background-color: rgb(155, 155, 155);
 }
 
 .status-done {
-  color: #195999;
+  background-color: rgb(59, 129, 161);
 }

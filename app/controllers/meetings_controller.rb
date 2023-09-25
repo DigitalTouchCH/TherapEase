@@ -40,7 +40,7 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new(meeting_params)
     authorize @meeting
     if @meeting.save
-      redirect_to packages_path, notice: 'Meeting was successfully created.'
+      redirect_to patient_path(@meeting.package.patient), notice: 'Meeting was successfully created.'
     else
       render :new
     end
@@ -68,12 +68,12 @@ class MeetingsController < ApplicationController
   end
 
   def update
-    @meeting = Meeting.find(params[:id]) # Chargez l'enregistrement existant
+    @meeting = Meeting.find(params[:id])
     authorize @meeting
-    if @meeting.update(meeting_params) # Mettez à jour l'enregistrement existant
-      redirect_to packages_path, notice: 'Meeting was successfully modified.'
+    if @meeting.update(meeting_params)
+      redirect_to patient_path(@meeting.package.patient), notice: 'Meeting was successfully modified.'
     else
-      render :edit # Renvoyez à la page d'édition si la mise à jour échoue
+      render :edit
     end
   end
 
