@@ -9,8 +9,9 @@ class PatientsController < ApplicationController
 
   def show
     authorize @patient
-    @packages = Package.where(therapist: @therapist)
+    @packages = Package.where(therapist: @therapist, patient: @patient)
   end
+
 
   def new
     @patient = Patient.new

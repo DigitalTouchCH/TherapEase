@@ -57,6 +57,7 @@ gem "pundit"
 gem 'psych', '~> 3.3', '>= 3.3.2'
 gem "cloudinary"
 gem 'simple_calendar'
+gem 'faker'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -19,7 +19,7 @@
           <% @packages.each do |package| %>
           <div class="row" data-controller="toggle">
             <div class="card-header text-center">
-              <h6><%= package.service.name %> (<%= package.num_of_session %> sessions)
+              <h6><%= package.service.name %> (<%= package.num_of_session %> sessions) with <%= package.therapist.first_name %>
                 <%= link_to edit_package_path(package), class: 'float-right ml-2' do %>
                   <i class="fas fas-black fa-edit"></i>
                 <% end %>

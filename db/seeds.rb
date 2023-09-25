@@ -13,230 +13,68 @@ puts "Old data destroyed."
 
 puts "Creating new data..."
 
-# USERS
-user1 = User.create(email: "patient1@example.com", password: "password123", password_confirmation: "password123")
-user2 = User.create(email: "patient2@example.com", password: "password123", password_confirmation: "password123")
-user3 = User.create(email: "therapist1@example.com", password: "password123", password_confirmation: "password123")
-user4 = User.create(email: "therapist2@example.com", password: "password123", password_confirmation: "password123")
-user5 = User.create(email: "therapist3@example.com", password: "password123", password_confirmation: "password123")
-user6 = User.create(email: "therapist4@example.com", password: "password123", password_confirmation: "password123")
-user7 = User.create(email: "therapist5@example.com", password: "password123", password_confirmation: "password123")
-user8 = User.create(email: "therapist6@example.com", password: "password123", password_confirmation: "password123")
-user9 = User.create(email: "patient3@example.com", password: "password123", password_confirmation: "password123")
-user10 = User.create(email: "patient4@example.com", password: "password123", password_confirmation: "password123")
-user11 = User.create(email: "patient5@example.com", password: "password123", password_confirmation: "password123")
-user12 = User.create(email: "patient6@example.com", password: "password123", password_confirmation: "password123")
+# USERS / PATIENTS
 
-puts "#{User.count} users created."
+50.times do |i|
+  email = "patient#{i + 1}@example.com"
+  password = "password123"
 
-# PATIENTS
-patient1 = Patient.create(
-  date_of_birth: Date.new(1980, 1, 1),
-  age: 43,
-  addresse: "123 Patient St",
-  tel_1: "123-456-7890",
-  tel_2: "234-567-8901",
-  contact_name: "John Doe",
-  contact_info: "Friend",
-  contact_tel: "345-678-9012",
-  info_private: "Private notes here",
-  info_public: "Public notes here",
-  first_name: "Jane",
-  last_name: "Doe"
-)
-patient1.user = user1
-patient1.save!
+  user = User.create(email: email, password: password, password_confirmation: password)
 
-patient2 = Patient.create(
-  date_of_birth: Date.new(1990, 5, 5),
-  age: 33,
-  addresse: "456 Patient Ave",
-  tel_1: "456-789-0123",
-  tel_2: "567-890-1234",
-  contact_name: "Mary Smith",
-  contact_info: "Sister",
-  contact_tel: "678-901-2345",
-  info_private: "More private notes",
-  info_public: "More public notes",
-  first_name: "John",
-  last_name: "Smith"
-)
-patient2.user = user2
-patient2.save!
+  patient = Patient.create(
+    user: user,
+    date_of_birth: Faker::Date.birthday(min_age: 18, max_age: 85),
+    age: Faker::Number.between(from: 18, to: 85),
+    addresse: Faker::Address.street_address,
+    tel_1: Faker::PhoneNumber.phone_number,
+    tel_2: Faker::PhoneNumber.phone_number,
+    contact_name: Faker::Name.name,
+    contact_info: ["Friend", "Relative", "Sibling"].sample,
+    contact_tel: Faker::PhoneNumber.phone_number,
+    info_private: Faker::Lorem.sentence,
+    info_public: Faker::Lorem.sentence,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name
+  )
 
-patient3 = Patient.create(
-  date_of_birth: Date.new(1985, 8, 15),
-  age: 38,
-  addresse: "789 Patient Rd",
-  tel_1: "789-012-3456",
-  tel_2: "890-123-4567",
-  contact_name: "David Johnson",
-  contact_info: "Brother",
-  contact_tel: "901-234-5678",
-  info_private: "Private notes 2",
-  info_public: "Public notes 2",
-  first_name: "Emily",
-  last_name: "Johnson"
-)
-
-patient3.user = user9
-patient3.save!
-
-patient4 = Patient.create(
-  date_of_birth: Date.new(1985, 9, 20),
-  age: 37,
-  addresse: "789 Patient Rd",
-  tel_1: "789-012-3456",
-  tel_2: "890-123-4567",
-  contact_name: "Bob Johnson",
-  contact_info: "Friend",
-  contact_tel: "901-234-5678",
-  info_private: "Private notes for patient 3",
-  info_public: "Public notes for patient 3",
-  first_name: "Eve",
-  last_name: "Teil"
-)
-
-patient4.user = user10
-patient4.save!
-
-patient5 = Patient.create(
-  date_of_birth: Date.new(1988, 9, 20),
-  age: 35,
-  addresse: "789 Patient Rd",
-  tel_1: "789-012-3456",
-  tel_2: "890-123-4567",
-  contact_name: "Bob Johnson",
-  contact_info: "Friend",
-  contact_tel: "901-234-5678",
-  info_private: "Private notes for patient 3",
-  info_public: "Public notes for patient 3",
-  first_name: "Thomas",
-  last_name: "Dessert"
-)
-
-patient5.user = user11
-patient5.save!
-
-patient6 = Patient.create(
-  date_of_birth: Date.new(1980, 9, 20),
-  age: 42,
-  addresse: "789 Patient Rd",
-  tel_1: "789-012-3456",
-  tel_2: "890-123-4567",
-  contact_name: "Bob Johnson",
-  contact_info: "Friend",
-  contact_tel: "901-234-5678",
-  info_private: "Private notes for patient 3",
-  info_public: "Public notes for patient 3",
-  first_name: "Angelina",
-  last_name: "Jolie"
-)
-
-patient6.user = user12
-patient6.save!
+  # file_path = Rails.root.join('app', 'assets', 'images', 'avatar.jpg')
+  #patient.photo.attach(io: File.open(file_path), filename: "local_avatar_#{i + 1}.jpg", content_type: "image/jpg")
+end
 
 puts "#{Patient.count} patients created."
 
 # THERAPISTS
 
-therapist1 = Therapist.create(
-  information: "A compassionate physiotherapist with a passion for healing. Alice's extensive experience and commitment to patient-centered care make her your trusted partner on the path to recovery",
-  location_name: "Therapy Center 1",
-  location_address: "789 Therapist Blvd",
-  first_name: "Alice",
-  last_name: "Cooper",
-)
-therapist1.user = user3
-therapist1.save!
+photos_urls = ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg",
+              "https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Am%C3%A9lie_250x250_su4uyp.jpg",
+              "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg",
+              "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg"]
 
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Am%C3%A9lie_250x250_su4uyp.jpg")
-therapist1.photo.attach(io: photo1, filename: "therapist1.jpg", content_type: "image/jpg")
-therapist1.save!
+4.times do |i|
+  email = "therapist#{i + 1}@example.com"
+  password = "password123"
 
+  user = User.create(email: email, password: password, password_confirmation: password)
 
-therapist2 = Therapist.create(
-  information: "A skilled physiotherapist specializing in sports injuries and rehabilitation. With Daniel's expert guidance, you'll regain strength, mobility, confidence and guidance in no time",
-  location_name: "Healing Center 2",
-  location_address: "101 Therapist Lane",
-  first_name: "Daniel",
-  last_name: "Duclos",
-)
+  therapist = Therapist.create(
+    user: user,
+    information: Faker::Lorem.paragraph,
+    location_name: "Therapy Center #{Faker::Address.building_number}",
+    location_address: Faker::Address.street_address,
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+  )
 
-therapist2.user = user4
-therapist2.save!
-
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg")
-therapist2.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "image/jpg")
-therapist2.save!
-
-therapist3 = Therapist.create(
-  information: "A dedicated osteopathy expert with a gentle touch and a deep understanding of the body's natural healing processes. Maria's holistic approach will leave you feeling rejuvenated",
-  location_name: "Healing Center 2",
-  location_address: "101 Therapist Lane",
-  first_name: "Maria",
-  last_name: "Smith",
-)
-
-therapist3.user = user5
-therapist3.save!
-
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253784/therap3_f5x9vg.jpg")
-therapist3.photo.attach(io: photo1, filename: "therapist3.jpg", content_type: "image/jpg")
-therapist3.save!
-
-therapist4 = Therapist.create(
-  information: "With a passion for helping others, Alex is your dedicated physiotherapist, committed to guiding you on your journey to optimal health and well-being. With years of experience and a caring",
-  location_name: "Healing Center 2",
-  location_address: "101 Therapist Lane",
-  first_name: "Alex",
-  last_name: "Monroe",
-)
-
-therapist4.user = user6
-therapist4.save!
-
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg")
-therapist4.photo.attach(io: photo1, filename: "therapist4.jpg", content_type: "image/jpg")
-therapist4.save!
-
-therapist5 = Therapist.create(
-  information: "As an experienced physiotherapist, Rachel specializes in restoring your mobility and vitality. Her expertise in rehabilitation and pain management, combined with her compassion.",
-  location_name: "Healing Center 2",
-  location_address: "101 Therapist Lane",
-  first_name: "Rachel",
-  last_name: "Black",
-)
-
-therapist5.user = user7
-therapist5.save!
-
-photo1 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695253784/therap4_snn7dl.jpg")
-therapist5.photo.attach(io: photo1, filename: "therapist2.jpg", content_type: "image/jpg")
-therapist5.save!
-
-therapist6 = Therapist.create(
-  information: "For effective pain relief and rehabilitation, Jacqueline is the physiotherapist you can rely on. With a deep understanding of the human body and a commitment to your recovery",
-  location_name: "Healing Center 2",
-  location_address: "101 Therapist Lane",
-  first_name: "Jacqueline",
-  last_name: "Doe",
-)
-
-therapist6.user = user8
-therapist6.save!
-
-photo2 = URI.open("https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg")
-therapist6.photo.attach(io: photo2, filename: "therapist6.jpg", content_type: "image/jpg")
-therapist6.save!
-
-
+  # Attach a random image from the internet
+  photo = URI.open(photos_urls[i])
+  therapist.photo.attach(io: photo, filename: "therapist_#{therapist.id}.jpg", content_type: "image/jpg")
+end
 puts "#{Therapist.count} therapists created."
 
 # AVAILABILITIES
 
 days_of_week = ["monday", "tuesday", "wednesday", "thursday", "friday"]
-therapists = [therapist1, therapist2]
+therapists = Therapist.all
 
 therapists.each do |therapist|
   week_availability = WeekAvailability.create!(
@@ -285,7 +123,6 @@ therapists.each do |therapist|
   end
 end
 
-
 puts "#{Absence.count} absences created."
 
 
@@ -302,21 +139,7 @@ services_data = [
     price_per_unit: 50.0,
     duration_per_unit: 30,
     color: "#DFF2FF",
-    services_therapists: [therapist1, therapist2],
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_perinee_450x300_vjkamj.jpg"]
-  },
-  {
-    active: true,
-    name: "Massage 30 min",
-    paiement_methode: "Twint or cash",
-    insurance_visibility: false,
-    place_type: "In-Person",
-    price_visibility: true,
-    price_per_unit: 60.0,
-    duration_per_unit: 30,
-    color: "#B0F2B6",
-    services_therapists: [therapist1],
-    photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_Massage_450x300_clk194.jpg"]
   },
   {
     active: true,
@@ -325,10 +148,21 @@ services_data = [
     insurance_visibility: false,
     place_type: "In-Person",
     price_visibility: true,
-    price_per_unit: 90.0,
+    price_per_unit: 60.0,
     duration_per_unit: 45,
+    color: "#B0F2B6",
+    photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_Massage_450x300_clk194.jpg"]
+  },
+  {
+    active: true,
+    name: "Massage 60 min",
+    paiement_methode: "Twint or cash",
+    insurance_visibility: false,
+    place_type: "In-Person",
+    price_visibility: true,
+    price_per_unit: 90.0,
+    duration_per_unit: 60,
     color: "#DFF9E1",
-    services_therapists: [therapist1],
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148015/Cat%C3%A9gorie_Physioth%C3%A9rapie_450x300_v2ibey.jpg"]
   },
   {
@@ -339,28 +173,30 @@ services_data = [
     place_type: "Online",
     price_visibility: true,
     price_per_unit: 30.0,
-    duration_per_unit: 15,
+    duration_per_unit: 30,
     color: "#FFF5E6",
-    services_therapists: [therapist2],
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148166/consulting_pdhtri.jpg"]
   }
 ]
 
-
+# Création des services à partir de services_data
 services_data.each do |service_data|
-  therapists_for_service = service_data.delete(:services_therapists)
   photo_url = service_data.delete(:photo).first
+  service = Service.create(service_data)
+  service.photo.attach(io: URI.open(photo_url), filename: "service_#{service.id}.jpg", content_type: "image/jpg")
+end
 
-  service = Service.create!(service_data)
+# Récupération de la liste des thérapeutes
+therapists = Therapist.all
 
-  if therapists_for_service
-    service.therapists << therapists_for_service
-    service.save!
-  end
+# Affectation aléatoire des services aux thérapeutes
+therapists.each do |therapist|
+  # Mélange les services et prend entre 1 et 3 services aléatoirement
+  services_for_this_therapist = Service.all.shuffle.take(rand(3..4))
 
-  if photo_url
-    photo = URI.open(photo_url)
-    service.photo.attach(io: photo, filename: File.basename(photo_url), content_type: "image/jpg")
+  services_for_this_therapist.each do |service|
+    # Vous devez ajuster cette ligne selon la manière dont les services et les thérapeutes sont liés dans votre modèle
+    therapist.services << service unless therapist.services.include?(service)
   end
 end
 
@@ -371,135 +207,43 @@ puts "#{Service.count} services created."
 
 # PACKAGES
 
-package_data = []
+# For each patient, create 2 to 3 packages with random services
+Patient.all.each do |patient|
+  # Select a random number of services for this patient (between 2 and 3)
+  selected_services = Service.all.sample(rand(2..3))
 
-Service.all.each do |service|
-  service.therapists.each do |therapist|
-    package = Package.new(
-      num_of_session: 9,
-      info_private: "Private package info",
-      info_public: "Public package info",
+  selected_services.each do |service|
+    # Randomly select one therapist offering the current service
+    therapist = service.therapists.sample
+
+    package = Package.create(
+      num_of_session: [5, 9].sample,
+      info_private: Faker::Lorem.sentence,
+      info_public: Faker::Lorem.sentence,
       insurance_name: "InsuranceCorp",
       insurance_number: "12345",
       insurance_type: "TypeA",
       package_type: "Individual",
       service: service,
       therapist: therapist,
-      patient: patient1
+      patient: patient
     )
-    package.save!
-    package_data << package
-  end
-end
-
-Service.all.each do |service|
-  service.therapists.each do |therapist|
-    package = Package.new(
-      num_of_session: 6,
-      info_private: "Private package info",
-      info_public: "Public package info",
-      insurance_name: "InsuranceCorp",
-      insurance_number: "12345",
-      insurance_type: "TypeA",
-      package_type: "Individual",
-      service: service,
-      therapist: therapist,
-      patient: patient2
-    )
-    package.save!
-    package_data << package
-  end
-end
-
-Service.all.each do |service|
-  service.therapists.each do |therapist|
-    package = Package.new(
-      num_of_session: 9,
-      info_private: "Private package info",
-      info_public: "Public package info",
-      insurance_name: "InsuranceCorp",
-      insurance_number: "12345",
-      insurance_type: "TypeA",
-      package_type: "Individual",
-      service: service,
-      therapist: therapist,
-      patient: patient3
-    )
-    package.save!
-    package_data << package
-  end
-end
-
-Service.all.each do |service|
-  service.therapists.each do |therapist|
-    package = Package.new(
-      num_of_session: 9,
-      info_private: "Private package info",
-      info_public: "Public package info",
-      insurance_name: "InsuranceCorp",
-      insurance_number: "12345",
-      insurance_type: "TypeA",
-      package_type: "Individual",
-      service: service,
-      therapist: therapist,
-      patient: patient4
-    )
-    package.save!
-    package_data << package
-  end
-end
-
-Service.all.each do |service|
-  service.therapists.each do |therapist|
-    package = Package.new(
-      num_of_session: 9,
-      info_private: "Private package info",
-      info_public: "Public package info",
-      insurance_name: "InsuranceCorp",
-      insurance_number: "12345",
-      insurance_type: "TypeA",
-      package_type: "Individual",
-      service: service,
-      therapist: therapist,
-      patient: patient5
-    )
-    package.save!
-    package_data << package
-  end
-end
-
-Service.all.each do |service|
-  service.therapists.each do |therapist|
-    package = Package.new(
-      num_of_session: 9,
-      info_private: "Private package info",
-      info_public: "Public package info",
-      insurance_name: "InsuranceCorp",
-      insurance_number: "12345",
-      insurance_type: "TypeA",
-      package_type: "Individual",
-      service: service,
-      therapist: therapist,
-      patient: patient6
-    )
-    package.save!
-    package_data << package
   end
 end
 
 puts "#{Package.count} packages created."
 
 
-
 # MEETINGS
 
 meetings = []
+packages = Package.all
 
-package_data.each do |package|
+packages.each do |package|
   package.num_of_session.times do |i|
     meeting = Meeting.create!(
-      info_public: "Public meeting info",
-      info_private: "Private meeting info",
+      info_public: Faker::Lorem.sentence,
+      info_private: Faker::Lorem.sentence,
       url_zoom: "",
       package: package,
       status: "No date set"
@@ -510,29 +254,6 @@ end
 
 puts "#{Meeting.count} meetings created."
 
-# DATE TO MEETIN OLD
-#
-# meetings_to_assign_date = meetings.sample(meetings.count * 3 / 4)
-#
-# meetings_to_assign_date.each do |meeting|
-#   duration = meeting.package.service.duration_per_unit.minutes
-#   day = Date.today + rand(1..14).days
-#
-#   while ![1, 2, 3, 4, 5].include?(day.cwday)
-#     day += 1.day
-#   end
-#
-#
-#   hour = rand(8..17)
-#
-#   start_time = Time.new(day.year, day.month, day.day, hour)
-#   end_time = start_time + duration
-#
-#   meeting.start_time = start_time
-#   meeting.end_time = end_time
-#   meeting.status = ["Pending", "Confirmed", "Cancelled", "Excused", "Done"].sample
-#   meeting.save!
-# end
 
 therapists = Therapist.all
 
