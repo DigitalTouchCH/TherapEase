@@ -21,7 +21,6 @@ module WeekAvailabilitiesHelper
     end
   end
 
-  # Méthode pour afficher une ligne de tableau de time block
   def render_time_block_row(time_block)
     content_tag(:tr) do
       concat(content_tag(:td, time_block.week_day))

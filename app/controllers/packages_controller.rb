@@ -44,7 +44,7 @@ class PackagesController < ApplicationController
   def update
     authorize @package
     if @package.update(package_params)
-      redirect_to packages_path, notice: 'Package was successfully updated.'
+      redirect_to patient_path(@package.patient), notice: 'Package was successfully updated.'
     else
       render :edit, status: 422
     end

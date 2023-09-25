@@ -1,40 +1,9 @@
 <div class="container-with-sidebar">
-  <div class="sidebar therapist-info">
-    <div class="d-flex justify-content-center align-items-center">
-        <% if @therapist.photo.attached? %>
-            <div class="image-container-sidebar">
-                <%= cl_image_tag(@therapist.photo.key, alt: "Therapist Photo", class: "my-image rounded-circle") %>
-            </div>
-        <% else %>
-            <p>No photo</p>
-        <% end %>
-    </div>
-
-    <div>
-      <% if @therapist.present? %>
-        <p class="text-center"> <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
-        <br>
-        <strong><p class="text-center"><%= @therapist.location_name %></p></strong>
-        <p class="text-center"><%= @therapist.location_address %></p>
-      <% end %>
-    </div>
-
-    <div class="mt-3">
-      <%= link_to week_availabilities_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-calendar-week"></i> My working hours
-      <% end %>
-      <%= link_to packages_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-calendar-week"></i> My packages
-      <% end %>
-      <%= link_to new_absence_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-plus"></i> New absence
-      <% end %>
-      <!-- OTHER LINK -->
-    </div>
-  </div>
+  <%= render 'shared/sidebar' %>
 
   <div class="content-column">
 
+    <!--
     <div class="shadow-rounded mb-5">
       <h3 class="text-center">My Services</h3>
       <div class="d-grid gap-2 col-2 mx-auto">
@@ -50,21 +19,19 @@
         <% end %>
       </div>
     </div>
+    -->
 
     <div class="shadow-rounded mb-5">
       <h3 class="text-center">My meetings</h3>
       <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
-        <div class="day-events" style="height: 1000px;">
+        <div class="day-events" style="height: 620px;">
           <% events.each do |event| %>
             <% if event.is_a?(Meeting) %>
               <div class="meeting-card"
                   style="top: <%= calculate_top_position(event) %>%;
                           height: <%= calculate_height_for_meeting(event) %>%;
                           background-color: <%= event.package.service.color %>;">
-                <strong><%= event.start_time.strftime('%H:%M') %> to <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %></strong> - <strong><%= event.package.patient.first_name + " " + event.package.patient.last_name %></strong>
-                <br>
-                <%= event.package.service.name %>
-
+                <%= event.start_time.strftime('%H:%M') %> - <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %> - <%= link_to event.package.patient.first_name[0] + ". " + event.package.patient.last_name, patient_path(event.package.patient) %>
               </div>
             <% elsif event.is_a?(Absence) %>
               <div class="absence-card"
@@ -83,6 +50,8 @@
         </div>
       <% end %>
     </div>
+
+
 
     <!-- WITHOUT PROPORTIONALITIES -->
     <!--

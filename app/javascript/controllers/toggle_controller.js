@@ -9,14 +9,14 @@ export default class extends Controller {
 
   toggle() {
     console.log("Toggle method called!")
-    if (this.contentTarget.style.display === "none" || !this.contentTarget.style.display) {
-      this.contentTarget.style.display = "block";
-      this.iconTarget.classList.remove("fa-eye-slash");
-      this.iconTarget.classList.add("fa-eye");
-    } else {
-      this.contentTarget.style.display = "none";
+    if (this.contentTarget.classList.contains("hide-content")) {
+      this.contentTarget.classList.remove("hide-content");
       this.iconTarget.classList.remove("fa-eye");
       this.iconTarget.classList.add("fa-eye-slash");
+    } else {
+      this.contentTarget.classList.add("hide-content");
+      this.iconTarget.classList.remove("fa-eye-slash");
+      this.iconTarget.classList.add("fa-eye");
     }
   }
 }

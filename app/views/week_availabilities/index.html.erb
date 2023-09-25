@@ -1,37 +1,5 @@
 <div class="container-with-sidebar">
-  <div class="sidebar therapist-info">
-    <div class="d-flex justify-content-center align-items-center">
-        <% if @therapist.photo.attached? %>
-            <div class="image-container-sidebar">
-                <%= cl_image_tag(@therapist.photo.key, alt: "Therapist Photo", class: "my-image rounded-circle") %>
-            </div>
-        <% else %>
-            <p>No photo</p>
-        <% end %>
-    </div>
-
-    <div>
-      <% if @therapist.present? %>
-        <p class="text-center"> <%= @therapist.first_name %> <%= @therapist.last_name %>!</p>
-        <br>
-        <strong><p class="text-center"><%= @therapist.location_name %></p></strong>
-        <p class="text-center"><%= @therapist.location_address %></p>
-      <% end %>
-    </div>
-
-    <div class="mt-3">
-      <%= link_to meetings_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-calendar-week"></i> My calendar
-      <% end %>
-      <%= link_to packages_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-calendar-week"></i> My packages
-      <% end %>
-      <%= link_to new_week_availability_path, class: "btn btn-primary mb-3 d-block" do %>
-          <i class="fas fa-plus"></i> New schedule
-      <% end %>
-    </div>
-  </div>
-
+  <%= render 'shared/sidebar' %>
 
   <div class="content-column">
 

@@ -22,11 +22,14 @@ class MeetingPolicy < ApplicationPolicy
     # Only the associated therapist can update the meeting
     user_is_therapist_for_meeting?
   end
+
   def destroy?
     # Only the associated therapist can delete the meeting
     user_is_therapist_for_meeting?
   end
+
   private
+
   def user_is_therapist?
     # Check if the current user is a therapist
     user.therapist.present?
@@ -43,6 +46,7 @@ class MeetingPolicy < ApplicationPolicy
     # Check if the patient associated with the package linked to the meeting is the current user
     record.package.patient == user.patient
   end
+
   def user_meetings
     # Return a relation of meetings associated with the current user, either as a therapist or as a patient
     if user_is_therapist?

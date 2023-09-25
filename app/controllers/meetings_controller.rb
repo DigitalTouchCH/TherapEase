@@ -5,6 +5,7 @@ class MeetingsController < ApplicationController
     @therapist = current_user.therapist
     @meetings = policy_scope(Meeting).where.not(start_time: nil)
     @absences = policy_scope(Absence)
+    @patients = policy_scope(Patient)
     @events_with_dates = @meetings.to_a + @absences.to_a
   end
 
