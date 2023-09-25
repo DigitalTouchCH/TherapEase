@@ -25,6 +25,15 @@
       <h3 class="text-center">My meetings</h3>
       <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
         <div class="day-events" style="height: 620px;">
+
+          <% time_slots.each do |time_slot, index| %>
+            <div class="time-slot"
+                style="top: <%= calculate_top_position_for_time_slot(time_slot) %>%;
+                        height: <%= calculate_height_for_time_slot %>%;">
+              <%= index %>
+            </div>
+          <% end %>
+
           <% events.each do |event| %>
             <% if event.is_a?(Meeting) %>
               <div class="meeting-card"
