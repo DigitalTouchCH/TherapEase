@@ -1,7 +1,7 @@
 class AbsencesController < ApplicationController
   before_action :authenticate_user!
   before_action :validate_therapist
-  before_action :set_absence, only: [:edit, :update]
+  before_action :set_absence, only: [:edit, :update, :destroy]
 
   def index
     @absences = policy_scope(Absence)
@@ -30,6 +30,12 @@ class AbsencesController < ApplicationController
   def update
     authorize @absence
     @absence.update(absence_params)
+    redirect_to meetings_path
+  end
+
+  def destroy
+    authorize @absence
+    @absence.destroy
     redirect_to meetings_path
   end
 

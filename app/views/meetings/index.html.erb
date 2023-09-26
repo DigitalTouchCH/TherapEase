@@ -50,9 +50,16 @@
                 <br>
                 Absence (<%= event.reason %>)
                 <br>
-                <%= link_to edit_absence_path(event) do %>
-                  <i class="fas fas-black fa-edit" title="Edit"></i>
-                <% end %>
+                <div>
+                  <%= link_to edit_absence_path(event) do %>
+                    <i class="fas fas-black fa-edit" title="Edit"></i>
+                  <% end %>
+                </div>
+                <div>
+                  <%= link_to absence_path(event), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
+                    <i class="fa-regular fa-trash-can" style="color: #000000;" title="Delete"></i>
+                  <% end %>
+                </div>
               </div>
             <% end %>
           <% end %>
