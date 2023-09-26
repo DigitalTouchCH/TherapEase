@@ -35,7 +35,7 @@ class MediaController < ApplicationController
     if @medium.update(medium_params)
       redirect_to media_path
     else
-      render :new, status: 422
+      render :edit, status: 422
     end
   end
 
@@ -52,6 +52,10 @@ class MediaController < ApplicationController
   end
 
   def medium_params
-    params.require(:medium).permit(:title, :description, :url, :meeting_id)
+    new_params = params.require(:medium).permit(:title, :description, :url, meetings: [])
+    meetings = []
+    new_params[:meetings].each { |meeting_id| meetings << Meeting.find(meeting_id) unless meeting_id.empty? }
+    new_params[:meetings] = meetings
+    new_params
   end
 end
