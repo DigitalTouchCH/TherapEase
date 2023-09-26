@@ -56,7 +56,7 @@ class PackagePolicy < ApplicationPolicy
     elsif user_is_patient?
       Package.where(patient: user.patient)
     else
-      Meeting.none
+      Package.none
     end
   end
 
