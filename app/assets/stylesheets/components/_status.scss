@@ -1,23 +1,40 @@
-.status-no-date {
-}
-
 .status-pending {
-  background-color: #b38b75;
+    background-color: #ce9a4c;
 }
 
 .status-confirmed {
-  background-color: #40865d;
+    background-color: #40865d;
 }
 
 .status-cancelled {
-  background-color: #464646;
+    background-color: #464646;
 }
 
 .status-excused {
-  font-style: italic;
-  background-color: rgb(155, 155, 155);
+    font-style: italic;
+    background-color: rgb(155, 155, 155);
 }
 
 .status-done {
-  background-color: rgb(59, 129, 161);
+    background-color: rgb(59, 129, 161);
+}
+
+/* Nouveau style pour le dropdown */
+.badge-status-dropdown {
+  border: none;
+  background-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0;
+  margin: 0;
+  font-size:xx-small
+  font-weight: bolder;
+  color: #ffffff;
+  text-align: center;
+  --bs-form-select-bg-img: none;
+}
+
+.badge-status-dropdown option {
+  color: #000000 !important;
 }

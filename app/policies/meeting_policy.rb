@@ -28,6 +28,10 @@ class MeetingPolicy < ApplicationPolicy
     user_is_therapist_for_meeting?
   end
 
+  def update_status?
+    user_is_therapist_for_meeting?
+  end
+
   private
 
   def user_is_therapist?

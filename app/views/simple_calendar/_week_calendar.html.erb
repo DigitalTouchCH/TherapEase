@@ -5,11 +5,11 @@
 
     <nav>
       <div class="d-flex align-items-center justify-content-between">
-        <%= link_to t('simple_calendar.previous', default: '<<'), calendar.url_for_previous_view, class: "btn btn-link fs-5", style: "text-decoration: none;" %>
-        <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view, class: "btn btn-link fs-5 me-3 ms-3", style: "text-decoration: none;" %>
-        <%= link_to t('simple_calendar.next', default: '>>'), calendar.url_for_next_view, class: "btn btn-link fs-5", style: "text-decoration: none;" %>
-        <span class="fs-5 me-3"><%= t('simple_calendar.week', default: '') %></span>
-        <p class="fs-5 mb-0"><%= calendar.date_range.first.strftime("%d %B %Y") %> - <%= calendar.date_range.last.strftime("%d %B %Y") %></p>
+        <%= link_to t('simple_calendar.previous', default: '<<'), calendar.url_for_previous_view, class: "btn btn-link", style: "text-decoration: none; color: black; font-weight: bold;" %>
+        <%= link_to t('simple_calendar.today', default: 'Today'), calendar.url_for_today_view, class: "btn btn-link me-3 ms-3", style: "text-decoration: none; color: black; font-weight: bold;" %>
+        <%= link_to t('simple_calendar.next', default: '>>'), calendar.url_for_next_view, class: "btn btn-link", style: "text-decoration: none; color: black; font-weight: bold;" %>
+        <span class="me-3"><%= t('simple_calendar.week', default: '') %></span>
+        <p class="mb-0"><strong><%= calendar.date_range.first.strftime("%d %B %Y") %> - <%= calendar.date_range.last.strftime("%d %B %Y") %></strong></p>
       </div>
     </nav>
 

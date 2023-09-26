@@ -31,8 +31,8 @@ module ApplicationHelper
   end
 
   FACTOR = 1
-  START_TIME = 8.0
-  END_TIME = 17.0
+  START_TIME = 7.0
+  END_TIME = 19.0
   TOTAL_HOURS = END_TIME - START_TIME
   INTERVAL = 15.minutes
 
@@ -78,6 +78,18 @@ module ApplicationHelper
     0.1
   end
 
+  def status_update_form(meeting)
+    form_with url: update_status_meeting_path(meeting), method: :patch, local: true do |f|
+      concat(
+        content_tag(:span, class: "badge rounded-pill #{status_class(meeting.status)}") do
+          f.select :status, meeting_statuses.reject { |status| status == "No date set" }.map { |status| [status.humanize, status] }, { selected: meeting.status }, class: "form-select badge-status-dropdown", onchange: 'this.form.submit()'
+        end
+      )
+      concat f.submit 'Update', style: 'display: none;'
+    end
+  end
 
-
+  def meeting_statuses
+    ["Pending", "Confirmed", "Cancelled", "Excused", "Done"]
+  end
 end
