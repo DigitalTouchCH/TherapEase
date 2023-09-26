@@ -22,6 +22,9 @@
             <%= link_to edit_package_path(package) do %>
               <i class="fas fas-black fa-edit"></i>
             <% end %>
+            <%= link_to package_path(package), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
+                <i class="fa-regular fa-trash-can" style="color: #000000;" title="Delete"></i>
+            <% end %>
             <button data-action="toggle#toggle" class="btn btn-sm float-right">
               <i class="fas fas-black fa-eye" data-toggle-icon></i>
             </button>
