@@ -1,8 +1,8 @@
 # app/helpers/charts_helper.rb
 module ChartsHelper
   STATUS_COLORS = {
-    "No date set" => "#ffffff",
-    "Pending" => "#b38b75",
+    "No date set" => "#DCDCDC",
+    "Pending" => "#ce9a4c",
     "Confirmed" => "#40865d",
     "Cancelled" => "#464646",
     "Excused" => "#9B9B9B",

@@ -22,9 +22,9 @@
     -->
 
     <div class="shadow-rounded mb-5">
-      <h3 class="text-center">My meetings</h3>
+      <h3 class="text-center home-subtitle">MY MEETINGS</h3>
       <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
-        <div class="day-events" style="height: 620px;">
+        <div class="day-events" style="height: 1000px;">
 
           <% time_slots.each do |time_slot, index| %>
             <div class="time-slot"
@@ -40,7 +40,12 @@
                   style="top: <%= calculate_top_position(event) %>%;
                           height: <%= calculate_height_for_meeting(event) %>%;
                           background-color: <%= event.package.service.color %>;">
-                <%= event.start_time.strftime('%H:%M') %> - <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %> - <%= link_to event.package.patient.first_name[0] + ". " + event.package.patient.last_name, patient_path(event.package.patient) %>
+                <%= event.start_time.strftime('%H:%M') %> - <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
+                <br>
+                <div style="display: flex; align-items: center;">
+                  <%= link_to event.package.patient.first_name[0] + ". " + event.package.patient.last_name, patient_path(event.package.patient), class: "me-2" %>
+                  <%= status_update_form(event) %>
+                </div>
               </div>
             <% elsif event.is_a?(Absence) %>
               <div class="absence-card"

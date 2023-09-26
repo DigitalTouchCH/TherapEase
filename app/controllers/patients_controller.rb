@@ -41,7 +41,7 @@ end
   def update
     authorize @patient
     if @patient.update(patient_params)
-      redirect_to patients_path, notice: 'Patient was successfully updated.'
+      redirect_to patient_path(@patient), notice: "Information updated successfully!"
     else
       render :edit, status: 422
     end

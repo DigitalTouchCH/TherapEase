@@ -1,5 +1,6 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
+  skip_after_action :verify_authorized, only: [:update_status]
 
   def index
     @therapist = current_user.therapist
@@ -11,6 +12,13 @@ class MeetingsController < ApplicationController
 
   def show
     authorize @meeting
+    if request.referrer&.include?(meetings_path)
+      redirect_to meetings_path
+    elsif request.referrer&.include?(patient_path(@meeting.package.patient))
+      redirect_to patient_path(@meeting.package.patient)
+    else
+      redirect_to root_path
+    end
   end
 
   def new
@@ -33,8 +41,6 @@ class MeetingsController < ApplicationController
 
     authorize @meeting
   end
-
-
 
   def create
     @meeting = Meeting.new(meeting_params)
@@ -77,11 +83,19 @@ class MeetingsController < ApplicationController
     end
   end
 
-
   def destroy
     authorize @meeting
     @meeting.destroy
     redirect_to meetings_url, notice: 'Meeting was successfully destroyed.'
+  end
+
+  def update_status
+    @meeting = Meeting.find(params[:id])
+    if @meeting.update(status: params[:status])
+      redirect_to @meeting, notice: 'Status updated successfully.'
+    else
+      render :index
+    end
   end
 
   private
