@@ -1,5 +1,5 @@
 class TherapistsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
     # @therapists = Therapist.all
@@ -7,7 +7,8 @@ class TherapistsController < ApplicationController
   end
 
   def show
-    @service = Therapist.find(params[:id])
+    @therapist = Therapist.find(params[:id])
+    authorize @therapist
   end
 
   def new
@@ -15,7 +16,7 @@ class TherapistsController < ApplicationController
   end
 
   def create
-    @therapist = Therapists.new(therapist_params)
+    @therapist = Therapist.new(therapist_params)
     if @therapist.save
       redirect_to therapist_path(@therapist), notice: 'Therapists was successfully created.'
     else
@@ -24,17 +25,20 @@ class TherapistsController < ApplicationController
   end
 
   def edit
-    @therapist = Therapists.find(params[:id])
+    @therapist = Therapist.find(params[:id])
+    authorize @therapist
   end
 
   def update
-    @therapist = Therapists.find(params[:id])
+    @therapist = Therapist.find(params[:id])
     @therapist.update(service_params)
+    authorize @therapist
     redirect_to therapist_path(@therapist), notice: 'Therapists was successfully updated.'
   end
 
   def destroy
-    @therapist = Therapists.find(params[:id])
+    @authorize = authorize @therapist
+    @therapist = Therapist.find(params[:id])
     @therapist.destroy
     redirect_to therapists_path, status: :see_other, notice: 'Therapists was successfully deleted.'
   end

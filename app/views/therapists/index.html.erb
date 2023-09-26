@@ -16,7 +16,7 @@
               <h3 class="name"><%= therapist.first_name%></h3>
               <p class="title"><%= ["physiotherapist", "osteopath"].sample %></p>
               <p class="description"><%= therapist.information %></p>
-              <p class="button-18">Contact</p>
+              <p class="button-18"><%= link_to "Details", therapist_path(therapist), class: "btn btn-primary" %></p>
             </div>
           </div>
         <% end %>

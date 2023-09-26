@@ -1,10 +1,21 @@
-<h1>Therapist Details</h1>
+  <div class="content-column">
+    <div class="container">
 
-<div>
-  <h2><%= @therapist.first_namename %></h2>
-  <p><strong>Description:</strong> <%= @therapist.information %></p>
-  <p><strong>Location:</strong> $<%= @therapist.location_name %></p>
-</div>
+      <div class="shadow-rounded mb-5">
 
-<%= link_to 'Edit', edit_therapist_path(@service) %> |
-<%= link_to 'Back', therapists_path %>
+        <div class="card-header text-center", style="padding: 0.8rem;">
+          <strong><%= @therapist.first_name %> <%= @therapist.last_name %></strong>
+        </div>
+        <div class="card-body mt-3">
+          <p class="card-text">Description: <%= @therapist.information %></p>
+          <p class="card-text">Location: <%= @therapist.location_name %></p>
+        </div>
+            <div class="profile-picture">
+              <% if @therapist.photo.attached? %>
+                  <%= cl_image_tag @therapist.photo.key, class: "card-img-top rounded"%>
+                <% else %>
+                  <img class="card-img-top rounded" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Card image cap" class="card-img-top rounded", style:="width: 290px; height:193px">
+                <% end %>
+      </div>
+<%# <%= link_to 'Edit', edit_therapist_path(@service) | %>
+<%# <%= link_to 'Back', therapists_path %>
