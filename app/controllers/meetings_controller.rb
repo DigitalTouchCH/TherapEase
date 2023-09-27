@@ -53,6 +53,7 @@ class MeetingsController < ApplicationController
   end
 
   def edit
+    @media = Medium.where(therapist: current_user.therapist)
     @meeting = Meeting.find(params[:id]) # Chargez l'enregistrement existant
     @package = @meeting.package # Obtenez le package associé à la réunion
     @duration = @package.service.duration_per_unit.to_i
@@ -74,6 +75,7 @@ class MeetingsController < ApplicationController
   end
 
   def update
+    @media = Medium.where(therapist: current_user.therapist)
     @meeting = Meeting.find(params[:id])
     authorize @meeting
     if @meeting.update(meeting_params)
@@ -105,7 +107,8 @@ class MeetingsController < ApplicationController
   end
 
   def meeting_params
-    params.require(:meeting).permit(:start_time, :end_time, :status, :info_public, :info_private, :package_id, :therapist_id)
+    params.require(:meeting).permit(:start_time, :end_time, :status,
+                                    :info_public, :info_private, :package_id,
+                                    :therapist_id, :patient_id, :medium_ids => [])
   end
-
 end
