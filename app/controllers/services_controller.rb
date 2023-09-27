@@ -12,8 +12,8 @@ class ServicesController < ApplicationController
   end
 
   def show
-    authorize @service
     @service = Service.find(params[:id])
+    authorize @service
   end
 
   def new

@@ -1,10 +1,10 @@
 class ServicePolicy < ApplicationPolicy
   def index?
-    true?
+    true
   end
 
   def show?
-    true?
+    true
   end
 
   def create?
