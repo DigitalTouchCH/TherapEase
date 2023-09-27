@@ -1,10 +1,12 @@
-<h1>Service Details</h1>
+ <div class="content-column">
+    <div class="container">
 
-<div>
-  <h2><%= @service.name %></h2>
-  <p><strong>Description:</strong> <%= @service. %></p>
-  <p><strong>Price:</strong> $<%= format_price(@service.price_per_unit) %></p>
-</div>
+      <div class="shadow-rounded mb-5">
 
-<%= link_to 'Edit', edit_service_path(@service) %> |
-<%= link_to 'Back', services_path %>
+        <div class="card-header text-center", style="padding: 0.8rem;">
+         <div class>
+          <h2><%= @service.name %></h2>
+            <p><strong>Session Type:</strong> <%= @service.place_type %></p>
+            <p><strong>Price:</strong> <%= format_price_per_unit(@service.price_per_unit) %> EUR</p>
+      </div>
+ </div>

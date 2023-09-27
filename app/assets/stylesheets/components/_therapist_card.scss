@@ -107,3 +107,10 @@
 .team-boxed .social a:hover {
   opacity:1;
 }
+
+.profile-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
