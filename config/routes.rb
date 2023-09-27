@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :meetings do
     patch 'update_status', on: :member
+    resources :media_meetings, only: [:new, :create]
   end
 
 

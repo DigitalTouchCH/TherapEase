@@ -90,6 +90,9 @@
                       <td>
                         <%= status_update_form(meeting) %>
                       </td>
+                      <td>
+                        <%= link_to "+Media", edit_meeting_path(meeting.id) %>
+                      </td>
                     </tr>
                   <% else %>
                     <tr>
