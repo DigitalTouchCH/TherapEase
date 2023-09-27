@@ -1,10 +1,10 @@
 class TherapistPolicy < ApplicationPolicy
   def index?
-    true?
+    true
   end
 
   def show?
-    true?
+    true
   end
 
   def create?
@@ -16,7 +16,7 @@ class TherapistPolicy < ApplicationPolicy
   end
 
   def destroy?
-    false?
+    therapist == current_user.therapist
   end
 
   class Scope
