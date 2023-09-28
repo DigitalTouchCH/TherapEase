@@ -8,6 +8,8 @@ WeekAvailability.destroy_all
 Therapist.destroy_all
 User.destroy_all
 Service.destroy_all
+Medium.destroy_all
+MediaMeeting.destroy_all
 puts "Old data destroyed."
 
 
@@ -295,6 +297,28 @@ therapists.each do |therapist|
   end
 end
 
+# MEDIA
+Medium.create(
+  title: "Exercises for back",
+  description: "Physiotherapy Exercises For Low Back Pain",
+  url: "https://www.youtube.com/embed/Ry-UGHYg7Us?si=W4AZMGqxpsa8Q09V",
+  therapist_id: 1
+)
 
+Medium.create(
+  title: "Exercises for knees",
+  description: "5 Exercises To Strengthen Your Knees",
+  url: "https://www.youtube.com/embed/ikt6NME0k9E?si=3ut-RpHF-yjWusRw",
+  therapist_id: 1
+)
+
+Medium.create(
+  title: "Exercises for neck",
+  description: "Physio Neck Exercises Stretch and Relieve Routine",
+  url: "https://www.youtube.com/embed/dY_af1ew5b0?si=gKSSxcOqgaRKOpLp",
+  therapist_id: 1
+)
+
+puts "3 media created."
 
 puts "Ok :)"
