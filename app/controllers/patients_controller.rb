@@ -13,11 +13,9 @@ class PatientsController < ApplicationController
     @meetings_by_status_per_package = {}
 
     @packages.each do |package|
-        @meetings_by_status_per_package[package.id] = Meeting.where(package: package).group(:status).count
+      @meetings_by_status_per_package[package.id] = Meeting.where(package: package).group(:status).count
     end
-end
-
-
+  end
 
   def new
     @patient = Patient.new
@@ -41,7 +39,7 @@ end
   def update
     authorize @patient
     if @patient.update(patient_params)
-      redirect_to patient_path(@patient), notice: "Information updated successfully!"
+      redirect_to patient_path(@patient), notice: 'Information updated successfully!'
     else
       render :edit, status: 422
     end
@@ -65,6 +63,9 @@ end
   end
 
   def patient_params
-    params.require(:patient).permit(:date_of_birth, :age, :addresse, :tel_1, :tel_2, :contact_name, :contact_info, :contact_tel, :info_private, :info_public, :first_name, :last_name)
+    params.require(:patient).permit(:date_of_birth, :age, :addresse,
+                                    :tel_1, :tel_2, :contact_name,
+                                    :contact_info, :contact_tel, :info_private,
+                                    :info_public, :first_name, :last_name)
   end
 end

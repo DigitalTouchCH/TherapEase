@@ -80,20 +80,20 @@
                       <td>
                         <div class="<%= row_class %>">
                           <%= meeting.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= meeting.end_time.try(:strftime, '%H:%M') %>
-                          <% if meeting.start_time > (Time.now + 24.hours) %>
-                            <%= link_to edit_meeting_path(meeting.id), class: "no-underline ms-3" do %>
-                              <i class="fas fas-black fa-edit" title="Edit"></i>
-                            <% end %>
-                          <% end %>
                         </div>
                       </td>
                       <td>
                         <%= status_update_form(meeting) %>
                       </td>
                       <td>
-                        <%= link_to "+Media", edit_meeting_path(meeting.id) %>
+                        <% if meeting.start_time > (Time.now + 24.hours) %>
+                          <%= link_to edit_meeting_path(meeting.id), class: "no-underline ms-3" do %>
+                          <i class="fas fas-black fa-edit" title="Edit"></i>
+                          <% end %>
+                        <% end %>
                       </td>
                     </tr>
+
                   <% else %>
                     <tr>
                       <th scope="row"><%= index + 1 %></th>
@@ -114,10 +114,31 @@
             <%= pie_chart meetings_by_status, colors: colors_for_data(meetings_by_status), width: "200px", height: "200px" %>
           </div>
 
+          <!-- Media Section -->
+          <% if package.media_list.present? %>
+            <div class="shadow-rounded mb-5" data-controller="toggle">
+              <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px;">
+                <h6 class= mb-0>Media
+                  <button data-action="toggle#toggle" class="btn btn-sm float-right">
+                    <i class="fas fas-black fa-eye" data-toggle-icon></i>
+                  </button>
+                </h6>
+              </div>
+              <div class="card-group" data-toggle-target="content">
+                <% package.media_list.each do |m| %>
+                  <div class="card shadow-rounded mb-5">
+                    <%= youtube_video m.url %>
+                    <div class="card-body">
+                       <h5 class="card-title"><%= m.title %></h5>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
       <% end %>
     </div>
   </div>
-
 </div>
