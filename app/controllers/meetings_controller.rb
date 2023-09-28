@@ -109,6 +109,6 @@ class MeetingsController < ApplicationController
   def meeting_params
     params.require(:meeting).permit(:start_time, :end_time, :status,
                                     :info_public, :info_private, :package_id,
-                                    :therapist_id, :patient_id, :medium_ids => [])
+                                    :therapist_id, :patient_id, medium_ids: [])
   end
 end

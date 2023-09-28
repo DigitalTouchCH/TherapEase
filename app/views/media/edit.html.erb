@@ -10,13 +10,6 @@
               <%= f.input :title, required: true %>
               <%= f.input :description, required: true %>
               <%= f.input :url, required: true %>
-              <div>
-                <p>Assign to meetings</p>
-                <%= f.select :meetings, Meeting.where(package: Package.where(therapist: Therapist.where(user: current_user)))
-                .where.not(start_time: nil).order(:start_time)
-                .collect {|x| [x.start_time.try(:strftime, "%d %B from %H:%M")+ x.end_time.try(:strftime, " to %H:%M"), x.id]},
-                {}, multiple: true %>
-               </div>
             </div>
 
             <div class="form-actions">

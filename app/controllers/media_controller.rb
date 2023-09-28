@@ -52,11 +52,6 @@ class MediaController < ApplicationController
   end
 
   def medium_params
-    # new_params =
     params.require(:medium).permit(:title, :description, :url, meeting_ids: [])
-    # meetings = []
-    # new_params[:meetings].each { |meeting_id| meetings << Meeting.find(meeting_id) unless meeting_id.empty? }
-    # new_params[:meetings] = meetings
-    # new_params
   end
 end
