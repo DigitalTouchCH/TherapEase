@@ -69,6 +69,27 @@
   font-weight: bold;
 }
 
+.availability-card {
+  position: absolute;
+  width: 95%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 1em;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  color: black !important;
+  overflow: hidden;
+  font-size: smaller;
+}
+
+.availability-card :hover {
+}
+
+.selected-slot {
+  background-color: #b1d4f7;
+}
+
 
 .absence-card {
   position: absolute;

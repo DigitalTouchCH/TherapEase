@@ -32,7 +32,7 @@ module ApplicationHelper
 
   FACTOR = 1
   START_TIME = 7.0
-  END_TIME = 19.0
+  END_TIME = 18.0
   TOTAL_HOURS = END_TIME - START_TIME
   INTERVAL = 15.minutes
 
