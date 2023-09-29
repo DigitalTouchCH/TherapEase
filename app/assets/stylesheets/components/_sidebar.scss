@@ -66,6 +66,19 @@
   background-color: white;
 }
 
+.shadow-rounded-upper {
+  padding-top: 4em;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-bottom: 2em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px 20px 0 0;
+  background-color: white;
+  position: relative;
+  margin-top: -25px;
+  z-index: -1;
+}
+
 
 
 .sidebar-patient-list {
