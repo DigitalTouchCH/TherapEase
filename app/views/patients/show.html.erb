@@ -4,11 +4,11 @@
   <%= render 'shared/sidebar' %>
 
   <div class="content-column">
-      <div class="shadow-rounded mb-5">
+      <div class="mb-5">
         <div class="row card-header text-center", style="padding: 0.8rem; border-radius: 15px;">
           <strong><%= @patient.first_name %> <%= @patient.last_name.upcase %></strong>
         </div>
-        <div class="mt-3">
+        <div class="shadow-rounded-upper">
         <%= simple_form_for @patient do |f| %>
           <div class="row">
             <div class="col-md-3">
