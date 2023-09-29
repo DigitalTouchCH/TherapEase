@@ -28,7 +28,7 @@
           <%= week_calendar attribute: :start_time, events: @final_slots_array do |date, slots| %>
             <div class="day-events">
               <% slots.each do |slot| %>
-                <div class="absence-card slot" data-slot-target="slot" data-time="<%= slot.start_time %>" data-action="click->slot-selection#select">
+                <div class="availability-cardd slot" data-slot-target="slot" data-time="<%= slot.start_time %>" data-action="click->slot-selection#select">
                   <%= slot.start_time.strftime('%H:%M') %>
                   <br>
                 </div>

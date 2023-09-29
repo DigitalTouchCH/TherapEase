@@ -29,7 +29,6 @@
     padding: 6px;
     vertical-align: top;
     width: 14%;
-
     border: 1px solid #ddd;
     border-top-color: rgb(221, 221, 221);
     border-top-style: solid;
@@ -55,28 +54,32 @@
     height: 80px;
   }
 
-  .wday-0 {}
+  .wday-0 {
+    background: #f0f0f0;
+  }
   .wday-1 {}
   .wday-2 {}
   .wday-3 {}
   .wday-4 {}
   .wday-5 {}
-  .wday-6 {}
-
-  .today {
-    background: #FFFFC0
+  .wday-6 {
+    background: #f0f0f0;
   }
 
-  .past {}
+  .today {
+    background: #d9f0ff;
+  }
+
+  .past {
+    background: #eff8ff;
+  }
   .future {}
 
   .start-date {}
 
   .prev-month {
-    background: #DDD;
   }
   .next-month {
-    background: #DDD;
   }
   .current-month {}
 

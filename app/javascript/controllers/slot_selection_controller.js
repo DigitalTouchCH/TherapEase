@@ -7,6 +7,7 @@ export default class extends Controller {
 
   connect() {
     console.log("Slot controller connected!")
+    this.slotTargets.forEach(slot => slot.classList.remove('selected-slot'));
   }
 
   select(event) {
@@ -14,18 +15,14 @@ export default class extends Controller {
 
     const duration = parseInt(this.data.get('duration'));
 
-    // Mise à jour de startTime avec correction du décalage horaire
     const selectedTimeMoment = moment.tz(event.currentTarget.getAttribute('data-time'), 'UTC');
     this.startTimeTarget.value = selectedTimeMoment.format('D MMMM YYYY [from] HH:mm');
 
-    // Mise à jour de endTime avec correction du décalage horaire
-    const endTimeMoment = selectedTimeMoment.clone().add(duration, 'minutes'); // Utilisez .clone() pour éviter de modifier l'objet original
-    this.endTimeTarget.value = endTimeMoment.format('D MMMM YYYY [from] HH:mm');
+    const endTimeMoment = selectedTimeMoment.clone().add(duration, 'minutes');
+    this.endTimeTarget.value = endTimeMoment.format('HH:mm');
 
-    // Mise à jour du statut à "Pending"
     this.statusTarget.value = "Pending";
 
-    // Pour gérer le style de sélection
     this.slotTargets.forEach(slot => slot.classList.remove('selected-slot'));
     event.currentTarget.classList.add('selected-slot');
   }

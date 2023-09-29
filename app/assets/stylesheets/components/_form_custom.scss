@@ -1,0 +1,52 @@
+.form-header {
+  margin-top: -2em;
+  margin-right: -1.8em;
+  margin-left: -1.8em;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: #0D6EFD;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+}
+
+.form-header h2 {
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  margin: 0;
+  text-align: center;
+}
+
+.form-header p {
+  padding-bottom: 0.6em;
+  margin: 0;
+  text-align: center;
+}
+
+.form_circle_blue {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #0D6EFD;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  font-size: 1em;
+}
+
+.form_step_line1 {
+  margin-bottom: .25rem;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #0D6EFD;
+}
+
+.form_step_line2 {
+  margin-bottom: .25rem;
+  font-size: small;
+  font-weight: bold;
+  color: #8f8f8f;
+
+}

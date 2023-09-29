@@ -40,27 +40,23 @@
                   style="top: <%= calculate_top_position(event) %>%;
                           height: <%= calculate_height_for_meeting(event) %>%;
                           background-color: <%= event.package.service.color %>;">
-                <%= event.start_time.strftime('%H:%M') %> - <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
-                <br>
+                <%= link_to event.package.patient.first_name[0] + ". " + event.package.patient.last_name, patient_path(event.package.patient) %>
                 <div style="display: flex; align-items: center;">
-                  <%= link_to event.package.patient.first_name[0] + ". " + event.package.patient.last_name, patient_path(event.package.patient), class: "me-2" %>
-                  <%= status_update_form(event) %>
+                  <%= event.start_time.strftime('%H:%M') %> - <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
+                  <%= status_update_form(event)%>
                 </div>
               </div>
             <% elsif event.is_a?(Absence) %>
               <div class="absence-card"
                   style="top: <%= calculate_top_position(event) %>%;
                   height: <%= calculate_height_for_meeting(event) %>%;">
-                <strong><%= event.start_time.strftime('%H:%M') %> à <%= event.end_time.strftime('%H:%M') %></strong>
+                <strong>Absence (<%= event.reason %>)</strong>
                 <br>
-                Absence (<%= event.reason %>)
-                <br>
+                <%= event.start_time.strftime('%H:%M') %> à <%= event.end_time.strftime('%H:%M') %>
                 <div>
                   <%= link_to edit_absence_path(event) do %>
                     <i class="fas fas-black fa-edit" title="Edit"></i>
                   <% end %>
-                </div>
-                <div>
                   <%= link_to absence_path(event), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
                     <i class="fa-regular fa-trash-can" style="color: #000000;" title="Delete"></i>
                   <% end %>
