@@ -10,6 +10,7 @@ class PatientsController < ApplicationController
   def show
     authorize @patient
     @packages = Package.where(therapist: @therapist, patient: @patient)
+    @patient.age = new_age
     @meetings_by_status_per_package = {}
 
     @packages.each do |package|
@@ -60,6 +61,13 @@ class PatientsController < ApplicationController
   def set_therapist
     @therapist = current_user.therapist
     @patients = current_user.therapist.packages.includes(:patient).map(&:patient).uniq
+  end
+
+  def new_age
+    today = Date.today
+    age = today.year - @patient.date_of_birth.year
+    age -= 1 if @patient.date_of_birth.strftime("%m%d").to_i > today.strftime("%m%d").to_i
+    age
   end
 
   def patient_params

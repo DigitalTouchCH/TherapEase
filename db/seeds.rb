@@ -17,6 +17,15 @@ puts "Creating new data..."
 
 # USERS / PATIENTS
 
+
+private_notes = ["Right Shoulder Mobility: shows a marked reduction in right shoulder mobility, especially during external rotation. Possible rotator cuff tendinitis.",
+                "Left Knee: shows a marked reduction in left knee mobility, especially during flexion. Possible meniscus tear.",
+                "Right Ankle: shows a marked reduction in right ankle mobility, especially during dorsiflexion. Possible Achilles tendinitis.",
+                "Left Shoulder: shows a marked reduction in left shoulder mobility, especially during external rotation. Possible rotator cuff tendinitis.",
+                "Right Knee: shows a marked reduction in right knee mobility, especially during flexion. Possible meniscus tear.",
+                "Left Ankle: shows a marked reduction in left ankle mobility, especially during dorsiflexion. Possible Achilles tendinitis.",
+                "Right Hip: shows a marked reduction in right hip mobility, especially during flexion. Possible hip osteoarthritis."]
+
 50.times do |i|
   email = "patient#{i + 1}@example.com"
   password = "password123"
@@ -33,8 +42,8 @@ puts "Creating new data..."
     contact_name: Faker::Name.name,
     contact_info: ["Friend", "Relative", "Sibling"].sample,
     contact_tel: Faker::PhoneNumber.phone_number,
-    info_private: Faker::Lorem.sentence,
-    info_public: Faker::Lorem.sentence,
+    info_private: private_notes.sample,
+    info_public: "Please be advised that appointments can be rescheduled, but not on the day they are set. Any changes made on the day of the appointment will result in a charge, barring exceptional circumstances. We appreciate your understanding.",
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name
   )
@@ -209,6 +218,23 @@ puts "#{Service.count} services created."
 
 # PACKAGES
 
+patient_instructions = [
+  "Ensure to arrive 10 minutes early for your first session to fill out any necessary paperwork.",
+  "Wear loose, comfortable clothing to your therapy session.",
+  "Stay hydrated before and after the massage for better muscle recovery.",
+  "Avoid eating a heavy meal before the therapy.",
+  "Speak up if you feel any discomfort during the session."
+]
+
+private_notes = [
+  "Patient mentioned a slight pain in the lower back during the last session.",
+  "Sensitive to pressure around the neck area.",
+  "Has had previous surgery on the left knee – be gentle.",
+  "Prefers a warmer room during the session.",
+  "Experienced dizziness post last session – monitor and adjust accordingly."
+]
+
+
 # For each patient, create 2 to 3 packages with random services
 Patient.all.each do |patient|
   # Select a random number of services for this patient (between 2 and 3)
@@ -220,8 +246,8 @@ Patient.all.each do |patient|
 
     package = Package.create(
       num_of_session: [5, 9].sample,
-      info_private: Faker::Lorem.sentence,
-      info_public: Faker::Lorem.sentence,
+      info_private: private_notes.sample,
+      info_public: patient_instructions.sample,
       insurance_name: "InsuranceCorp",
       insurance_number: "12345",
       insurance_type: "TypeA",
