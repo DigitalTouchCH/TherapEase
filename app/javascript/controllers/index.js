@@ -11,3 +11,9 @@ application.register("toggle", ToggleController)
 
 import SlotSelectionController from "./slot_selection_controller"
 application.register("slot-selection", SlotSelectionController)
+
+import EditPackageController from "./edit_package_controller"
+application.register("edit-package", EditPackageController)
+
+import EditPatientController from "./edit_patient_controller"
+application.register("edit-patient", EditPatientController)

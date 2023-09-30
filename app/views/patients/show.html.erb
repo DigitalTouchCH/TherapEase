@@ -4,141 +4,242 @@
   <%= render 'shared/sidebar' %>
 
   <div class="content-column">
-      <div class="mb-5">
-        <div class="row card-header text-center", style="padding: 0.8rem; border-radius: 15px;">
-          <strong><%= @patient.first_name %> <%= @patient.last_name.upcase %></strong>
+
+      <!-- PATIENT FORM -->
+      <div class="mb-5" data-controller="edit-patient">
+        <div class="row card-header-new">
+          <h1>
+            <%= @patient.first_name %> <%= @patient.last_name.upcase %>
+            <%= button_tag type: 'submit', class: "btn btn-link", data: { action: "click->edit-patient#edit" } do %>
+              <i class="fas fa-edit" title="Edit"></i>
+            <% end %>
+          </h1>
         </div>
-        <div class="shadow-rounded-upper">
-        <%= simple_form_for @patient do |f| %>
+
+        <div class="shadow-rounded">
+
+          <%= form_with model: @patient do |f| %>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form_step_line1">DETAILS</div>
+                <div class="form-group">
+                  <%= f.label :first_name, "First name : ", class: "form-label" %>
+                  <%= f.text_field :first_name, readonly: true, class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :last_name, "Surname : ", class: "form-label" %>
+                  <%= f.text_field :last_name, readonly: true, class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :date_of_birth, "Birth's date : ", class: "form-label" %>
+                  <%= f.date_field :date_of_birth, readonly: true, class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :date_of_birth, "Age : ", class: "form-label" %>
+                  <%= f.text_field :age, readonly: true, id: 'age', class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :addresse, "Addresse : ", class: "form-label" %>
+                  <%= f.text_field :addresse, readonly: true, class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :tel_1, "Tel. : ", class: "form-label" %>
+                  <%= f.text_field :tel_1, readonly: true, class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :tel_2, "Tel. : ", class: "form-label" %>
+                  <%= f.text_field :tel_2, readonly: true, class: "form-input" %>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form_step_line1">EMERGENCY CONTACT</div>
+                <div class="form-group">
+                  <%= f.label :contact_name, "Full Name : ", class: "form-label" %>
+                  <%= f.text_field :contact_name, readonly: true, class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :contact_info, "Relationship : ", class: "form-label" %>
+                  <%= f.text_field :contact_info, readonly: true, class: "form-input" %>
+                </div>
+                <div class="form-group">
+                  <%= f.label :contact_tel, "Tel. : ", class: "form-label" %>
+                  <%= f.text_field :contact_tel, readonly: true, class: "form-input" %>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form_step_line1">PATIENT INSTRUCTIONS</div>
+                <%= f.text_area :info_public, readonly: true, class: "form-input", rows: 8, cols: 40 %>
+              </div>
+
+
+              <div class="col-md-3">
+                <div class="form_step_line1">PRIVATE NOTES</div>
+                <div class="form-group">
+                  <%= f.text_area :info_private, readonly: true, class: "form-input", rows: 8, cols: 40 %>
+                </div>
+              </div>
+
+            </div>
+
           <div class="row">
-            <div class="col-md-3">
-                <%= f.input :first_name %>
-                <%= f.input :last_name %>
-                <%= f.input :addresse %>
-            </div>
-            <div class="col-md-3">
-                <%= f.input :date_of_birth, as: :date, start_year: Time.now.year - 100, end_year: Time.now.year, order: [:day, :month, :year], input_html: { id: 'dob' } %>
-                <%= f.input :age, input_html: { readonly: true, id: 'age' } %>
-                <%= f.input :tel_1 %>
-                <%= f.input :tel_2 %>
-            </div>
-            <div class="col-md-3">
-                <%= f.input :contact_name %>
-                <%= f.input :contact_info %>
-                <%= f.input :contact_tel %>
-            </div>
-            <div class="col-md-3">
-                <%= f.input :contact_name %>
-                <%= f.input :contact_info %>
-                <%= f.input :contact_tel %>
-                <%= f.input :info_private %>
-                <%= f.input :info_public %>
+            <div class="col-md-2 offset-md-5 text-center mt-3 saveButton" style="display: none;">
+              <%= f.submit "Save", class: "btn btn-dark", data: { action: "click->edit-patient#save" } %>
             </div>
           </div>
-          <div class="text-center mt-3">
-              <%= f.button :submit, "Update", class: "btn btn-primary" %>
-          </div>
-        <% end %>
+          <% end %>
+
         </div>
+
       </div>
 
 
       <% @packages.each do |package| %>
-      <div class="shadow-rounded mb-5" data-controller="toggle">
-        <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px;">
-          <h6 class= mb-0><%= package.service.name %> (<%= package.num_of_session %> sessions) with <%= package.therapist.first_name %>
-            <%= link_to edit_package_path(package), class: "no-underline ms-3" do %>
-              <i class="fas fas-black fa-edit"></i>
-            <% end %>
-            <%= link_to package_path(package), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
-                <i class="fa-regular fa-trash-can" style="color: #000000;" title="Delete"></i>
-            <% end %>
-            <button data-action="toggle#toggle" class="btn btn-sm float-right">
-              <i class="fas fas-black fa-eye" data-toggle-icon></i>
-            </button>
-          </h6>
-        </div>
-        <div class="row" data-toggle-target="content">
-          <!-- First Column -->
-          <div class="col-md-4">
-            <p><strong>Insurance</strong></p>
-            <p><%= package.insurance_name %> (<%= package.insurance_type %>)<br> N°<%= package.insurance_number %></p>
-            <p><strong>Informations</strong></p>
-            <p>Public: <%= package.info_public %><br>Intern: <%= package.info_private %></p>
-          </div>
-          <!-- Second Column -->
-          <div class="col-md-6">
-            <table class="table">
-              <thead>
-              </thead>
-              <tbody>
-                <% Meeting.where(package: package).order(:start_time).each_with_index do |meeting, index| %>
-                  <% row_class = meeting.start_time && meeting.start_time < (Time.now + 24.hours) ? 'text-muted' : '' %>
-                  <% if meeting.start_time.present? %>
-                    <tr>
-                      <th scope="row"><%= index + 1 %></th>
-                      <td>
-                        <div class="<%= row_class %>">
-                          <%= meeting.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= meeting.end_time.try(:strftime, '%H:%M') %>
-                        </div>
-                      </td>
-                      <td>
-                        <%= status_update_form(meeting) %>
-                      </td>
-                      <td>
-                        <% if meeting.start_time > (Time.now + 24.hours) %>
-                          <%= link_to edit_meeting_path(meeting.id), class: "no-underline ms-3" do %>
-                          <i class="fas fas-black fa-edit" title="Edit"></i>
-                          <% end %>
-                        <% end %>
-                      </td>
-                    </tr>
 
-                  <% else %>
-                    <tr>
-                      <th scope="row"><%= index + 1 %></th>
-                      <td><%= link_to edit_meeting_path(meeting.id) do %>
-                            <i class="fas fas-black fa-calendar" title="Book"></i>
-                          <% end %>
-                      </td>
-                    </tr>
-                  <% end %>
-                <% end %>
-              </tbody>
-            </table>
+        <div class="shadow-rounded mb-5" data-controller="toggle edit-package">
+
+          <!-- Header -->
+          <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px; margin-top: -2em; margin-left: -2em; margin-right: -2em;">
+            <h6 class= mb-0><%= package.service.name %> (<%= package.num_of_session %> sessions)
+              <%= button_tag type: 'submit', class: "btn btn-link", data: { action: "click->edit-package#edit" } do %>
+                <i class="fas fas-black fa-edit"></i>
+              <% end %>
+              <%= link_to package_path(package), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} do %>
+                  <i class="fa-regular fa-trash-can" style="color: #000000;" title="Delete"></i>
+              <% end %>
+              <button data-action="toggle#toggle" class="btn btn-sm float-right">
+                <i class="fas fas-black fa-eye" data-toggle-icon></i>
+              </button>
+            </h6>
           </div>
 
-          <!-- Third Column -->
-          <div class="col-md-2">
-            <% meetings_by_status = Meeting.where(package: package).group(:status).count %>
-            <%= pie_chart meetings_by_status, colors: colors_for_data(meetings_by_status), width: "200px", height: "200px" %>
-          </div>
+          <div data-toggle-target="content">
+            <%= form_with model: package do |f| %>
+              <div class="row">
+                <!-- Form -->
 
-          <!-- Media Section -->
-          <% if package.media_list.present? %>
-            <div class="shadow-rounded mb-5" data-controller="toggle">
-              <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px;">
-                <h6 class= mb-0>Media
-                  <button data-action="toggle#toggle" class="btn btn-sm float-right">
-                    <i class="fas fas-black fa-eye" data-toggle-icon></i>
-                  </button>
-                </h6>
-              </div>
-              <div class="card-group" data-toggle-target="content">
-                <% package.media_list.each do |m| %>
-                  <div class="card shadow-rounded mb-5">
-                    <%= youtube_video m.url %>
-                    <div class="card-body">
-                       <h5 class="card-title"><%= m.title %></h5>
-                    </div>
+                <div class="col-md-3">
+
+                  <div class="form_step_line1">DETAILS</div>
+                  <div class="form-group mb-2">
+                    <%= f.label :num_of_session, "Number of Sessions:", class: "form-label" %>
+                    <%= f.number_field :num_of_session, readonly: true, class: "form-input" %>
                   </div>
-                <% end %>
+                  <div>
+                    <% meetings_by_status = Meeting.where(package: package).group(:status).count %>
+                    <%= pie_chart meetings_by_status, colors: colors_for_data(meetings_by_status), width: "100px", height: "100px" %>
+                  </div>
+
+                  <div class="form-label mt-3">INSURANCE</div>
+                  <div class="form-group">
+                    <%= f.label :insurance_name, "Name:", class: "form-label" %>
+                    <%= f.text_field :insurance_name, readonly: true, class: "form-input" %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :insurance_number, "Number:", class: "form-label" %>
+                    <%= f.text_field :insurance_number, readonly: true, class: "form-input" %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :insurance_type, "Type:", class: "form-label" %>
+                    <%= f.select :insurance_type, ["Accident", " Lamal"], {}, {class: "form-input", readonly: true} %>
+                  </div>
+
+                </div>
+
+                <div class="col-md-3">
+
+                  <div class="form_step_line1">PATIENT INSTRUCTIONS</div>
+                  <div class="form-group">
+                    <%= f.text_area :info_public, readonly: true, class: "form-input", rows: 3 %>
+                  </div>
+
+                  <div class="form_step_line1">PRIVATE NOTES</div>
+                  <div class="form-group">
+                    <%= f.text_area :info_private, readonly: true, class: "form-input", rows: 3 %>
+                  </div>
+
+                  <div class="text-center mt-3 saveButton" style="display: none; width: 100px;">
+                    <%= f.submit "Save", class: "btn btn-dark", data: { action: "click->edit-package#save" } %>
+                  </div>
+                </div>
+
+            <% end %>
+
+                <div class="col-md-6">
+                  <div class="form_step_line1">MEETINGS</div>
+                  <table>
+                    <thead>
+                    </thead>
+                    <tbody>
+                      <% Meeting.where(package: package).order(:start_time).each_with_index do |meeting, index| %>
+                        <% row_class = meeting.start_time && meeting.start_time < (Time.now + 24.hours) ? 'text-muted' : '' %>
+                        <% if meeting.start_time.present? %>
+                          <tr>
+                            <th scope="row"><%= index + 1 %>
+                            </th>
+                            <td class="pe-4 ps-4">
+                              <div class="<%= row_class %>" style="font-size: 0.8em;">
+                                <%= meeting.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= meeting.end_time.try(:strftime, '%H:%M') %>
+                              </div>
+                            </td>
+                            <td>
+                              <%= status_update_form(meeting) %>
+                            </td>
+                            <td>
+                              <% if meeting.start_time > (Time.now + 24.hours) %>
+                                <%= link_to edit_meeting_path(meeting.id), class: "no-underline ms-3" do %>
+                                <i class="fas fas-black fa-edit" title="Edit"></i>
+                                <% end %>
+                              <% end %>
+                            </td>
+                          </tr>
+
+                        <% else %>
+                          <tr>
+                            <th scope="row"><%= index + 1 %></th>
+                            <td><%= link_to edit_meeting_path(meeting.id) do %>
+                                  <i class="fas fas-black fa-calendar ps-3" title="Book"></i>
+                                <% end %>
+                            </td>
+                          </tr>
+                        <% end %>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+
               </div>
+
+            <div class="row">
+              <!-- Media Section -->
+              <% if package.media_list.present? %>
+                <div class="row shadow-rounded mb-5">
+                  <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px;">
+                    <h6 class= mb-0>Media
+                      <button data-action="toggle#toggle" class="btn btn-sm float-right">
+                        <i class="fas fas-black fa-eye" data-toggle-icon></i>
+                      </button>
+                    </h6>
+                  </div>
+                  <div class="card-group">
+                    <% package.media_list.each do |m| %>
+                      <div class="card shadow-rounded mb-5">
+                        <%= youtube_video m.url %>
+                        <div class="card-body">
+                          <h5 class="card-title"><%= m.title %></h5>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
             </div>
-          <% end %>
+          </div>
+
         </div>
-      </div>
       <% end %>
+
     </div>
   </div>
 </div>
