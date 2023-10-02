@@ -56,10 +56,19 @@ puts "#{Patient.count} patients created."
 
 # THERAPISTS
 
-photos_urls = ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg",
-              "https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Am%C3%A9lie_250x250_su4uyp.jpg",
-              "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg",
-              "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg"]
+photos_urls = [
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg",
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Am%C3%A9lie_250x250_su4uyp.jpg",
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg",
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg"
+]
+
+therapist_descriptions = [
+  "Dedicated osteopath providing expert care. Skilled in diagnosing and treating musculoskeletal issues. Committed to improving patients' well-being, flexibility and mobility.",
+  "Passionate physiotherapist dedicated to restoring mobility and enhancing overall wellness. Expert in musculoskeletal care and personalized rehabilitation techniques.",
+  "Compassionate massage therapist devoted to relieving stress and promoting relaxation. Skilled in therapeutic touch, enhancing well-being through personalized techniques.",
+  "Empathetic counselor providing a safe space for healing and growth. Experienced in guiding clients through challenges, fostering resilience, and promoting mental well-being."
+]
 
 4.times do |i|
   email = "therapist#{i + 1}@example.com"
@@ -69,17 +78,19 @@ photos_urls = ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/So
 
   therapist = Therapist.create(
     user: user,
-    information: Faker::Lorem.paragraph,
+    information: therapist_descriptions[i],
     location_name: "Therapy Center #{Faker::Address.building_number}",
     location_address: Faker::Address.street_address,
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
+    title: ["osteopath", "physiotherapist", "massage therapist", "counselor"][i]
   )
 
   # Attach a random image from the internet
   photo = URI.open(photos_urls[i])
   therapist.photo.attach(io: photo, filename: "therapist_#{therapist.id}.jpg", content_type: "image/jpg")
 end
+
 puts "#{Therapist.count} therapists created."
 
 # AVAILABILITIES
@@ -92,7 +103,7 @@ therapists.each do |therapist|
     therapist: therapist,
     valid_from: Date.new(2023, 1, 1),
     valid_until: Date.new(2023, 12, 31),
-    name: "Standart availability"
+    name: "Standard availability"
   )
   days_of_week.each do |day|
     # Créer des TimeBlocks pour chaque jour de la semaine
