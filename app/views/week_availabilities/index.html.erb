@@ -3,13 +3,16 @@
 
   <div class="content-column">
 
+    <div class="mb-5">
+      <div class="row card-header-new">
+        <h1> MY AVAILABILITES </h1>
+    </div>
+
     <div class="shadow-rounded mb-5">
-      <h3 class="text-center">My availabilities</h3>
-      <br>
       <div data-controller="toggle">
         <% @week_availabilities.each do |week_availability| %>
           <div class="mb-5">
-            <div class="card-header text-center">
+            <div class="text-center">
               <%= week_availability.name.capitalize %> :
               From <strong><%= week_availability.valid_from.strftime('%A %d %B %Y') %></strong> to <strong><%= week_availability.valid_until.strftime('%A %d %B %Y') %></strong>
               <%= link_to new_week_availability_time_block_path(week_availability), class: 'float-right ml-2' do %>

@@ -2,11 +2,11 @@
 module ChartsHelper
   STATUS_COLORS = {
     "No date set" => "#DCDCDC",
-    "Pending" => "#ce9a4c",
-    "Confirmed" => "#40865d",
-    "Cancelled" => "#464646",
+    "Pending" => "#ff6b35",
+    "Confirmed" => "#023e7d",
+    "Cancelled" => "#9B9B9B",
     "Excused" => "#9B9B9B",
-    "Done" => "#3B65A1"
+    "Done" => "#023e7d"
   }.freeze
 
   def colors_for_data(data)

@@ -162,7 +162,9 @@
                   <div class="text-center mt-3 saveButton" style="display: none; width: 100px;">
                     <%= f.submit "Save", class: "btn btn-dark", data: { action: "click->edit-package#save" } %>
                   </div>
+
                 </div>
+
 
             <% end %>
 
@@ -211,30 +213,25 @@
 
               </div>
 
-            <div class="row">
-              <!-- Media Section -->
-              <% if package.media_list.present? %>
-                <div class="row shadow-rounded mb-5">
-                  <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px;">
-                    <h6 class= mb-0>Media
-                      <button data-action="toggle#toggle" class="btn btn-sm float-right">
-                        <i class="fas fas-black fa-eye" data-toggle-icon></i>
-                      </button>
-                    </h6>
-                  </div>
-                  <div class="card-group">
+            <% if package.media_list.present? %>
+              <div class="row mt-5">
+                <div class="">
+                  <div class="form_step_line1">EXERCICES SHARED</div>
+                  <div class="cards-video-therapist">
                     <% package.media_list.each do |m| %>
-                      <div class="card shadow-rounded mb-5">
-                        <%= youtube_video m.url %>
+                      <div class="mb-5">
+                        <iframe width="350" height="200" src="<%= m.url %>" frameborder="0" allowfullscreen></iframe>
                         <div class="card-body">
                           <h5 class="card-title"><%= m.title %></h5>
+                          <h5 class="card-title"><%= m.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= m.end_time.try(:strftime, '%H:%M') %>
+                          <p class="card-text" style="font-size: 0.8em;"><%= m.description %></p>
                         </div>
                       </div>
                     <% end %>
                   </div>
                 </div>
-              <% end %>
-            </div>
+              </div>
+            <% end %>
           </div>
 
         </div>

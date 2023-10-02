@@ -38,6 +38,15 @@
   align-items: center;
 }
 
+.cards-video-therapist {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+  display: flex;
+  justify-content:left;
+  align-items: center;
+}
+
 // Smallest device
 @media (min-width: 100px) and (max-width: 575px) {
   .cards {

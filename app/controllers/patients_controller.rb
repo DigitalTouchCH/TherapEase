@@ -40,11 +40,16 @@ class PatientsController < ApplicationController
   def update
     authorize @patient
     if @patient.update(patient_params)
-      redirect_to patient_path(@patient), notice: 'Information updated successfully!'
+      if current_user.therapist
+        redirect_to patient_path(@patient), notice: 'Information updated successfully!'
+      else current_user.patient
+        redirect_to packages_path, notice: 'Information updated successfully!'
+      end
     else
       render :edit, status: 422
     end
   end
+
 
   def destroy
     authorize @patient
@@ -55,13 +60,22 @@ class PatientsController < ApplicationController
   private
 
   def set_patient
-    @patient = Patient.find(params[:id])
+    @patient = if current_user.patient
+                 current_user.patient
+               else
+                 Patient.find(params[:id])
+               end
   end
 
   def set_therapist
-    @therapist = current_user.therapist
-    @patients = current_user.therapist.packages.includes(:patient).map(&:patient).uniq
+    if current_user.therapist
+      @therapist = current_user.therapist
+      @patients = @therapist.packages.includes(:patient).map(&:patient).uniq
+    elsif current_user.patient
+      @patients = [@patient]
+    end
   end
+
 
   def new_age
     today = Date.today

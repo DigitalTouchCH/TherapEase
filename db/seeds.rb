@@ -26,7 +26,7 @@ private_notes = ["Right Shoulder Mobility: shows a marked reduction in right sho
                 "Left Ankle: shows a marked reduction in left ankle mobility, especially during dorsiflexion. Possible Achilles tendinitis.",
                 "Right Hip: shows a marked reduction in right hip mobility, especially during flexion. Possible hip osteoarthritis."]
 
-50.times do |i|
+80.times do |i|
   email = "patient#{i + 1}@example.com"
   password = "password123"
 
@@ -149,7 +149,7 @@ services_data = [
     price_visibility: false,
     price_per_unit: 50.0,
     duration_per_unit: 30,
-    color: "#DFF2FF",
+    color: "#48cae4",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_perinee_450x300_vjkamj.jpg"]
   },
   {
@@ -161,7 +161,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 60.0,
     duration_per_unit: 45,
-    color: "#B0F2B6",
+    color: "#90e0ef",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_Massage_450x300_clk194.jpg"]
   },
   {
@@ -173,7 +173,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 90.0,
     duration_per_unit: 60,
-    color: "#DFF9E1",
+    color: "#ade8f4",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148015/Cat%C3%A9gorie_Physioth%C3%A9rapie_450x300_v2ibey.jpg"]
   },
   {
@@ -185,7 +185,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 30.0,
     duration_per_unit: 30,
-    color: "#FFF5E6",
+    color: "#caf0f8",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148166/consulting_pdhtri.jpg"]
   }
 ]
@@ -285,7 +285,7 @@ puts "#{Meeting.count} meetings created."
 
 therapists = Therapist.all
 
-available_hours = (8..12).to_a + (13..16).to_a
+available_hours = (8..11).to_a + (13..16).to_a
 
 start_date = Date.today - 7
 end_date = Date.today + 14
