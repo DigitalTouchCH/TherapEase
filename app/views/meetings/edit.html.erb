@@ -32,7 +32,7 @@
             </div>
           </div>
           <!-- CALENDAR INFO -->
-          <div class="mt-2">
+          <div class="mt-2" style="margin-bottom: 2em;">
             <%= week_calendar attribute: :start_time, events: @final_slots_array do |date, slots| %>
               <div class="day-events" style="height: 450px;">
                 <% slots.each do |slot| %>

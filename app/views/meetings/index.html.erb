@@ -10,7 +10,7 @@
 
     <div class="shadow-rounded mb-5">
       <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
-        <div class="day-events" style="height: 1000px;">
+        <div class="day-events" style="height: 1000px; margin-bottom: 2em;">
 
           <% time_slots.each do |time_slot, index| %>
             <div class="time-slot"

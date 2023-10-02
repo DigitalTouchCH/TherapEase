@@ -338,26 +338,27 @@ end
 
 media_list = [
   {
-  title: "Exercises for back",
-  description: "Physiotherapy Exercises For Low Back Pain",
-  url: "https://www.youtube.com/embed/Ry-UGHYg7Us?si=W4AZMGqxpsa8Q09V",
+    title: "Exercises for back",
+    description: "Discover effective physiotherapy exercises specifically tailored for alleviating and preventing low back pain. Learn the correct techniques and understand the benefits of each movement.",
+    url: "https://www.youtube.com/embed/Ry-UGHYg7Us?si=W4AZMGqxpsa8Q09V",
   },
   {
-  title: "Exercises for knees",
-  description: "5 Exercises To Strengthen Your Knees",
-  url: "https://www.youtube.com/embed/ikt6NME0k9E?si=3ut-RpHF-yjWusRw",
+    title: "Exercises for knees",
+    description: "5 vital exercises aimed at strengthening your knees. Each exercise is explained in detail to ensure safe and effective results. Ideal for athletes or individuals with knee concerns.",
+    url: "https://www.youtube.com/embed/ikt6NME0k9E?si=3ut-RpHF-yjWusRw",
   },
   {
-  title: "Exercises for neck",
-  description: "Physio Neck Exercises Stretch and Relieve Routine",
-  url: "https://www.youtube.com/embed/dY_af1ew5b0?si=gKSSxcOqgaRKOpLp",
+    title: "Exercises for neck",
+    description: "Addressing common neck problems, this video provides a sequence of physio exercises. These stretches and routines are designed to relieve discomfort and improve the strength and flexibility of your neck.",
+    url: "https://www.youtube.com/embed/dY_af1ew5b0?si=gKSSxcOqgaRKOpLp",
   },
   {
-  title: "4 Exercises for Shoulder Pain",
-  description: "4 exercises that can help reduce shoulder pain due to subacromial bursitis and/or tendinopathy of the supraspinatus (rotator cuff) or biceps tendons. All three of these structures are located in the subacromial space and can become irritated with overhead movements.",
-  url: "https://www.youtube.com/embed/432yWPJQ-is?si=t-nWd2YqwogC3W_0",
+    title: "4 Exercises for Shoulder Pain",
+    description: "help reduce shoulder pain due to subacromial bursitis and/or tendinopathy of the supraspinatus (rotator cuff) or biceps tendons. All three of these structures are located in the subacromial space and can become irritated with overhead movements.",
+    url: "https://www.youtube.com/embed/432yWPJQ-is?si=t-nWd2YqwogC3W_0",
   }
 ]
+
 
 physiotherapists = Therapist.joins(:services).where(services: { name: "Physiotherapy Session" })
 
