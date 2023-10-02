@@ -47,7 +47,7 @@ class TherapistsController < ApplicationController
 
   def therapist_params
     params.require(:therapist).permit(:information, :location_name, :location_address, :created_at, :updated_at,
-                                    :user_id, :first_name, :last_name)
+                                    :user_id, :first_name, :last_name, :type)
   end
 
 end
