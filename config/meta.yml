@@ -1,0 +1,11 @@
+# config/meta.yml
+
+meta_product_name: “TherapEase”
+
+meta_title: “TherapEase – Your Path to Wellness and Ease”
+
+meta_description: “A personalised solution for physiotherapists and patients”
+
+meta_image: cover.png # should exist in `app/assets/images/`
+
+twitter_account: “@product_twitter_account” # required for Twitter Cards
