@@ -3,26 +3,12 @@
 
   <div class="content-column">
 
-    <!--
-    <div class="shadow-rounded mb-5">
-      <h3 class="text-center">My Services</h3>
-      <div class="d-grid gap-2 col-2 mx-auto">
-        <h5 class="btn btn-primary mb-3 texte-center"> Add a new service</h5>
-      </div>
-      <br>
-      <div class="cards mb-3">
-        <% @therapist.services.each do |service| %>
-          <div class="card-category text-center" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cl_image_path(service.photo.key) %>)">
-            <h4><%= service.name %></h4>
-            <p>Price : <%= service.price_per_unit %> | Duration : <%= service.duration_per_unit %> min.</p>
-          </div>
-        <% end %>
-      </div>
+    <div class="mb-5">
+      <div class="row card-header-new">
+        <h1> MY MEETINGS </h1>
     </div>
-    -->
 
     <div class="shadow-rounded mb-5">
-      <h3 class="text-center home-subtitle">MY MEETINGS</h3>
       <%= week_calendar attribute: :start_time, events: @events_with_dates do |date, events| %>
         <div class="day-events" style="height: 1000px;">
 
@@ -43,7 +29,7 @@
                 <%= link_to event.package.patient.first_name[0] + ". " + event.package.patient.last_name, patient_path(event.package.patient) %>
                 <div style="display: flex; align-items: center;">
                   <%= event.start_time.strftime('%H:%M') %> - <%= (event.start_time + event.package.service.duration_per_unit.minutes).strftime('%H:%M') %>
-                  <%= status_update_form(event)%>
+                  <span style="margin-left: 5px;"><%= status_update_form(event)%></span>
                 </div>
               </div>
             <% elsif event.is_a?(Absence) %>
