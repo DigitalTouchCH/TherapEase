@@ -5,11 +5,11 @@ puts "Destroying old data..."
 Package.destroy_all
 Patient.destroy_all
 WeekAvailability.destroy_all
+MediaMeeting.destroy_all
+Medium.destroy_all
 Therapist.destroy_all
 User.destroy_all
 Service.destroy_all
-Medium.destroy_all
-MediaMeeting.destroy_all
 puts "Old data destroyed."
 
 
@@ -335,27 +335,64 @@ therapists.each do |therapist|
 end
 
 # MEDIA
-Medium.create(
+
+media_list = [
+  {
   title: "Exercises for back",
   description: "Physiotherapy Exercises For Low Back Pain",
   url: "https://www.youtube.com/embed/Ry-UGHYg7Us?si=W4AZMGqxpsa8Q09V",
-  therapist_id: 1
-)
-
-Medium.create(
+  },
+  {
   title: "Exercises for knees",
   description: "5 Exercises To Strengthen Your Knees",
   url: "https://www.youtube.com/embed/ikt6NME0k9E?si=3ut-RpHF-yjWusRw",
-  therapist_id: 1
-)
-
-Medium.create(
+  },
+  {
   title: "Exercises for neck",
   description: "Physio Neck Exercises Stretch and Relieve Routine",
   url: "https://www.youtube.com/embed/dY_af1ew5b0?si=gKSSxcOqgaRKOpLp",
-  therapist_id: 1
-)
+  },
+  {
+  title: "4 Exercises for Shoulder Pain",
+  description: "4 exercises that can help reduce shoulder pain due to subacromial bursitis and/or tendinopathy of the supraspinatus (rotator cuff) or biceps tendons. All three of these structures are located in the subacromial space and can become irritated with overhead movements.",
+  url: "https://www.youtube.com/embed/432yWPJQ-is?si=t-nWd2YqwogC3W_0",
+  }
+]
 
-puts "3 media created."
+physiotherapists = Therapist.joins(:services).where(services: { name: "Physiotherapy Session" })
+
+media_list.each do |media_data|
+  media = Medium.create(media_data)
+  # Associate the media with all therapists offering physiotherapy
+  physiotherapists.each do |therapist|
+    therapist.media << media
+  end
+end
+
+puts "4 media created."
+
+# Fetch all packages that are for "Physiotherapy Session"
+physiotherapy_packages = Package.joins(:service).where(services: { name: "Physiotherapy Session" })
+
+# Get all media that are related to physiotherapy
+physiotherapy_media = Medium.all # Adjust this if you have a way to distinguish physiotherapy-related media.
+
+physiotherapy_packages.each do |package|
+  # Select meetings with start dates in the past
+  past_meetings = package.meetings.where("start_time < ?", DateTime.now)
+
+  past_meetings.each do |meeting|
+    # Randomly select 1 to 2 media items and associate with this meeting
+    media_for_this_meeting = physiotherapy_media.sample(rand(1..2))
+
+    media_for_this_meeting.each do |media_item|
+      # Assuming you have a model or join table named `MediaMeeting` to associate media with meetings
+      MediaMeeting.create(medium: media_item, meeting: meeting)
+    end
+  end
+end
+
+puts "Media associated with past meetings of physiotherapy packages."
+
 
 puts "Ok :)"
