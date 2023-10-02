@@ -44,7 +44,7 @@
   grid-gap: 20px;
   display: flex;
   justify-content:left;
-  align-items: center;
+  align-items:baseline;
 }
 
 // Smallest device
@@ -99,4 +99,19 @@
 .patient-card {
   border: 1px solid #ddd;
   width: 100%;
+}
+
+
+.associated-meetings-list {
+  list-style-type: none;
+  font-size: 0.8em;
+  color: #414141;
+  font-size: small;
+}
+
+.associated-meetings-list li {
+  font-size: 0.8em;
+  color: #414141;
+  margin-left: 0;
+  font-size: small;
 }

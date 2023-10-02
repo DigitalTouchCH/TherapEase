@@ -213,25 +213,35 @@
 
               </div>
 
-            <% if package.media_list.present? %>
-              <div class="row mt-5">
-                <div class="">
-                  <div class="form_step_line1">EXERCICES SHARED</div>
-                  <div class="cards-video-therapist">
-                    <% package.media_list.each do |m| %>
-                      <div class="mb-5">
-                        <iframe width="350" height="200" src="<%= m.url %>" frameborder="0" allowfullscreen></iframe>
-                        <div class="card-body">
-                          <h5 class="card-title"><%= m.title %></h5>
-                          <h5 class="card-title"><%= m.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= m.end_time.try(:strftime, '%H:%M') %>
-                          <p class="card-text" style="font-size: 0.8em;"><%= m.description %></p>
-                        </div>
+              <% if package.media_list.present? %>
+                  <div class="row mt-5">
+                      <div class="">
+                          <div class="form_step_line1">EXERCICES SHARED</div>
+                          <div class="cards-video-therapist">
+                              <% package.media_list.each do |m| %>
+                                  <div class="mb-5">
+                                      <iframe width="350" height="200" src="<%= m.url %>" frameborder="0" allowfullscreen></iframe>
+                                      <div class="card-body" style="text-align: left;">
+                                          <h5 class="card-title" style="margin-bottom: 0px;"><%= m.title %></h5>
+                                          <p class="" style="font-size: 1em; margin-bottom: 5px;"><%= m.description %></p>
+                                          <p style="font-size: 1em; margin-bottom: 0px;">
+                                              Associated Meetings:
+                                              <ul class="associated-meetings-list" style="padding-left: 0px;">
+                                              <% m.meetings.each do |meeting| %>
+                                                  <li style="margin-bottom: 0px;">
+                                                      <%= meeting.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= meeting.end_time.try(:strftime, '%H:%M') %>
+                                                  </li>
+                                              <% end %>
+                                              </ul>
+                                          </p>
+                                      </div>
+                                  </div>
+                              <% end %>
+                          </div>
                       </div>
-                    <% end %>
                   </div>
-                </div>
-              </div>
-            <% end %>
+              <% end %>
+
           </div>
 
         </div>
