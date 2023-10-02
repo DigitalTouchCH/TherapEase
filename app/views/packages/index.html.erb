@@ -11,11 +11,11 @@
           </h1>
         </div>
 
-        <div class="shadow-rounded">
+        <div class="shadow-rounded" style="margin-bottom: 2em;">
 
           <%= form_with model: @patient do |f| %>
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-3" style="margin-bottom: 2em;">
                 <div class="form_step_line1">DETAILS</div>
                 <div class="form-group">
                   <%= f.label :first_name, "First name : ", class: "form-label" %>
@@ -67,7 +67,7 @@
                 </div>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-3" style="margin-bottom: 2em;">
                 <div class="form_step_line1">INSTRUCTIONS</div>
                 <div class="form-input" style="height: auto; overflow-y: auto; max-height: calc(8 * 1.5em);">
                   <%= @patient.info_public %>
@@ -92,15 +92,15 @@
         <div class="shadow-rounded mb-5" data-controller="toggle edit-package">
           <!-- Header -->
           <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px; margin-top: -2em; margin-left: -2em; margin-right: -2em;">
-            <h6 class= mb-0><%= package.service.name %> (<%= package.num_of_session %> sessions)
+            <h6 class= mb-0><%= package.service.name %> with <%= package.therapist.first_name %> <%= package.therapist.last_name %> (<%= package.num_of_session %> sessions)
               <button data-action="toggle#toggle" class="btn btn-sm float-right">
                 <i class="fas fas-black fa-eye" data-toggle-icon></i>
               </button>
             </h6>
           </div>
 
-          <div data-toggle-target="content">
-            <div class="row">
+          <div data-toggle-target="content" class="hide-content">
+            <div class="row" style="margin-bottom: 2em;">
 
               <div class="col-md-3">
                 <div class="d-flex justify-content-center align-items-center mt-3">
@@ -176,24 +176,37 @@
 
             </div>
 
-            <div class="row">
+            <div class="row mb-2" style="margin-bottom: 2em;">
               <!-- Media Section -->
               <% if package.media_list.present? %>
-                <div class="row">
-                    <h6 class= mb-0>Media</h6>
-                  </div>
-                  <div class="card-group">
-                    <% package.media_list.each do |m| %>
-                      <div class="card shadow-rounded mb-5">
-                        <%= youtube_video m.url %>
-                        <div class="card-body">
-                          <h5 class="card-title"><%= m.title %></h5>
-                        </div>
+                  <div class="row mt-5">
+                      <div class="">
+                          <div class="form_step_line1">EXERCICES SHARED</div>
+                          <div class="cards-video-therapist">
+                              <% package.media_list.each do |m| %>
+                                  <div class="mb-5">
+                                      <iframe width="350" height="200" src="<%= m.url %>" frameborder="0" allowfullscreen></iframe>
+                                      <div class="card-body" style="text-align: left;">
+                                          <h5 class="card-title" style="margin-bottom: 0px;"><%= m.title %></h5>
+                                          <p class="" style="font-size: 1em; margin-bottom: 5px;"><%= m.description %></p>
+                                          <p style="font-size: 1em; margin-bottom: 0px;">
+                                              Associated Meetings:
+                                              <ul class="associated-meetings-list" style="padding-left: 0px;">
+                                              <% m.meetings.where(package: package).each do |meeting| %>
+                                                  <li style="margin-bottom: 0px;">
+                                                      <%= meeting.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= meeting.end_time.try(:strftime, '%H:%M') %>
+                                                  </li>
+                                              <% end %>
+                                              </ul>
+                                          </p>
+                                      </div>
+                                  </div>
+                              <% end %>
+                          </div>
                       </div>
-                    <% end %>
                   </div>
-                </div>
               <% end %>
+
             </div>
           </div>
         </div>
