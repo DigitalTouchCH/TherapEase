@@ -1,6 +1,9 @@
 <div class="container">
   <div class="content-column mt-5">
-    <div class="shadow-rounded mb-5">
+    <div class="mb-3">
+      <%= link_to "↵ Back to services", services_path, class: "return-link" %>
+    </div>
+    <div class="shadow-rounded mb-5 pb-5">
 
       <div class="intro mb-5">
         <h3 class="text-center"><%= @service.name %></h3>
@@ -12,9 +15,9 @@
         </div>
 
         <div class="col-5 service-show-description">
-            <p>Welcome to our dedicated physiotherapy and massage services. Discover the path to relaxation, pain relief, and improved well-being with our expert therapists.</p>
-            <p>Several packages options are available for <%= @service.name %>, depending on the therapist you choose. Each session will last around <%= @service.duration_per_unit %> minutes </p>
-            <p>You can book directly on Therapease, choosing the therapist you prefer and picking a slot from his or her availabilities</p>
+            <p>Welcome to our <strong>dedicated physiotherapy and massage services</strong>. Discover the path to relaxation, pain relief, and improved well-being with our expert therapists.</p>
+            <p>Several packages options are available for <%= @service.name %>, depending on the therapist you choose. <strong>Each session will last around <%= @service.duration_per_unit %> minutes</strong> </p>
+            <p>You can book directly on Therapease, choosing the therapist you prefer and <strong>picking a slot from his or her availabilities</strong></p>
         </div>
 
         <div class="col-3">

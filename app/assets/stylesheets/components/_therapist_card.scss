@@ -52,7 +52,6 @@
   border-radius: 20px;
   background-color: white;
   text-align:center;
-  margin-bottom:20px;
   min-height: 510px;
 }
 
@@ -77,12 +76,13 @@
   margin-bottom:20px;
 }
 
-// .team-boxed .item .buttons-div {
+.team-boxed .item .buttons-div {
+  margin-top: 60px;
 //   // display: flex;
 //   // justify-content: space-around;
 //   // position: absolute;
 //   // bottom: 50px;
-// }
+}
 
 .team-boxed .item img {
   object-fit: cover;
@@ -112,4 +112,10 @@
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.therapist-show-image {
+  border-radius: 25% 10%;
+  max-width: 160px;
+  align-self: center;
 }
