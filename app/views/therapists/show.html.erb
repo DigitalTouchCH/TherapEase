@@ -1,21 +1,47 @@
-  <div class="content-column">
-    <div class="container">
+<div class="container">
+  <div class="content-column mt-5">
+    <div class="mb-3">
+        <%= link_to "↵ Back to therapists", therapists_path, class: "return-link" %>
+    </div>
+    <div class="shadow-rounded mb-5 pb-5">
 
-      <div class="shadow-rounded mb-5">
-
-        <div class="card-header text-center", style="padding: 0.8rem;">
-          <strong><%= @therapist.first_name %> <%= @therapist.last_name %></strong>
-        </div>
-        <div class="card-body mt-3">
-          <p class="card-text">Description: <%= @therapist.information %></p>
-          <p class="card-text">Location: <%= @therapist.location_name %></p>
-        </div>
-            <div class="profile-picture">
-              <% if @therapist.photo.attached? %>
-                  <%= cl_image_tag @therapist.photo.key, class: "card-img-top rounded"%>
-                <% else %>
-                  <img class="card-img-top rounded" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Card image cap" class="card-img-top rounded", style:="width: 290px; height:193px">
-                <% end %>
+      <div class="intro mb-5">
+        <h3 class="text-center"><%= @therapist.first_name %> <%= @therapist.last_name %></h3>
       </div>
-<%# <%= link_to 'Edit', edit_therapist_path(@service) | %>
-<%# <%= link_to 'Back', therapists_path %>
+
+      <div class="row">
+        <div class="col-2">
+          <% if @therapist.photo.attached? %>
+          <%= cl_image_tag @therapist.photo.key, class: "therapist-show-image"%>
+          <% else %>
+            <img class="card-img-top rounded" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Card image cap" class="card-img-top rounded", style:="width: 290px; height:193px">
+          <% end %>
+        </div>
+        <div class="col-10 service-show-description">
+          <p><%= @therapist.information %></p>
+          <i class="fa-solid fa-location-pin" style="color: #0052e0;"></i>
+          <p class="mb-0"><strong><%= @therapist.location_name %></strong></p>
+          <p class="mt-0"><%= @therapist.location_address %></p>
+        </div>
+      </div>
+
+      <div class="row justify-content-center mt-5">
+        <div class="col-3">
+          <div class="card mb-1 box-shadow">
+            <div class="card-body">
+              <h4 class="card-title pricing-card-title">Contact <%= @therapist.first_name %></h4>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="listed-feature-service">Free first consultation</li>
+                <li class="listed-feature-service">Home-service available</li>
+                <li class="listed-feature-service">Insurance covered</li>
+                <li class="listed-feature-service">Online support and video</li>
+              </ul>
+              <%= link_to "Book now", new_package_path(@package), class: "button-18" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
