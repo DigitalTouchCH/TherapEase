@@ -14,7 +14,7 @@
                   <img class="card-img-top rounded" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Card image cap" class="card-img-top rounded", style:="width: 290px; height:193px">
                 <% end %>
               <h3 class="name"><%= therapist.first_name%></h3>
-              <p class="title"><%= ["physiotherapist", "osteopath"].sample %></p>
+              <p class="title"><%= therapist.title%></p>
               <p class="description"><%= therapist.information %></p>
               <p class="button-18"><%= link_to "Details", therapist_path(therapist), class: "btn btn-primary" %></p>
               <p class="button-20"><%= link_to "Book", new_package_path(@package), class: "btn btn-primary" %></p>
