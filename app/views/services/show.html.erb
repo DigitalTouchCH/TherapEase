@@ -1,12 +1,37 @@
- <div class="content-column">
-    <div class="container">
+<div class="container">
+  <div class="content-column mt-5">
+    <div class="shadow-rounded mb-5">
 
-      <div class="shadow-rounded mb-5">
-
-        <div class="card-header text-center", style="padding: 0.8rem;">
-         <div class>
-          <h2><%= @service.name %></h2>
-            <p><strong>Session Type:</strong> <%= @service.place_type %></p>
-            <p><strong>Price:</strong> <%= format_price_per_unit(@service.price_per_unit) %> EUR</p>
+      <div class="intro mb-5">
+        <h3 class="text-center"><%= @service.name %></h3>
       </div>
- </div>
+
+      <div class="row">
+        <div class="col-4">
+          <img class="service-show-image" src="<%= cl_image_path(@service.photo.key) %>" alt="Professionals at work">
+        </div>
+
+        <div class="col-5 service-show-description">
+            <p>Welcome to our dedicated physiotherapy and massage services. Discover the path to relaxation, pain relief, and improved well-being with our expert therapists.</p>
+            <p>Several packages options are available for <%= @service.name %>, depending on the therapist you choose. Each session will last around <%= @service.duration_per_unit %> minutes </p>
+            <p>You can book directly on Therapease, choosing the therapist you prefer and picking a slot from his or her availabilities</p>
+        </div>
+
+        <div class="col-3">
+          <div class="card mb-4 box-shadow">
+            <div class="card-body">
+              <h3 class="card-title pricing-card-title">€<%= format_price_per_unit(@service.price_per_unit) %> <small class="text-muted">/ <%= @service.duration_per_unit %> min</small></h3>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="listed-feature-service">Free first consultation</li>
+                <li class="listed-feature-service">Home-service available</li>
+                <li class="listed-feature-service">Insurance covered</li>
+                <li class="listed-feature-service">Online support and video</li>
+              </ul>
+              <%= link_to "Book now", new_package_path(@package), class: "button-18" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
