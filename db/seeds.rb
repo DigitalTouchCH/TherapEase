@@ -363,10 +363,11 @@ media_list = [
 physiotherapists = Therapist.joins(:services).where(services: { name: "Physiotherapy Session" })
 
 media_list.each do |media_data|
-  media = Medium.create(media_data)
   # Associate the media with all therapists offering physiotherapy
   physiotherapists.each do |therapist|
-    therapist.media << media
+    medium = Medium.create(media_data)
+    medium.therapist = therapist
+    therapist.media << medium
   end
 end
 
@@ -383,8 +384,8 @@ physiotherapy_packages.each do |package|
   past_meetings = package.meetings.where("start_time < ?", DateTime.now)
 
   past_meetings.each do |meeting|
-    # Randomly select 1 to 2 media items and associate with this meeting
-    media_for_this_meeting = physiotherapy_media.sample(rand(1..2))
+    # Randomly select 1 media items and associate with this meeting
+    media_for_this_meeting = physiotherapy_media.sample(1)
 
     media_for_this_meeting.each do |media_item|
       # Assuming you have a model or join table named `MediaMeeting` to associate media with meetings

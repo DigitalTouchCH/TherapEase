@@ -32,7 +32,11 @@ class PackagesController < ApplicationController
     @package = Package.new(package_params)
     authorize @package
     if @package.save
-      redirect_to packages_path, notice: 'Package was successfully created.'
+      if current_user&.therapist
+        redirect_to meetings_path, notice: 'Package was successfully created.'
+      else
+        redirect_to packages_path, notice: 'Package was successfully created.'
+      end
     else
       render :new, status: 422
     end
@@ -45,7 +49,11 @@ class PackagesController < ApplicationController
   def update
     authorize @package
     if @package.update(package_params)
-      redirect_to patient_path(@package.patient), notice: 'Package was successfully updated.'
+      if current_user&.therapist
+        redirect_to meetings_path, notice: 'Package was successfully updated.'
+      else
+        redirect_to packages_path, notice: 'Package was successfully updated.'
+      end
     else
       render :edit, status: 422
     end
@@ -54,7 +62,7 @@ class PackagesController < ApplicationController
   def destroy
     authorize @package
     @package.destroy
-    redirect_to packages_url, notice: 'Package was successfully destroyed.'
+    redirect_to meetings_path, notice: 'Package was successfully destroyed.'
   end
 
   private

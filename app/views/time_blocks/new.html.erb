@@ -4,7 +4,7 @@
   <div class="row mt-5">
     <div class="col-md-6 offset-md-3">
       <div class="p-4 shadow-rounded">
-        <h2 class="text-center">Create a new availabilitie slot</h2>
+        <h2 class="text-center">Create a new available slot</h2>
         <%= form_with(model: [@week_availability, TimeBlock.new], local: true) do |form| %>
           <% if @time_block.errors.any? %>
             <div class="alert alert-danger">
