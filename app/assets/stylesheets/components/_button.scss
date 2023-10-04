@@ -72,3 +72,34 @@
   font-size: small;
   color:#7d8285;
 }
+
+.button-19 {
+  align-items: center;
+  background-color: $primary;
+  border: 0;
+  border-radius: 100px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: small;
+  justify-content: center;
+  line-height: 20px;
+  width: 200px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  min-height: 25px;
+  min-width: 0px;
+  overflow: hidden;
+  padding: 5px;
+  padding-top: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  text-decoration: none;
+}

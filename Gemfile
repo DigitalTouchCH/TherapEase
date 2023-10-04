@@ -59,6 +59,7 @@ gem "cloudinary"
 gem 'simple_calendar'
 gem 'faker'
 gem 'chartkick'
+gem 'pg_search', '~> 2.3', '>= 2.3.6'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
