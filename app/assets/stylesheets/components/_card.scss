@@ -38,6 +38,14 @@
   align-items: center;
 }
 
+.cards-video-therapist {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 30px;
+  justify-content:left;
+  align-items:baseline;
+}
+
 // Smallest device
 @media (min-width: 100px) and (max-width: 575px) {
   .cards {
@@ -90,4 +98,19 @@
 .patient-card {
   border: 1px solid #ddd;
   width: 100%;
+}
+
+
+.associated-meetings-list {
+  list-style-type: none;
+  font-size: 0.8em;
+  color: #414141;
+  font-size: small;
+}
+
+.associated-meetings-list li {
+  font-size: 0.8em;
+  color: #414141;
+  margin-left: 0;
+  font-size: small;
 }

@@ -13,7 +13,7 @@ class PatientPolicy < ApplicationPolicy
   end
 
   def update?
-    user_is_therapist?
+    user_is_therapist? || user_is_patient?
   end
 
   def destroy?
@@ -23,6 +23,10 @@ class PatientPolicy < ApplicationPolicy
 
   def user_is_therapist?
     user&.therapist.present?
+  end
+
+  def user_is_patient?
+    user&.patient.present?
   end
 
   class Scope < Scope

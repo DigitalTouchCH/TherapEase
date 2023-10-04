@@ -78,12 +78,20 @@ class MeetingsController < ApplicationController
     @media = Medium.where(therapist: current_user.therapist)
     @meeting = Meeting.find(params[:id])
     authorize @meeting
+
     if @meeting.update(meeting_params)
-      redirect_to patient_path(@meeting.package.patient), notice: 'Meeting was successfully modified.'
+      if current_user.therapist
+        redirect_to patient_path(@meeting.package.patient), notice: 'Meeting was successfully modified.'
+      elsif current_user.patient
+        redirect_to packages_path, notice: 'Meeting was successfully modified.'
+      else
+        redirect_to root_path
+      end
     else
       render :edit
     end
   end
+
 
   def destroy
     authorize @meeting

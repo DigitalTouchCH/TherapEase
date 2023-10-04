@@ -4,6 +4,7 @@ class PackagesController < ApplicationController
 
   def index
     @packages = policy_scope(Package)
+    @patient = current_user.patient
     @therapist = current_user.therapist
 
     if @therapist

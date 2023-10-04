@@ -5,11 +5,11 @@ puts "Destroying old data..."
 Package.destroy_all
 Patient.destroy_all
 WeekAvailability.destroy_all
+MediaMeeting.destroy_all
+Medium.destroy_all
 Therapist.destroy_all
 User.destroy_all
 Service.destroy_all
-Medium.destroy_all
-MediaMeeting.destroy_all
 puts "Old data destroyed."
 
 
@@ -26,7 +26,7 @@ private_notes = ["Right Shoulder Mobility: shows a marked reduction in right sho
                 "Left Ankle: shows a marked reduction in left ankle mobility, especially during dorsiflexion. Possible Achilles tendinitis.",
                 "Right Hip: shows a marked reduction in right hip mobility, especially during flexion. Possible hip osteoarthritis."]
 
-50.times do |i|
+80.times do |i|
   email = "patient#{i + 1}@example.com"
   password = "password123"
 
@@ -56,10 +56,19 @@ puts "#{Patient.count} patients created."
 
 # THERAPISTS
 
-photos_urls = ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg",
-              "https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Am%C3%A9lie_250x250_su4uyp.jpg",
-              "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg",
-              "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg"]
+photos_urls = [
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Solen.jpg",
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/Am%C3%A9lie_250x250_su4uyp.jpg",
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap2_bgczb7.jpg",
+  "https://res.cloudinary.com/du87gda0f/image/upload/v1695253785/therap1_h4lorw.jpg"
+]
+
+therapist_descriptions = [
+  "Dedicated osteopath providing expert care. Skilled in diagnosing and treating musculoskeletal issues. Committed to improving patients' well-being, flexibility and mobility.",
+  "Passionate physiotherapist dedicated to restoring mobility and enhancing overall wellness. Expert in musculoskeletal care and personalized rehabilitation techniques.",
+  "Compassionate massage therapist devoted to relieving stress and promoting relaxation. Skilled in therapeutic touch, enhancing well-being through personalized techniques.",
+  "Empathetic counselor providing a safe space for healing and growth. Experienced in guiding clients through challenges, fostering resilience, and promoting mental well-being."
+]
 
 4.times do |i|
   email = "therapist#{i + 1}@example.com"
@@ -69,17 +78,19 @@ photos_urls = ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148032/So
 
   therapist = Therapist.create(
     user: user,
-    information: Faker::Lorem.paragraph,
+    information: therapist_descriptions[i],
     location_name: "Therapy Center #{Faker::Address.building_number}",
     location_address: Faker::Address.street_address,
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
+    title: ["osteopath", "physiotherapist", "massage therapist", "counselor"][i]
   )
 
   # Attach a random image from the internet
   photo = URI.open(photos_urls[i])
   therapist.photo.attach(io: photo, filename: "therapist_#{therapist.id}.jpg", content_type: "image/jpg")
 end
+
 puts "#{Therapist.count} therapists created."
 
 # AVAILABILITIES
@@ -92,7 +103,7 @@ therapists.each do |therapist|
     therapist: therapist,
     valid_from: Date.new(2023, 1, 1),
     valid_until: Date.new(2023, 12, 31),
-    name: "Standart availability"
+    name: "Standard availability"
   )
   days_of_week.each do |day|
     # Créer des TimeBlocks pour chaque jour de la semaine
@@ -149,7 +160,7 @@ services_data = [
     price_visibility: false,
     price_per_unit: 50.0,
     duration_per_unit: 30,
-    color: "#DFF2FF",
+    color: "#48cae4",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_perinee_450x300_vjkamj.jpg"]
   },
   {
@@ -161,7 +172,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 60.0,
     duration_per_unit: 45,
-    color: "#B0F2B6",
+    color: "#90e0ef",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695147976/Cat%C3%A9gorie_Massage_450x300_clk194.jpg"]
   },
   {
@@ -173,7 +184,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 90.0,
     duration_per_unit: 60,
-    color: "#DFF9E1",
+    color: "#ade8f4",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148015/Cat%C3%A9gorie_Physioth%C3%A9rapie_450x300_v2ibey.jpg"]
   },
   {
@@ -185,7 +196,7 @@ services_data = [
     price_visibility: true,
     price_per_unit: 30.0,
     duration_per_unit: 30,
-    color: "#FFF5E6",
+    color: "#caf0f8",
     photo: ["https://res.cloudinary.com/du87gda0f/image/upload/v1695148166/consulting_pdhtri.jpg"]
   }
 ]
@@ -285,7 +296,7 @@ puts "#{Meeting.count} meetings created."
 
 therapists = Therapist.all
 
-available_hours = (8..12).to_a + (13..16).to_a
+available_hours = (8..11).to_a + (13..16).to_a
 
 start_date = Date.today - 7
 end_date = Date.today + 14
@@ -324,27 +335,65 @@ therapists.each do |therapist|
 end
 
 # MEDIA
-Medium.create(
-  title: "Exercises for back",
-  description: "Physiotherapy Exercises For Low Back Pain",
-  url: "https://www.youtube.com/embed/Ry-UGHYg7Us?si=W4AZMGqxpsa8Q09V",
-  therapist_id: 1
-)
 
-Medium.create(
-  title: "Exercises for knees",
-  description: "5 Exercises To Strengthen Your Knees",
-  url: "https://www.youtube.com/embed/ikt6NME0k9E?si=3ut-RpHF-yjWusRw",
-  therapist_id: 1
-)
+media_list = [
+  {
+    title: "Exercises for back",
+    description: "Discover effective physiotherapy exercises specifically tailored for alleviating and preventing low back pain. Learn the correct techniques and understand the benefits of each movement.",
+    url: "https://www.youtube.com/embed/Ry-UGHYg7Us?si=W4AZMGqxpsa8Q09V",
+  },
+  {
+    title: "Exercises for knees",
+    description: "5 vital exercises aimed at strengthening your knees. Each exercise is explained in detail to ensure safe and effective results. Ideal for athletes or individuals with knee concerns.",
+    url: "https://www.youtube.com/embed/ikt6NME0k9E?si=3ut-RpHF-yjWusRw",
+  },
+  {
+    title: "Exercises for neck",
+    description: "Addressing common neck problems, this video provides a sequence of physio exercises. These stretches and routines are designed to relieve discomfort and improve the strength and flexibility of your neck.",
+    url: "https://www.youtube.com/embed/dY_af1ew5b0?si=gKSSxcOqgaRKOpLp",
+  },
+  {
+    title: "4 Exercises for Shoulder Pain",
+    description: "help reduce shoulder pain due to subacromial bursitis and/or tendinopathy of the supraspinatus (rotator cuff) or biceps tendons. All three of these structures are located in the subacromial space and can become irritated with overhead movements.",
+    url: "https://www.youtube.com/embed/432yWPJQ-is?si=t-nWd2YqwogC3W_0",
+  }
+]
 
-Medium.create(
-  title: "Exercises for neck",
-  description: "Physio Neck Exercises Stretch and Relieve Routine",
-  url: "https://www.youtube.com/embed/dY_af1ew5b0?si=gKSSxcOqgaRKOpLp",
-  therapist_id: 1
-)
 
-puts "3 media created."
+physiotherapists = Therapist.joins(:services).where(services: { name: "Physiotherapy Session" })
+
+media_list.each do |media_data|
+  media = Medium.create(media_data)
+  # Associate the media with all therapists offering physiotherapy
+  physiotherapists.each do |therapist|
+    therapist.media << media
+  end
+end
+
+puts "4 media created."
+
+# Fetch all packages that are for "Physiotherapy Session"
+physiotherapy_packages = Package.joins(:service).where(services: { name: "Physiotherapy Session" })
+
+# Get all media that are related to physiotherapy
+physiotherapy_media = Medium.all # Adjust this if you have a way to distinguish physiotherapy-related media.
+
+physiotherapy_packages.each do |package|
+  # Select meetings with start dates in the past
+  past_meetings = package.meetings.where("start_time < ?", DateTime.now)
+
+  past_meetings.each do |meeting|
+    # Randomly select 1 to 2 media items and associate with this meeting
+    media_for_this_meeting = physiotherapy_media.sample(rand(1..2))
+
+    media_for_this_meeting.each do |media_item|
+      # Assuming you have a model or join table named `MediaMeeting` to associate media with meetings
+      MediaMeeting.create(medium: media_item, meeting: meeting)
+    end
+  end
+end
+
+puts "Media associated with past meetings of physiotherapy packages."
+
 
 puts "Ok :)"

@@ -1,10 +1,7 @@
 <div class="container" data-controller="slot-selection" data-slot-selection-duration="<%= @duration %>">
 
     <div class="shadow-rounded mt-5">
-      <div class="form-header">
-        <h2>Update your meeting</h2>
-        <p>Fill in the below information</p>
-      </div>
+      <h2 class="text-center">Update the meeting</h2>
 
       <%= form_for @meeting do |f| %>
 
@@ -35,7 +32,7 @@
             </div>
           </div>
           <!-- CALENDAR INFO -->
-          <div class="mt-2">
+          <div class="mt-2" style="margin-bottom: 2em;">
             <%= week_calendar attribute: :start_time, events: @final_slots_array do |date, slots| %>
               <div class="day-events" style="height: 450px;">
                 <% slots.each do |slot| %>
@@ -57,6 +54,7 @@
         <!-- FIELD INFO -->
         <div class="row">
 
+        <% if current_user&.therapist %>
           <div class="<%= !current_user&.therapist ? '' : 'col-6' %>">
             <div class="d-flex align-items-center mt-3">
               <div class="form_circle_blue me-3">2</div>
@@ -69,6 +67,7 @@
               <%= f.text_area :info_public, class: 'form-control', style: 'height: 150px;' %>
             </div>
           </div>
+        <% end %>
 
           <% if current_user&.therapist %>
             <div class="col-6">

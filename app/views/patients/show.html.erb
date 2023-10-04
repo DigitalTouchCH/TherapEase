@@ -20,7 +20,7 @@
 
           <%= form_with model: @patient do |f| %>
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-3" style="margin-bottom: 2em;">
                 <div class="form_step_line1">DETAILS</div>
                 <div class="form-group">
                   <%= f.label :first_name, "First name : ", class: "form-label" %>
@@ -119,7 +119,7 @@
               <div class="row">
                 <!-- Form -->
 
-                <div class="col-md-3">
+                <div class="col-md-3" style="margin-bottom: 2em;">
 
                   <div class="form_step_line1">DETAILS</div>
                   <div class="form-group mb-2">
@@ -131,7 +131,7 @@
                     <%= pie_chart meetings_by_status, colors: colors_for_data(meetings_by_status), width: "100px", height: "100px" %>
                   </div>
 
-                  <div class="form-label mt-3">INSURANCE</div>
+                  <div class="form-label mt-4">INSURANCE</div>
                   <div class="form-group">
                     <%= f.label :insurance_name, "Name:", class: "form-label" %>
                     <%= f.text_field :insurance_name, readonly: true, class: "form-input" %>
@@ -151,22 +151,24 @@
 
                   <div class="form_step_line1">PATIENT INSTRUCTIONS</div>
                   <div class="form-group">
-                    <%= f.text_area :info_public, readonly: true, class: "form-input", rows: 3 %>
+                    <%= f.text_area :info_public, readonly: true, class: "form-input", rows: 5 %>
                   </div>
 
                   <div class="form_step_line1">PRIVATE NOTES</div>
                   <div class="form-group">
-                    <%= f.text_area :info_private, readonly: true, class: "form-input", rows: 3 %>
+                    <%= f.text_area :info_private, readonly: true, class: "form-input", rows: 5 %>
                   </div>
 
                   <div class="text-center mt-3 saveButton" style="display: none; width: 100px;">
                     <%= f.submit "Save", class: "btn btn-dark", data: { action: "click->edit-package#save" } %>
                   </div>
+
                 </div>
+
 
             <% end %>
 
-                <div class="col-md-6">
+                <div class="col-md-6" style="margin-bottom: 2em;">
                   <div class="form_step_line1">MEETINGS</div>
                   <table>
                     <thead>
@@ -211,30 +213,36 @@
 
               </div>
 
-            <div class="row">
-              <!-- Media Section -->
-              <% if package.media_list.present? %>
-                <div class="row shadow-rounded mb-5">
-                  <div class="row text-center mb-3 p-2" style="background-color: <%= package.service.color %>; border-radius: 15px;">
-                    <h6 class= mb-0>Media
-                      <button data-action="toggle#toggle" class="btn btn-sm float-right">
-                        <i class="fas fas-black fa-eye" data-toggle-icon></i>
-                      </button>
-                    </h6>
-                  </div>
-                  <div class="card-group">
-                    <% package.media_list.each do |m| %>
-                      <div class="card shadow-rounded mb-5">
-                        <%= youtube_video m.url %>
-                        <div class="card-body">
-                          <h5 class="card-title"><%= m.title %></h5>
+            <% if package.media_list.present? %>
+                <div class="row mt-5">
+                    <div class="">
+                        <div class="form_step_line1">EXERCICES SHARED</div>
+                        <div class="cards-video-therapist">
+                            <% package.media_list.each do |m| %>
+                                <div class="mb-5">
+                                    <iframe width="350" height="200" src="<%= m.url %>" frameborder="0" allowfullscreen></iframe>
+                                    <div class="card-body" style="text-align: left;">
+                                        <h5 class="card-title" style="margin-bottom: 0px;"><%= m.title %></h5>
+                                        <p class="" style="font-size: 1em; margin-bottom: 5px;"><%= m.description %></p>
+                                        <p style="font-size: 1em; margin-bottom: 0px;">
+                                            Associated Meetings:
+                                            <ul class="associated-meetings-list" style="padding-left: 0px;">
+                                            <% m.meetings.where(package: package).each do |meeting| %>
+                                                <li style="margin-bottom: 0px;">
+                                                    <%= meeting.start_time.try(:strftime, "%d %B %Y from %H:%M") %> to <%= meeting.end_time.try(:strftime, '%H:%M') %>
+                                                </li>
+                                            <% end %>
+                                            </ul>
+                                        </p>
+                                    </div>
+                                </div>
+                            <% end %>
                         </div>
-                      </div>
-                    <% end %>
-                  </div>
+                    </div>
                 </div>
-              <% end %>
-            </div>
+            <% end %>
+
+
           </div>
 
         </div>
