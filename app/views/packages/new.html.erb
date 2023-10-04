@@ -8,12 +8,12 @@
 
             <div class="form-inputs">
               <%= f.input :num_of_session, label: "Number of sessions", required: true %>
-              <%= f.input :info_public, label: "Public information" %>
-              <%= f.input :info_private, label: "Private information" %>
-              <%= f.input :insurance_name, label: "Insurance name" %>
-              <%= f.input :insurance_number, label: "Insurance number" %>
-              <%= f.input :insurance_type, as: :radio_buttons, label: "Insurance type", :collection => %w[Accident Lamal] %>
-              <%= f.input :package_type, as: :radio_buttons, label: "Package type", :collection => %w[Group Individual] %>
+              <%= f.hidden_field :info_public, label: "Public information" %>
+              <%= f.hidden_field :info_private, label: "Private information" %>
+              <%= f.hidden_field :insurance_name, label: "Insurance name" %>
+              <%= f.hidden_field :insurance_number, label: "Insurance number" %>
+              <%= f.hidden_field :insurance_type, as: :radio_buttons, label: "Insurance type", :collection => %w[Accident Lamal] %>
+              <%= f.hidden_field :package_type, as: :radio_buttons, value: "Individual", label: "Package type", :collection => %w[Group Individual] %>
               <%= f.association :service, as: :radio_buttons, label: "Service" %>
               <%= f.association :therapist, label_method: :first_name, value_method: :id, include_blank: false, label: "Therapist" %>
               <%= f.association :patient, label_method: :first_name, value_method: :id, include_blank: false, label: "Patient" %>
@@ -21,7 +21,7 @@
 
             <div class="form-actions mt-3 d-grid gap-2 d-md-flex justify-content-md-center">
               <%= f.button :submit, "Submit", class:"btn btn-primary" %>
-              <%= link_to 'Cancel', packages_path, class: 'btn btn-outline-primary' %>
+              <%= link_to 'Cancel', services_path, class: 'btn btn-outline-primary' %>
             </div>
           <% end %>
       </div>
