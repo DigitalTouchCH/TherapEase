@@ -1,7 +1,7 @@
 <div class="container">
   <div class="content-column mt-5">
     <div class="mb-3">
-        <%= link_to "↵ Back to therapists", therapists_path, class: "return-link" %>
+      <%= link_to "↵ Back to therapists", therapists_path, class: "return-link" %>
     </div>
     <div class="shadow-rounded mb-5 pb-5">
 
@@ -17,15 +17,14 @@
             <img class="card-img-top rounded" src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Card image cap" class="card-img-top rounded", style:="width: 290px; height:193px">
           <% end %>
         </div>
-        <div class="col-10 service-show-description">
+
+        <div class="col-7 service-show-description">
           <p><%= @therapist.information %></p>
           <i class="fa-solid fa-location-pin" style="color: #0052e0;"></i>
           <p class="mb-0"><strong><%= @therapist.location_name %></strong></p>
           <p class="mt-0"><%= @therapist.location_address %></p>
         </div>
-      </div>
 
-      <div class="row justify-content-center mt-5">
         <div class="col-3">
           <div class="card mb-1 box-shadow">
             <div class="card-body">
@@ -38,10 +37,8 @@
               </ul>
               <%= link_to "Book now", new_package_path(@package), class: "button-18" %>
             </div>
-          </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
