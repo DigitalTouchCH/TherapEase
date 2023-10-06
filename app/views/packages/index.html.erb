@@ -26,7 +26,7 @@
                   <%= f.text_field :last_name, readonly: true, class: "form-input" %>
                 </div>
                 <div class="form-group">
-                  <%= f.label :date_of_birth, "Birth's date : ", class: "form-label" %>
+                  <%= f.label :date_of_birth, "Birthdate : ", class: "form-label" %>
                   <%= f.date_field :date_of_birth, readonly: true, class: "form-input" %>
                 </div>
                 <div class="form-group">
@@ -38,7 +38,7 @@
               <div class="col-md-3">
                 <div class="form_step_line1">CONTACT</div>
                 <div class="form-group">
-                  <%= f.label :addresse, "Addresse : ", class: "form-label" %>
+                  <%= f.label :addresse, "Address : ", class: "form-label" %>
                   <%= f.text_field :addresse, readonly: true, class: "form-input" %>
                 </div>
                 <div class="form-group">
@@ -181,7 +181,7 @@
               <% if package.media_list.present? %>
                   <div class="row mt-5">
                       <div class="">
-                          <div class="form_step_line1">EXERCICES SHARED</div>
+                          <div class="form_step_line1">EXERCISES SHARED</div>
                           <div class="cards-video-therapist">
                               <% package.media_list.each do |m| %>
                                   <div class="mb-5">
